@@ -1,0 +1,9 @@
+<resources>
+
+    <!-- Open Roaming -->
+    <string name="open_roaming_not_supported">Passpoint is not supported in this device!</string>
+
+    <!-- Google SignIn Button -->
+    <string name="google_sign_in_button">Continue with Google</string>
+
+</resources>

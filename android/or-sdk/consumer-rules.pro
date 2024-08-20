@@ -1,0 +1,2 @@
+-dontwarn com.galactikperspective.or.core.User
+-dontwarn com.galactikperspective.or.views.GoogleSignInButton

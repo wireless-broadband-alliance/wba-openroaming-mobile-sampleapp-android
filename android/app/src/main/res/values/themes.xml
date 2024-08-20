@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base Theme -->
+    <style name="Theme.MimWifi" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_secondary</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/color_background</item>
+        <item name="colorOnSecondaryContainer">@color/color_on_primary</item>
+        <item name="colorSurface">@color/color_primary</item>
+        <item name="colorOnSurface">@color/color_on_primary</item>
+        <item name="colorOnSurfaceVariant">@color/color_on_primary</item>
+        <item name="colorSurfaceContainerLowest">@color/color_primary</item>
+        <item name="colorSurfaceContainerLow">@color/color_primary</item>
+        <item name="colorSurfaceContainer">@color/color_primary</item>
+        <item name="colorSurfaceContainerHigh">@color/color_primary</item>
+        <item name="colorSurfaceContainerHighest">@color/color_primary</item>
+        <item name="colorError">@color/color_error</item>
+        <item name="colorOutline">@color/color_outline</item>
+        <item name="backgroundColor">@color/color_background</item>
+        <item name="android:textColorLink">@color/color_on_primary</item>
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="android:navigationBarColor">@color/color_primary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:textViewStyle">@style/Widget.MaterialTextView</item>
+        <item name="toolbarStyle">@style/Widget.MaterialToolbar</item>
+    </style>
+
+    <!-- Material TextView Widget -->
+    <style name="Widget.MaterialTextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textColor">?colorOnPrimary</item>
+        <item name="android:textAppearance">?textAppearanceBodyMedium</item>
+    </style>
+
+    <!-- Material Toolbar Widget -->
+    <style name="Widget.MaterialToolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?colorSecondary</item>
+        <item name="titleTextColor">?colorOnSecondary</item>
+    </style>
+
+</resources>

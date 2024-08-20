@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/user_button"
+        android:enabled="true"
+        android:icon="@drawable/ic_user"
+        android:title="@string/activity_main_user" />
+
+    <item
+        android:id="@+id/usage_button"
+        android:enabled="true"
+        android:icon="@drawable/ic_wifi"
+        android:title="@string/activity_main_usage" />
+
+    <item
+        android:id="@+id/about_button"
+        android:enabled="true"
+        android:icon="@drawable/ic_about"
+        android:title="@string/activity_main_about" />
+
+</menu>
