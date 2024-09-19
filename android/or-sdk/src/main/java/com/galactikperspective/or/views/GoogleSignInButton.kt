@@ -52,6 +52,7 @@ class GoogleSignInButton : MaterialButton {
     }
 
     private fun startGoogleSignIn() {
+        /*
         val turnstile = Turnstile()
         turnstile.onCaptchaSuccess = {
             Toast.makeText(context, "Success! Proceed to google account signin!", Toast.LENGTH_LONG).show()
@@ -63,5 +64,6 @@ class GoogleSignInButton : MaterialButton {
 
         val activity = context as Activity
         turnstile.renderCaptcha(activity)
+         */
     }
 }

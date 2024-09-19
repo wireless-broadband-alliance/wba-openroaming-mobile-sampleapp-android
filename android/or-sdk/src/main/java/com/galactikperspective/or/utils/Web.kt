@@ -1,14 +1,18 @@
 package com.galactikperspective.or.utils
 
-import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
+import com.galactikperspective.or.R
+import com.galactikperspective.or.core.User
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.FormBody
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import org.json.JSONObject
 import java.io.IOException
-import java.util.UUID
 
 //
 //  Web.kt
@@ -24,30 +28,29 @@ class Web {
     private val client = OkHttpClient()
     //endregion
 
-    fun verifyToken(jsInterface: Turnstile.JSInterface, activity: Activity, token: String) {
-        //TODO replace with production secret
-        val body = FormBody.Builder()
-            .add("secret", "1x0000000000000000000000000000000AA")
-            .add("response", token)
-            .add("idempotency_key", UUID.randomUUID().toString())
-            .build()
-
-        val url = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
+    fun login(activity: AppCompatActivity, user: User, params: JSONObject, type: String) {
+        val url = String.format(activity.getString(R.string.open_roaming_api), "auth/$type")
         val request = Request.Builder()
             .url(url)
-            .post(body)
+            .addHeader("Content-Type", "application/json")
+            .post(params.toBody())
             .build()
 
         client.newCall(request).enqueue(object : Callback {
 
             override fun onResponse(call: Call, response: Response) = activity.runOnUiThread {
-                if (response.isSuccessful) jsInterface.onVerifySuccess(response.body.string())
+                if (response.isSuccessful) user.onLoginSuccess(response.body.string())
                 else onFailure(call, IOException("Invalid response exception!"))
             }
 
             override fun onFailure(call: Call, e: IOException) = activity.runOnUiThread {
-                jsInterface.onVerifyError(e)
+                user.onLoginError(e)
             }
         })
+    }
+
+    private fun JSONObject.toBody(): RequestBody {
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        return toString().toRequestBody(mediaType)
     }
 }

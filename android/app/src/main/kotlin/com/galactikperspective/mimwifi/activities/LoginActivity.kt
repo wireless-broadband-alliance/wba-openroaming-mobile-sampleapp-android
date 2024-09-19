@@ -2,8 +2,10 @@ package com.galactikperspective.mimwifi.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.galactikperspective.mimwifi.databinding.ActivityLoginBinding
+import com.galactikperspective.or.core.User
 import com.galactikperspective.or.utils.Preferences
 
 //
@@ -40,8 +42,29 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginButton.setOnClickListener {
+            login()
+
+            /*
             startActivity(Intent(this, LegalActivity::class.java))
             finish()
+             */
         }
+    }
+
+    private fun login() {
+        val email = binding.emailEdit.text.toString()
+        val password = binding.passwordEdit.text.toString()
+
+        val user = User()
+        user.onLoginSuccess = {
+            val s = it
+            println(s)
+        }
+
+        user.onLoginError = {
+            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+        }
+
+        user.login(this, email, password)
     }
 }

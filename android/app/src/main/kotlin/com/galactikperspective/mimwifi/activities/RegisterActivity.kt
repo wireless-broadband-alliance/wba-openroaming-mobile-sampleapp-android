@@ -27,6 +27,5 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerButton.setOnClickListener {
             User().register(this)
         }
-
     }
 }

@@ -2,6 +2,10 @@
 
     <!-- Open Roaming -->
     <string name="open_roaming_not_supported">Passpoint is not supported in this device!</string>
+    <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string>
+
+    <!-- Login -->
+    <string name="open_roaming_login_blank_credentials">You need to complete all fields to continue!</string>
 
     <!-- Google SignIn Button -->
     <string name="google_sign_in_button">Continue with Google</string>
