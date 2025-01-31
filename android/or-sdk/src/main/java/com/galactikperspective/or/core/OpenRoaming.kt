@@ -1,9 +1,19 @@
 package com.galactikperspective.or.core
 
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.eap.EapSessionConfig
+import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
+import android.net.wifi.WifiNetworkSuggestion
+import android.net.wifi.hotspot2.PasspointConfiguration
+import android.net.wifi.hotspot2.pps.Credential
+import android.net.wifi.hotspot2.pps.HomeSp
 import android.os.Build
+import android.os.Bundle
+import android.provider.Settings.ACTION_WIFI_ADD_NETWORKS
+import android.provider.Settings.EXTRA_WIFI_NETWORK_LIST
 import android.widget.Toast
 import com.galactikperspective.or.R
 import com.galactikperspective.or.dialogs.TermsDialog
@@ -45,13 +55,8 @@ class OpenRoaming {
         if (!isSupported) return Toast.makeText(context, context.getString(R.string.open_roaming_not_supported), Toast.LENGTH_LONG).show()
 
         // Checks if Terms and Conditions are accepted
-        val isTermsAccepted = isTermsAccepted(context)
-        if (!isTermsAccepted) return showTermsDialog(context)
-
-        /*
-        // Initialize the WifiManager
-        val isSupported = isPasspointSupported(context)
-        if (!isSupported) return Toast.makeText(context, context.getString(R.string.open_roaming_not_supported), Toast.LENGTH_LONG).show()
+        // val isTermsAccepted = isTermsAccepted(context)
+        // if (!isTermsAccepted) return showTermsDialog(context)
 
         // Set up HomeSp (Home Service Provider) information
         val homeSp = HomeSp()
@@ -85,13 +90,12 @@ class OpenRoaming {
 
         // Create intent
         val bundle = Bundle()
-        bundle.putParcelableArrayList(Settings.EXTRA_WIFI_NETWORK_LIST, suggestions)
+        bundle.putParcelableArrayList(EXTRA_WIFI_NETWORK_LIST, suggestions)
 
-        val intent = Intent(Settings.ACTION_WIFI_ADD_NETWORKS)
+        val intent = Intent(ACTION_WIFI_ADD_NETWORKS)
         intent.putExtras(bundle)
 
         // Launch intent
         context.startActivity(intent)
-        */
     }
 }

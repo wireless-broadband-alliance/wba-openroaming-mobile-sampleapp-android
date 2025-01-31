@@ -1,56 +1,51 @@
 package com.galactikperspective.or.utils
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import com.galactikperspective.or.R
-import com.galactikperspective.or.core.User
-import okhttp3.Call
-import okhttp3.Callback
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 import org.json.JSONObject
-import java.io.IOException
 
 //
 //  Web.kt
 //  Open Roaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2024 Galactik Perspective. All rights reserved.
+//  Copyright © 2025 Galactik Perspective. All rights reserved.
 //
 
-class Web {
+class Web(private val context: Context) {
 
-    //region GLOBAL
-    private val client = OkHttpClient()
-    //endregion
+    private val client = HttpClient()
 
-    fun login(activity: AppCompatActivity, user: User, params: JSONObject, type: String) {
-        val url = String.format(activity.getString(R.string.open_roaming_api), "auth/$type")
-        val request = Request.Builder()
-            .url(url)
-            .addHeader("Content-Type", "application/json")
-            .post(params.toBody())
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-
-            override fun onResponse(call: Call, response: Response) = activity.runOnUiThread {
-                if (response.isSuccessful) user.onLoginSuccess(response.body.string())
-                else onFailure(call, IOException("Invalid response exception!"))
-            }
-
-            override fun onFailure(call: Call, e: IOException) = activity.runOnUiThread {
-                user.onLoginError(e)
-            }
-        })
+    suspend fun getConfig(): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "config")
+        val response = client.get(url).bodyAsText()
+        return JSONObject(response)
     }
 
-    private fun JSONObject.toBody(): RequestBody {
-        val mediaType = "application/json; charset=utf-8".toMediaType()
-        return toString().toRequestBody(mediaType)
+    suspend fun login(params: JSONObject, type: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "auth/$type")
+        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
+    suspend fun register(params: JSONObject, type: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "auth/$type/register")
+        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
     }
 }

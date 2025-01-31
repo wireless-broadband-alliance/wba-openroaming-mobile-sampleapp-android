@@ -1,7 +1,10 @@
 <resources>
 
     <!-- Application -->
-    <string name="app_name">MiM - WiFi</string>
+    <string name="app_name">OR SDK</string>
+
+    <!-- Login Activity -->
+    <string name="activity_config_description">Getting OpenRoaming configuration…</string>
 
     <!-- Login Activity -->
     <string name="activity_login_description">To enjoy seamless and secure WiFi, please login with your credentials</string>
@@ -10,6 +13,8 @@
 
     <!-- Register Activity -->
     <string name="activity_register_description">Create your account to enjoy seamless and secure WiFi</string>
+    <string name="activity_register_name_first">First Name</string>
+    <string name="activity_register_name_last">Last Name</string>
     <string name="activity_register_continue">Register</string>
 
     <!-- Legal Activity -->

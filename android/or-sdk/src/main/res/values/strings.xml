@@ -2,12 +2,22 @@
 
     <!-- Open Roaming -->
     <string name="open_roaming_not_supported">Passpoint is not supported in this device!</string>
-    <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string>
+
+    <!-- QA -->
+    <!-- <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string> -->
+    <string name="open_roaming_api">https://wifi.tetrapi.pt/api/v1/%1$s</string>
+
+    <!-- Register -->
+    <string name="open_roaming_register_invalid_turnstile_key">The Turnstile Key is invalid… Please run the config endpoint to get a new Key!</string>
+    <string name="open_roaming_register_blank_credentials">You need to complete all fields to register!</string>
 
     <!-- Login -->
     <string name="open_roaming_login_blank_credentials">You need to complete all fields to continue!</string>
 
     <!-- Google SignIn Button -->
     <string name="google_sign_in_button">Continue with Google</string>
+
+    <!-- Common -->
+    <string name="common_error">An expected error occurred…</string>
 
 </resources>

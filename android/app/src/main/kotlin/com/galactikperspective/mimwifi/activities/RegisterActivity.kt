@@ -1,9 +1,11 @@
 package com.galactikperspective.mimwifi.activities
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.galactikperspective.mimwifi.databinding.ActivityRegisterBinding
 import com.galactikperspective.or.core.User
+import com.galactikperspective.or.utils.Preferences
 
 //
 //  RegisterActivity.kt
@@ -20,12 +22,48 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setViews()
+
+        binding.registerButton.setOnClickListener {
+            register()
+        }
     }
 
     private fun setViews() {
-        binding.registerButton.setOnClickListener {
-            User().register(this)
+        /*
+        val user = User()
+        user.onLoginSuccess = {
+            val s = it
+            println(s)
         }
+
+        user.onLoginError = {
+            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+        }
+
+        user.login(this, email, password)
+        */
+    }
+
+    private fun register() {
+        val email = binding.emailEdit.text.toString()
+        val password = binding.passwordEdit.text.toString()
+        val nameFirst = binding.nameFirstEdit.text.toString()
+        val nameLast = binding.nameLastEdit.text.toString()
+
+        val user = User()
+        user.onRegisterSuccess = {
+            //TODO continue here
+            val s = it
+            println(s)
+        }
+
+        user.onRegisterError = {
+
+            runOnUiThread {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        user.register(this, email, password, nameFirst, nameLast)
     }
 }

@@ -5,13 +5,13 @@ plugins {
 
 android {
     namespace = "com.galactikperspective.mimwifi"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.galactikperspective.mimwifi"
 
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
 
         versionCode = 1
         versionName = "1.0.0"
@@ -35,12 +35,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
@@ -51,5 +51,5 @@ dependencies {
     implementation("com.google.android.play:core-ktx:1.8.1")
 
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.airbnb.android:lottie:6.5.0")
+    implementation("com.airbnb.android:lottie:6.6.2")
 }

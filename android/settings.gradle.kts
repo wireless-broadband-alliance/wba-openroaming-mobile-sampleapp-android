@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MiM - WiFi"
+rootProject.name = "OR SDK"
 include(":app")
 include(":or-sdk")

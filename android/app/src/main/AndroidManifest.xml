@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +10,7 @@
         android:theme="@style/Theme.MimWifi">
 
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".activities.ConfigActivity"
             android:exported="true">
 
             <intent-filter>
@@ -20,6 +19,8 @@
             </intent-filter>
 
         </activity>
+
+        <activity android:name=".activities.LoginActivity" />
 
         <activity android:name=".activities.RegisterActivity" />
 
