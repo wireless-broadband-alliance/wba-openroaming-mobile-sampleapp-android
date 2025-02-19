@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.galactikperspective.mimwifi.databinding.ActivityRegisterBinding
+import com.galactikperspective.or.R
 import com.galactikperspective.or.core.User
-import com.galactikperspective.or.utils.Preferences
 
 //
 //  RegisterActivity.kt
@@ -28,42 +28,26 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun setViews() {
-        /*
-        val user = User()
-        user.onLoginSuccess = {
-            val s = it
-            println(s)
-        }
-
-        user.onLoginError = {
-            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-        }
-
-        user.login(this, email, password)
-        */
-    }
-
     private fun register() {
-        val email = binding.emailEdit.text.toString()
-        val password = binding.passwordEdit.text.toString()
-        val nameFirst = binding.nameFirstEdit.text.toString()
-        val nameLast = binding.nameLastEdit.text.toString()
-
         val user = User()
         user.onRegisterSuccess = {
-            //TODO continue here
-            val s = it
-            println(s)
+            val message = it.getJSONObject("data").getString("message")
+            runOnUiThread {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
+
+            finish()
         }
 
         user.onRegisterError = {
-
+            val message = it ?: getString(R.string.common_error)
             runOnUiThread {
-                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }
 
-        user.register(this, email, password, nameFirst, nameLast)
+        val email = binding.emailEdit.text.toString()
+        val password = binding.passwordEdit.text.toString()
+        user.register(this, email, password)
     }
 }

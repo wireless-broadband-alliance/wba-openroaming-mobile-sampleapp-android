@@ -5,19 +5,19 @@
 
     <!-- QA -->
     <!-- <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string> -->
-    <string name="open_roaming_api">https://wifi.tetrapi.pt/api/v1/%1$s</string>
-
-    <!-- Register -->
-    <string name="open_roaming_register_invalid_turnstile_key">The Turnstile Key is invalid… Please run the config endpoint to get a new Key!</string>
-    <string name="open_roaming_register_blank_credentials">You need to complete all fields to register!</string>
+    <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string>
 
     <!-- Login -->
-    <string name="open_roaming_login_blank_credentials">You need to complete all fields to continue!</string>
+    <string name="open_roaming_login_blank_credentials">You need to set your username and password to login!</string>
+
+    <!-- Register -->
+    <string name="open_roaming_register_blank_credentials">You need to set at least a username and password to register!</string>
 
     <!-- Google SignIn Button -->
     <string name="google_sign_in_button">Continue with Google</string>
 
     <!-- Common -->
     <string name="common_error">An expected error occurred…</string>
+    <string name="common_error_turnstile_key">The Turnstile key is invalid… Please run the config endpoint to get a new Key!</string>
 
 </resources>

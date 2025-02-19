@@ -32,7 +32,7 @@ class ConfigActivity : AppCompatActivity() {
 
     private fun checkConfig() {
         val turnstileKey = preferences.getString("TURNSTILE_SITE_KEY")
-        if (turnstileKey == null || turnstileKey.isBlank()) return setContentView()
+        if (turnstileKey.isNullOrBlank()) return setContentView()
 
         val expiration = preferences.getLong("CONFIG_EXPIRATION")
         if (expiration == 0L || System.currentTimeMillis() > expiration) return setContentView()
@@ -64,7 +64,7 @@ class ConfigActivity : AppCompatActivity() {
     private fun saveData(response: JSONObject) {
         val success = response.getBoolean("success")
         if (!success) {
-            binding.descriptionText.text = getString(R.string.common_error)
+            binding.descriptionText.text = response.getString("error") ?: getString(R.string.common_error)
             binding.descriptionText.setTextColor(Color.RED)
             return
         }
@@ -74,6 +74,12 @@ class ConfigActivity : AppCompatActivity() {
 
         val expiration = System.currentTimeMillis() + (2 * 24 * 60 * 60 * 1000) // Current time plus 2 days
         preferences.saveLong("CONFIG_EXPIRATION", expiration)
+
+        val tos = response.getJSONObject("data").getJSONObject("platform").getString("TOS")
+        preferences.saveString("TOS", tos)
+
+        val privacy = response.getJSONObject("data").getJSONObject("platform").getString("PRIVACY_POLICY")
+        preferences.saveString("PRIVACY_POLICY", privacy)
 
         startActivity(Intent(this, LoginActivity::class.java))
     }

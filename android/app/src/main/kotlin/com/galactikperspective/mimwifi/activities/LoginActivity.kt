@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.galactikperspective.mimwifi.databinding.ActivityLoginBinding
+import com.galactikperspective.or.R
 import com.galactikperspective.or.core.User
+import com.galactikperspective.or.utils.Preferences
+import org.json.JSONObject
 
 //
 //  LoginActivity.kt
@@ -22,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        User.isLoggedIn(this).let {
+        Preferences(this).getBoolean("USER_LOGGED_IN").let {
             if (it) setMainActivity()
             else setContentView()
         }
@@ -35,10 +38,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setContentView() {
         setContentView(binding.root)
-        setViews()
-    }
 
-    private fun setViews() {
         binding.registerText.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -49,21 +49,28 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login() {
-        /*
-        val email = binding.emailEdit.text.toString()
-        val password = binding.passwordEdit.text.toString()
-
         val user = User()
         user.onLoginSuccess = {
-            val s = it
-            println(s)
+            val data = it.getJSONObject("data")
+            saveUserToken(data)
+            setMainActivity()
         }
 
         user.onLoginError = {
-            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            val message = it ?: getString(R.string.common_error)
+            runOnUiThread {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
         }
 
+        val email = binding.emailEdit.text.toString()
+        val password = binding.passwordEdit.text.toString()
         user.login(this, email, password)
-        */
+    }
+
+    private fun saveUserToken(data: JSONObject) {
+        val preferences = Preferences(this)
+        preferences.saveString("USER_JWT_TOKEN", data.getString("token"))
+        preferences.saveBoolean("USER_LOGGED_IN", true)
     }
 }

@@ -1,10 +1,8 @@
 package com.galactikperspective.or.core
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.galactikperspective.or.utils.Preferences
-import com.galactikperspective.or.utils.Turnstile
 import com.galactikperspective.or.R
 import com.galactikperspective.or.utils.Web
 import kotlinx.coroutines.Dispatchers
@@ -21,13 +19,8 @@ import org.json.JSONObject
 
 class User {
 
-    companion object {
-
-        fun isLoggedIn(context: Context) = Preferences(context).getBoolean("isLoggedIn")
-    }
-
-    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String, nameLast: String) {
-        if (email.isBlank() || password.isBlank() || nameFirst.isBlank() || nameLast.isBlank()) {
+    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null) {
+        if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_register_blank_credentials)
             return onRegisterError(message)
         }
@@ -35,8 +28,8 @@ class User {
         val params = JSONObject().apply {
             put("email", email)
             put("password", password)
-            put("first_name", nameFirst)
-            put("last_name", nameLast)
+            if (nameFirst != null) put("first_name", nameFirst)
+            if (nameLast != null) put("last_name", nameLast)
         }
 
         register(activity, params, "local")
@@ -45,11 +38,13 @@ class User {
     private fun register(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
         val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
         if (siteKey.isNullOrBlank()) {
-            val message = activity.getString(R.string.open_roaming_register_invalid_turnstile_key)
+            val message = activity.getString(R.string.common_error_turnstile_key)
             return@launch onRegisterError(message)
         }
 
-        val token = Turnstile().getToken(activity, siteKey)
+        //TODO
+        //val token = Turnstile().getToken(activity, siteKey)
+        val token = "openroaming"
         params.put("turnstile_token", token)
 
         val request = runCatching {
@@ -58,7 +53,8 @@ class User {
         }
 
         request.onSuccess {
-            print("test")
+            val success = it.getBoolean("success")
+            if (success) onRegisterSuccess(it) else onRegisterError (it.getString("error"))
         }
 
         request.onFailure {
@@ -66,7 +62,7 @@ class User {
         }
     }
 
-    var onRegisterSuccess: (response: String) -> Unit = {
+    var onRegisterSuccess: (response: JSONObject) -> Unit = {
         /** Register succeeded */
     }
 
@@ -76,8 +72,8 @@ class User {
 
     fun login(activity: AppCompatActivity, email: String, password: String) {
         if (email.isBlank() || password.isBlank()) {
-            val exception = IllegalArgumentException(activity.getString(R.string.open_roaming_login_blank_credentials))
-            return onLoginError(exception)
+            val message = activity.getString(R.string.open_roaming_login_blank_credentials)
+            return onLoginError(message)
         }
 
         val params = JSONObject().apply {
@@ -89,19 +85,37 @@ class User {
     }
 
     private fun login(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
-        val token = Turnstile().getToken(activity, "1x00000000000000000000AA")
-        print(token)
+        val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
+        if (siteKey.isNullOrBlank()) {
+            val message = activity.getString(R.string.common_error_turnstile_key)
+            return@launch onRegisterError(message)
+        }
 
-        //params.put("cf-turnstile-response", token)
+        //TODO
+        //val token = Turnstile().getToken(activity, siteKey)
+        val token = "openroaming"
+        params.put("turnstile_token", token)
 
-        //Web().login(activity, this@User, params, type)
+        val request = runCatching {
+            val web = Web(activity)
+            web.login(params, type)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            if (success) onLoginSuccess(it) else onLoginError (it.getString("error"))
+        }
+
+        request.onFailure {
+            onLoginError(it.message)
+        }
     }
 
-    var onLoginSuccess: (response: String) -> Unit = {
+    var onLoginSuccess: (response: JSONObject) -> Unit = {
         /** Login succeeded */
     }
 
-    var onLoginError: (exception: Exception) -> Unit = {
+    var onLoginError: (message: String?) -> Unit = {
         /** Login failed */
     }
 }
