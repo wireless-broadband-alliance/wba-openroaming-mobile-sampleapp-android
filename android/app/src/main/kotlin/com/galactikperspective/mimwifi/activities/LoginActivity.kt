@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.galactikperspective.mimwifi.databinding.ActivityLoginBinding
 import com.galactikperspective.or.R
 import com.galactikperspective.or.core.User
-import com.galactikperspective.or.utils.Preferences
-import org.json.JSONObject
 
 //
 //  LoginActivity.kt
@@ -25,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Preferences(this).getBoolean("USER_LOGGED_IN").let {
+        User.isLoggedIn(this).let {
             if (it) setMainActivity()
             else setContentView()
         }
@@ -51,8 +49,6 @@ class LoginActivity : AppCompatActivity() {
     private fun login() {
         val user = User()
         user.onLoginSuccess = {
-            val data = it.getJSONObject("data")
-            saveUserToken(data)
             setMainActivity()
         }
 
@@ -66,11 +62,5 @@ class LoginActivity : AppCompatActivity() {
         val email = binding.emailEdit.text.toString()
         val password = binding.passwordEdit.text.toString()
         user.login(this, email, password)
-    }
-
-    private fun saveUserToken(data: JSONObject) {
-        val preferences = Preferences(this)
-        preferences.saveString("USER_JWT_TOKEN", data.getString("token"))
-        preferences.saveBoolean("USER_LOGGED_IN", true)
     }
 }

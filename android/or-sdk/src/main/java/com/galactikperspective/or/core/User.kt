@@ -1,5 +1,6 @@
 package com.galactikperspective.or.core
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.galactikperspective.or.utils.Preferences
@@ -18,6 +19,31 @@ import org.json.JSONObject
 //
 
 class User {
+
+    companion object {
+
+        fun jwtToken(context: Context): String? {
+            val preferences = Preferences(context)
+            return jwtToken(preferences)
+        }
+
+        fun jwtToken(preferences: Preferences) = preferences.getString("USER_JWT_TOKEN")
+
+        fun setUserJwtToken(preferences: Preferences, token: String) {
+            preferences.saveString("USER_JWT_TOKEN", token)
+        }
+
+        fun isLoggedIn(context: Context): Boolean {
+            val preferences = Preferences(context)
+            return isLoggedIn(preferences)
+        }
+
+        fun isLoggedIn(preferences: Preferences) = preferences.getBoolean("USER_LOGGED_IN")
+
+        fun setUserLoggedIn(preferences: Preferences, isLoggedIn: Boolean = true) {
+            preferences.saveBoolean("USER_LOGGED_IN", isLoggedIn)
+        }
+    }
 
     fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null) {
         if (email.isBlank() || password.isBlank()) {
@@ -88,7 +114,7 @@ class User {
         val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
         if (siteKey.isNullOrBlank()) {
             val message = activity.getString(R.string.common_error_turnstile_key)
-            return@launch onRegisterError(message)
+            return@launch onLoginError(message)
         }
 
         //TODO
@@ -103,7 +129,8 @@ class User {
 
         request.onSuccess {
             val success = it.getBoolean("success")
-            if (success) onLoginSuccess(it) else onLoginError (it.getString("error"))
+            if (success) it.getJSONObject("data").saveUserLogin(activity)
+            else onLoginError(it.getString("error"))
         }
 
         request.onFailure {
@@ -111,7 +138,17 @@ class User {
         }
     }
 
-    var onLoginSuccess: (response: JSONObject) -> Unit = {
+    private fun JSONObject.saveUserLogin(activity: AppCompatActivity) {
+        val preferences = Preferences(activity)
+        setUserLoggedIn(preferences, true)
+
+        val token = getString("token")
+        setUserJwtToken(preferences, token)
+
+        onLoginSuccess()
+    }
+
+    var onLoginSuccess: () -> Unit = {
         /** Login succeeded */
     }
 

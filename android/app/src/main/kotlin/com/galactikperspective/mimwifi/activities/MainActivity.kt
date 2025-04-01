@@ -14,10 +14,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setViews()
-    }
 
-    private fun setViews() {
         binding.bottomNavigation.setOnItemSelectedListener {
             it.changeMode()
         }
