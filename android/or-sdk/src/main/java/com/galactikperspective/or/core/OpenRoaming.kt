@@ -3,8 +3,6 @@ package com.galactikperspective.or.core
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.eap.EapSessionConfig
-import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSuggestion
 import android.net.wifi.hotspot2.PasspointConfiguration
@@ -15,8 +13,19 @@ import android.os.Bundle
 import android.provider.Settings.ACTION_WIFI_ADD_NETWORKS
 import android.provider.Settings.EXTRA_WIFI_NETWORK_LIST
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import com.galactikperspective.or.R
 import com.galactikperspective.or.dialogs.TermsDialog
+import com.galactikperspective.or.utils.Web
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
+import java.security.KeyPair
+import java.security.KeyPairGenerator
+import java.security.PrivateKey
+import java.util.Base64
+import javax.crypto.Cipher
 
 //
 //  OpenRoaming.kt
@@ -45,38 +54,90 @@ class OpenRoaming {
 
     private fun isPasspointSupported(context: Context, wifiManager: WifiManager) = when {
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> wifiManager.isWifiPasspointEnabled
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 -> context.packageManager.hasSystemFeature(PackageManager.FEATURE_WIFI_PASSPOINT)
-        else -> false
+        else -> context.packageManager.hasSystemFeature(PackageManager.FEATURE_WIFI_PASSPOINT)
     }
 
-    fun connect(context: Context) {
-        // Checks if device supports OpenRoaming
-        val isSupported = isPasspointSupported(context)
-        if (!isSupported) return Toast.makeText(context, context.getString(R.string.open_roaming_not_supported), Toast.LENGTH_LONG).show()
+    private fun generateRSAKeys(): KeyPair {
+        val generator = KeyPairGenerator.getInstance("RSA")
+        generator.initialize(1024)
 
+        return generator.generateKeyPair()
+    }
+
+    private fun decryptPassword(context: Context, key: PrivateKey, password: String): String {
+        val encryptedBytes = Base64.getDecoder().decode(password)
+
+        val cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding")
+        cipher.init(Cipher.DECRYPT_MODE, key)
+
+        val decryptedBytes = cipher.doFinal(encryptedBytes)
+        return String(decryptedBytes, Charsets.UTF_8)
+    }
+
+    fun connect(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
         // Checks if Terms and Conditions are accepted
         // val isTermsAccepted = isTermsAccepted(context)
         // if (!isTermsAccepted) return showTermsDialog(context)
 
+        // Checks if device supports OpenRoaming
+        val isSupported = isPasspointSupported(activity)
+        if (!isSupported) return@launch Toast.makeText(activity, activity.getString(R.string.open_roaming_not_supported), Toast.LENGTH_LONG).show()
+
+        // Generate RSA Keys to get Android profile
+        val keyPair = generateRSAKeys()
+        val publicKeyBase64 = Base64.getEncoder().encodeToString(keyPair.public.encoded)
+        val publicPemFormatted = "-----BEGIN PUBLIC KEY-----\n$publicKeyBase64\n-----END PUBLIC KEY-----"
+
+        // Get Android Profile configuration
+        val token = User.jwtToken(activity)
+        val params = JSONObject().apply {
+            put("public_key", publicPemFormatted)
+        }
+
+        // TODO need to request new token if null
+        val request = runCatching {
+            val web = Web(activity)
+            web.profile(params, token ?: "todo")
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            activity.runOnUiThread {
+                if (success) connect(activity, keyPair, it.getJSONObject("data"))
+                else Toast.makeText(activity, it.getString("error"), Toast.LENGTH_LONG).show()
+            }
+        }
+
+        request.onFailure {
+
+            activity.runOnUiThread {
+                Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun connect(context: Context, keyPair: KeyPair, data: JSONObject) {
         // Set up HomeSp (Home Service Provider) information
         val homeSp = HomeSp()
-        homeSp.friendlyName = "TETRAPI S.A."
-        homeSp.fqdn = "tetrapi-idp.openroaming.tetrapi.pt"
+        homeSp.friendlyName = data.getString("friendlyName")
+        homeSp.fqdn = data.getString("fqdn")
 
-        val oi1 = "5a03ba0000".toLong(16)
-        val oi2 = "004096".toLong(16)
+        val ois = data.getJSONArray("roamingConsortiumOis")
+        val oi1 = ois.getString(0).toLong(16)
+        val oi2 = ois.getString(1).toLong(16)
         homeSp.roamingConsortiumOis = longArrayOf(oi1, oi2)
 
         // Set up User Credentials
         val userCredential = Credential.UserCredential()
-        userCredential.username = "dQMCa8mh4H0Se252FVCMV@tetrapi.pt"
-        userCredential.password = "UnR1Y0MzWDlVeGxhNHYzU1drY0pl"
-        userCredential.eapType = 21
-        userCredential.nonEapInnerMethod = "MS-CHAP-V2"
+        userCredential.username = data.getString("radiusUsername")
+        userCredential.password = decryptPassword(context, keyPair.private, data.getString("radiusPassword"))
+
+        userCredential.eapType = data.getInt("eapType")
+        userCredential.nonEapInnerMethod = data.getString("nonEapInnerMethod")
 
         // Set up Credential for authentication
         val credential = Credential()
-        credential.realm = "tetrapi.pt"
+        credential.realm = data.getString("realm")
         credential.userCredential = userCredential
 
         // Create a new PasspointConfiguration instance

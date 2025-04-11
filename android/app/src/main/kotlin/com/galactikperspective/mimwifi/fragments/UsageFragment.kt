@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.galactikperspective.mimwifi.databinding.FragmentUsageBinding
+import com.galactikperspective.or.core.OpenRoaming
 
 //
 //  UsageFragment.kt
@@ -27,6 +28,9 @@ class UsageFragment : Fragment() {
     }
 
     private fun setViews() {
-
+        val or = OpenRoaming()
+        binding.testButton.setOnClickListener {
+            or.connect(requireActivity())
+        }
     }
 }
