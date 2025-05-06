@@ -1,10 +1,13 @@
 package com.galactikperspective.mimwifi.fragments
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.galactikperspective.mimwifi.R
 import com.galactikperspective.mimwifi.databinding.FragmentAboutBinding
 
 //
@@ -27,6 +30,10 @@ class AboutFragment : Fragment() {
     }
 
     private fun setViews() {
+        @Suppress("DEPRECATION")
+        binding.versionText.text = String.format(getString(R.string.fragment_about_version), if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) requireActivity().packageManager.getPackageInfo(requireActivity().packageName, PackageManager.PackageInfoFlags.of(0)).versionName
+        else requireActivity().packageManager.getPackageInfo(requireActivity().packageName, 0).versionName)
+
 
     }
 }

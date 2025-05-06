@@ -52,6 +52,7 @@ class ConfigActivity : AppCompatActivity() {
         }
 
         request.onSuccess {
+            //TODO this should be done by the SDK module
             saveData(it)
         }
 

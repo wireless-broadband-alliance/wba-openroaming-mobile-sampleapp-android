@@ -1,10 +1,14 @@
 package com.galactikperspective.or.core
 
+import android.app.Activity
 import android.content.Context
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.galactikperspective.or.utils.Preferences
 import com.galactikperspective.or.R
+import com.galactikperspective.or.utils.Turnstile
 import com.galactikperspective.or.utils.Web
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -68,9 +72,8 @@ class User {
             return@launch onRegisterError(message)
         }
 
-        //TODO
-        //val token = Turnstile().getToken(activity, siteKey)
-        val token = "openroaming"
+        //val token = "openroaming"
+        val token = Turnstile().getToken(activity, siteKey)
         params.put("turnstile_token", token)
 
         val request = runCatching {
@@ -117,9 +120,8 @@ class User {
             return@launch onLoginError(message)
         }
 
-        //TODO
-        //val token = Turnstile().getToken(activity, siteKey)
-        val token = "openroaming"
+        //val token = "openroaming"
+        val token = Turnstile().getToken(activity, siteKey)
         params.put("turnstile_token", token)
 
         val request = runCatching {
@@ -154,5 +156,43 @@ class User {
 
     var onLoginError: (message: String?) -> Unit = {
         /** Login failed */
+    }
+
+    fun info(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        val token = jwtToken(activity)
+        if (token == null) return@launch onInfoError(activity.getString(R.string.common_error_jwt_token))
+
+        val request = runCatching {
+            val web = Web(activity)
+            web.getUser(token)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            activity.runOnUiThread {
+                if (success) onInfoSuccess(it.getJSONObject("data"))
+                else onInfoError(it.getString("error"))
+            }
+        }
+
+        request.onFailure {
+
+            activity.runOnUiThread {
+                onInfoError(it.message)
+            }
+        }
+    }
+
+    var onInfoSuccess: (data: JSONObject) -> Unit = {
+        /** Info succeeded */
+    }
+
+    var onInfoError: (message: String?) -> Unit = {
+        /** Info failed */
+    }
+
+    fun logout(activity: Activity) {
+        val preferences = Preferences(activity)
+        setUserLoggedIn(preferences, false)
     }
 }

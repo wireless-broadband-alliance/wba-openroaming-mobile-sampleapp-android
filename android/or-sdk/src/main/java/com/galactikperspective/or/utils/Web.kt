@@ -50,6 +50,16 @@ class Web(private val context: Context) {
         return JSONObject(response)
     }
 
+    suspend fun getUser(token: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "user")
+        val response = client.get(url) {
+            contentType(ContentType.Application.Json)
+            header("Authorization", "Bearer $token")
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
     suspend fun profile(params: JSONObject, token: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "config/profile/android")
         val response = client.get(url) {

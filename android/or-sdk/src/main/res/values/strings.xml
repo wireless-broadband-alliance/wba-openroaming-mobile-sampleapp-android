@@ -5,7 +5,7 @@
 
     <!-- QA -->
     <!-- <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string> -->
-    <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string>
+    <string name="open_roaming_api">https://wifi.tetrapi.pt/api/v1/%1$s</string>
 
     <!-- Login -->
     <string name="open_roaming_login_blank_credentials">You need to set your username and password to login!</string>
@@ -19,5 +19,6 @@
     <!-- Common -->
     <string name="common_error">An expected error occurred…</string>
     <string name="common_error_turnstile_key">The Turnstile key is invalid… Please run the config endpoint to get a new Key!</string>
+    <string name="common_error_jwt_token">The JWT Token does not exist or it is expired!</string>
 
 </resources>
