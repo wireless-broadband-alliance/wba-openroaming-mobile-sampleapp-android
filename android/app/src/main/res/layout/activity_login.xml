@@ -88,6 +88,52 @@
         android:textColor="?colorSecondary"
         android:textStyle="bold" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/code_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_margin"
+        android:hint="@string/common_code"
+        app:boxStrokeColor="@color/cr_text_input_box"
+        app:hintTextColor="@color/cr_text_input_box">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/code_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textAppearance="?textAppearanceBodyMedium" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_margin_mini"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/request_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:text="@string/activity_login_request"
+            android:textColor="?colorSecondary"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/configure_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:gravity="end"
+            android:text="@string/activity_login_configure"
+            android:textColor="?colorSecondary"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
         android:layout_width="match_parent"

@@ -1,10 +1,13 @@
 package com.galactikperspective.mimwifi.fragments
 
+import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import com.galactikperspective.mimwifi.adapters.NetworksAdapter
 import com.galactikperspective.mimwifi.databinding.FragmentUsageBinding
 import com.galactikperspective.or.core.OpenRoaming
 
@@ -19,6 +22,7 @@ import com.galactikperspective.or.core.OpenRoaming
 class UsageFragment : Fragment() {
 
     private val binding by lazy { FragmentUsageBinding.inflate(layoutInflater) }
+    private val or = OpenRoaming()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = binding.root
 
@@ -28,9 +32,40 @@ class UsageFragment : Fragment() {
     }
 
     private fun setViews() {
-        val or = OpenRoaming()
-        binding.testButton.setOnClickListener {
+        binding.recyclerView.addItemDecoration(DividerItemDecoration(requireActivity(), DividerItemDecoration.VERTICAL))
+        checkNetworks()
+    }
+
+    private fun checkNetworks() {
+        val networks = or.networks(requireActivity())
+        if (networks.isEmpty()) showConnection() else setNetworks(networks)
+
+        binding.connectButton.setOnClickListener {
             or.connect(requireActivity())
         }
+
+        or.onConnectionSuccess = {
+            checkNetworks()
+        }
+    }
+
+    private fun showConnection() {
+        binding.recyclerView.visibility = View.GONE
+        binding.connectionLayout.visibility = View.VISIBLE
+    }
+
+    private fun setNetworks(networks: ArrayList<PasspointConfiguration>) {
+        binding.recyclerView.visibility = View.VISIBLE
+        binding.connectionLayout.visibility = View.GONE
+
+        binding.recyclerView.adapter.let {
+            if (it == null) binding.recyclerView.adapter = NetworksAdapter(this, networks)
+            else (it as NetworksAdapter).update(networks)
+        }
+    }
+
+    fun removeNetwork(network: PasspointConfiguration) {
+        or.remove(requireActivity(), network)
+        checkNetworks()
     }
 }

@@ -1,7 +1,6 @@
 package com.galactikperspective.or.core
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSuggestion
@@ -9,9 +8,6 @@ import android.net.wifi.hotspot2.PasspointConfiguration
 import android.net.wifi.hotspot2.pps.Credential
 import android.net.wifi.hotspot2.pps.HomeSp
 import android.os.Build
-import android.os.Bundle
-import android.provider.Settings.ACTION_WIFI_ADD_NETWORKS
-import android.provider.Settings.EXTRA_WIFI_NETWORK_LIST
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -150,13 +146,36 @@ class OpenRoaming {
         suggestions.add(WifiNetworkSuggestion.Builder().setPasspointConfig(passpointConfig).build())
 
         // Create intent
-        val bundle = Bundle()
-        bundle.putParcelableArrayList(EXTRA_WIFI_NETWORK_LIST, suggestions)
+        // val bundle = Bundle()
+        // bundle.putParcelableArrayList(EXTRA_WIFI_NETWORK_LIST, suggestions)
 
-        val intent = Intent(ACTION_WIFI_ADD_NETWORKS)
-        intent.putExtras(bundle)
+        // val intent = Intent(ACTION_WIFI_ADD_NETWORKS)
+        // intent.putExtras(bundle)
 
         // Launch intent
-        context.startActivity(intent)
+        // context.startActivity(intent)
+
+        val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        wifiManager.addNetworkSuggestions(suggestions)
+
+        onConnectionSuccess()
+    }
+
+    var onConnectionSuccess: () -> Unit = {
+        /** Connection succeeded */
+    }
+
+    fun networks(context: Context): ArrayList<PasspointConfiguration> {
+        val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        return wifiManager.networkSuggestions.mapNotNull { it.passpointConfig }.toCollection(ArrayList())
+    }
+
+    fun remove(context: Context, network: PasspointConfiguration) {
+        val suggestions = WifiNetworkSuggestion.Builder()
+            .setPasspointConfig(network)
+            .build()
+
+        val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        wifiManager.removeNetworkSuggestions(listOf(suggestions))
     }
 }

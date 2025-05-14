@@ -51,5 +51,5 @@ dependencies {
     implementation("com.google.android.play:core-ktx:1.8.1")
 
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.airbnb.android:lottie:6.6.2")
+    implementation("com.airbnb.android:lottie:6.6.6")
 }

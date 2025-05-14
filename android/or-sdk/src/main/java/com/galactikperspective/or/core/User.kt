@@ -99,7 +99,7 @@ class User {
         /** Register failed */
     }
 
-    fun login(activity: AppCompatActivity, email: String, password: String) {
+    fun login(activity: AppCompatActivity, email: String, password: String, code: String? = null) {
         if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_login_blank_credentials)
             return onLoginError(message)
@@ -108,6 +108,7 @@ class User {
         val params = JSONObject().apply {
             put("uuid", email)
             put("password", password)
+            if (code != null) put("twoFACode", code)
         }
 
         login(activity, params, "local")

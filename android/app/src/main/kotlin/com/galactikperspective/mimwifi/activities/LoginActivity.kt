@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.galactikperspective.mimwifi.databinding.ActivityLoginBinding
 import com.galactikperspective.or.R
 import com.galactikperspective.or.core.User
@@ -41,6 +42,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
+        binding.configureText.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, "https://wifi.tetrapi.pt/login".toUri())
+            startActivity(intent)
+        }
+
         binding.loginButton.setOnClickListener {
             login()
         }
@@ -59,8 +65,10 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        val email = binding.emailEdit.text.toString()
-        val password = binding.passwordEdit.text.toString()
-        user.login(this, email, password)
+        user.login(this,
+            binding.emailEdit.text.toString(),
+            binding.passwordEdit.text.toString(),
+            binding.codeEdit.text.toString()
+        )
     }
 }
