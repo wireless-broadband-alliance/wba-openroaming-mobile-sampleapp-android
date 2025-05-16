@@ -24,19 +24,19 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/user_fragment"
-            android:name="com.galactikperspective.mimwifi.fragments.UserFragment"
+            android:name="com.tetrapi.or.fragments.UserFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/usage_fragment"
-            android:name="com.galactikperspective.mimwifi.fragments.UsageFragment"
+            android:name="com.tetrapi.or.fragments.UsageFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/about_fragment"
-            android:name="com.galactikperspective.mimwifi.fragments.AboutFragment"
+            android:name="com.tetrapi.or.fragments.AboutFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Application -->
-    <string name="app_name">OR SDK</string>
+    <string name="app_name">GRA ID SDK</string>
 
     <!-- Login Activity -->
     <string name="activity_config_description">Getting OpenRoaming configuration…</string>

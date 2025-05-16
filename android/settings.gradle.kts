@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OR SDK"
+rootProject.name = "GRA ID SDK"
 include(":app")
 include(":or-sdk")

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.galactikperspective.or"
+    namespace = "com.tetrapi.sdk"
     compileSdk = 35
 
     defaultConfig {
@@ -39,12 +39,8 @@ android {
 
 dependencies {
     implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.android.play:core-ktx:1.8.1")
-
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.0")
-
     implementation("io.ktor:ktor-client-core:3.1.3")
     implementation("io.ktor:ktor-client-cio:3.1.3")
-
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
 }

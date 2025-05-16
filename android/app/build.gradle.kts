@@ -4,16 +4,16 @@ plugins {
 }
 
 android {
-    namespace = "com.galactikperspective.mimwifi"
+    namespace = "com.tetrapi.or"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.galactikperspective.mimwifi"
+        applicationId = "com.tetrapi.or"
 
         minSdk = 30
         targetSdk = 35
 
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0.0"
     }
 
@@ -46,10 +46,7 @@ android {
 
 dependencies {
     implementation(project(":or-sdk"))
-
     implementation("com.google.android.material:material:1.12.0")
-    implementation("com.google.android.play:core-ktx:1.8.1")
-
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.airbnb.android:lottie:6.6.6")
 }

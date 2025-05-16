@@ -26,8 +26,6 @@
 
         <activity android:name=".activities.RegisterActivity" />
 
-        <activity android:name=".activities.LegalActivity" />
-
         <activity android:name=".activities.MainActivity" />
 
     </application>

@@ -66,14 +66,14 @@
             android:layout_marginTop="@dimen/material_margin_large" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/privacy_text"
+            android:id="@+id/tos_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:drawableStart="@drawable/ic_privacy"
+            android:drawableStart="@drawable/ic_terms"
             android:drawablePadding="@dimen/material_margin_large"
             android:padding="@dimen/material_margin_large"
-            android:text="@string/fragment_about_privacy"
+            android:text="@string/fragment_about_terms"
             android:textAppearance="?textAppearanceBodyLarge"
             android:textStyle="bold"
             app:drawableTint="?colorSecondary" />
@@ -83,14 +83,14 @@
             android:layout_height="wrap_content" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/terms_text"
+            android:id="@+id/privacy_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:drawableStart="@drawable/ic_terms"
+            android:drawableStart="@drawable/ic_privacy"
             android:drawablePadding="@dimen/material_margin_large"
             android:padding="@dimen/material_margin_large"
-            android:text="@string/fragment_about_terms"
+            android:text="@string/fragment_about_privacy"
             android:textAppearance="?textAppearanceBodyLarge"
             android:textStyle="bold"
             app:drawableTint="?colorSecondary" />
