@@ -30,6 +30,16 @@ class Web(private val context: Context) {
         return JSONObject(response)
     }
 
+    suspend fun code(params: JSONObject): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "twoFA/request")
+        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
     suspend fun login(params: JSONObject, type: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "auth/$type")
         val response = client.post(url) {

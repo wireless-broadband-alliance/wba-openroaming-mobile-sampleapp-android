@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/material_margin"
+        android:paddingBottom="@dimen/material_margin">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:paddingStart="@dimen/material_margin"
+            android:paddingEnd="@dimen/material_margin"
+            android:text="@string/activity_twofa_description_1" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:adjustViewBounds="true"
+            android:src="@drawable/img_twofa_1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:paddingStart="@dimen/material_margin"
+            android:paddingEnd="@dimen/material_margin"
+            android:text="@string/activity_twofa_description_2" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:adjustViewBounds="true"
+            android:src="@drawable/img_twofa_2" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:paddingStart="@dimen/material_margin"
+            android:paddingEnd="@dimen/material_margin"
+            android:text="@string/activity_twofa_description_3" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:adjustViewBounds="true"
+            android:src="@drawable/img_twofa_3" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/open_button"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="@dimen/material_margin"
+            android:layout_marginStart="@dimen/material_margin"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:backgroundTint="?colorSecondary"
+            android:text="@string/activity_twofa_open" />
+
+    </LinearLayout>
+
+</ScrollView>

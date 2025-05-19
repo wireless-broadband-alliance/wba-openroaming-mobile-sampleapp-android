@@ -26,6 +26,8 @@
 
         <activity android:name=".activities.RegisterActivity" />
 
+        <activity android:name=".activities.TwoFAActivity" />
+
         <activity android:name=".activities.MainActivity" />
 
     </application>

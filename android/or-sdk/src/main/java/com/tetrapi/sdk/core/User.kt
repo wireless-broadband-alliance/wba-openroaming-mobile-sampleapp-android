@@ -47,6 +47,53 @@ class User {
         }
     }
 
+    fun code(activity: AppCompatActivity, email: String, password: String) {
+        if (email.isBlank() || password.isBlank()) {
+            val message = activity.getString(R.string.open_roaming_login_blank_credentials)
+            return onCodeError(message)
+        }
+
+        val params = JSONObject().apply {
+            put("uuid", email)
+            put("password", password)
+        }
+
+        code(activity, params)
+    }
+
+    private fun code(activity: AppCompatActivity, params: JSONObject) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
+        if (siteKey.isNullOrBlank()) {
+            val message = activity.getString(R.string.common_error_turnstile_key)
+            return@launch onCodeError(message)
+        }
+
+        val token = Turnstile().getToken(activity, siteKey)
+        params.put("turnstile_token", token)
+
+        val request = runCatching {
+            val web = Web(activity)
+            web.code(params)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            if (success) onCodeSuccess(it) else onCodeError(it.getString("error"))
+        }
+
+        request.onFailure {
+            onCodeError(it.message)
+        }
+    }
+
+    var onCodeSuccess: (response: JSONObject) -> Unit = {
+        /** Code succeeded */
+    }
+
+    var onCodeError: (message: String?) -> Unit = {
+        /** Code failed */
+    }
+
     fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null) {
         if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_register_blank_credentials)
@@ -80,7 +127,7 @@ class User {
 
         request.onSuccess {
             val success = it.getBoolean("success")
-            if (success) onRegisterSuccess(it) else onRegisterError (it.getString("error"))
+            if (success) onRegisterSuccess(it) else onRegisterError(it.getString("error"))
         }
 
         request.onFailure {

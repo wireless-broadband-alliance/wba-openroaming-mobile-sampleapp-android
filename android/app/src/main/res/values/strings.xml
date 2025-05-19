@@ -3,7 +3,7 @@
     <!-- Application -->
     <string name="app_name">GRA ID SDK</string>
 
-    <!-- Login Activity -->
+    <!-- Config Activity -->
     <string name="activity_config_description">Getting OpenRoaming configuration…</string>
 
     <!-- Login Activity -->
@@ -11,7 +11,6 @@
     <string name="activity_login_register">Create an account</string>
     <string name="activity_login_configure">Configure 2FA</string>
     <string name="activity_login_request">Request email code</string>
-
     <string name="activity_login_continue">Login</string>
 
     <!-- Register Activity -->
@@ -19,6 +18,12 @@
     <string name="activity_register_name_first">First Name</string>
     <string name="activity_register_name_last">Last Name</string>
     <string name="activity_register_continue">Register</string>
+
+    <!-- Two FA Activity -->
+    <string name="activity_twofa_description_1">To enable 2FA on your account, you will need to access https://wifi.tetrapi.pt/login and login with your credentials:</string>
+    <string name="activity_twofa_description_2">After logging into your account, click on \"Account Settings\":</string>
+    <string name="activity_twofa_description_3">Click on \"Configure Two-Factor Authentication\" and proceed with your preferred method:</string>
+    <string name="activity_twofa_open">Open https://wifi.tetrapi.pt/login</string>
 
     <!-- Legal Activity -->
     <string name="activity_legal_title">Agreements</string>
