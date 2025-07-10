@@ -1,9 +1,6 @@
-dependency_scanning:
-  stage: test
-  script:
-    - cd android
-    - ./gradlew :app:dependencies --configuration debugCompileClasspath --console=plain
-
 include :
   - template : Security/Dependency-Scanning.gitlab-ci.yml
   - template : Security/Secret-Detection.gitlab-ci.yml
+  
+gemnasium-maven-dependency_scanning:
+  image: "registry.gitlab.com/security-products/gemnasium-maven:5.2.16"
