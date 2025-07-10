@@ -1,3 +1,9 @@
+dependency_scanning:
+  stage: test
+  script:
+    - cd android
+    - ./gradlew dependencies
+    
 include :
   - template : Security/Dependency-Scanning.gitlab-ci.yml
   - template : Security/Secret-Detection.gitlab-ci.yml
