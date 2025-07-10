@@ -2,7 +2,7 @@ dependency_scanning:
   stage: test
   script:
     - cd android
-    - ./gradlew dependencies
+    - ./gradlew :app:dependencies --configuration debugCompileClasspath
     
 include :
   - template : Security/Dependency-Scanning.gitlab-ci.yml

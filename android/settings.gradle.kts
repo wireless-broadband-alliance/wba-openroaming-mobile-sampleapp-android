@@ -1,10 +1,12 @@
 pluginManagement {
+
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -14,5 +16,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "GRA ID SDK"
-include(":app")
-include(":or-sdk")
+include(":app", ":or-sdk")
+project(":or-sdk").projectDir = file("or-sdk")
