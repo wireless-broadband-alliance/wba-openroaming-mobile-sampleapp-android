@@ -17,4 +17,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "GRA ID SDK"
 include(":app", ":or-sdk")
-project(":or-sdk").projectDir = file("or-sdk")
