@@ -4,10 +4,10 @@ include:
 
 dependency_scanning:
   before_script:
-    # Build your internal module to populate Gradle's cache
+    # Move into the Android project directory where gradlew lives
+    - cd android
+    - chmod +x gradlew
     - ./gradlew :or-sdk:assembleRelease
-    # Then run a normal dependency report
-    - ./gradlew :app:dependencies
   variables:
     DS_JAVA_VERSION: "21"
     
