@@ -1,5 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+group = "com.tetrapi.sdk"
+version = "1.1.0"
+
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
