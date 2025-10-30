@@ -3,5 +3,11 @@ include:
   - template: Security/Secret-Detection.gitlab-ci.yml
 
 dependency_scanning:
+  before_script:
+    # Build your internal module to populate Gradle's cache
+    - ./gradlew :or-sdk:assembleRelease
+    # Then run a normal dependency report
+    - ./gradlew :app:dependencies
   variables:
-    DS_EXCLUDED_PATHS: "android/app/or-sdk"
+    DS_JAVA_VERSION: "21"
+    
