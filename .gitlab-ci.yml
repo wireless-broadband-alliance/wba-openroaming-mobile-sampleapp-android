@@ -5,7 +5,7 @@ stages:
 # --- Build internal SDK first ---
 build_or_sdk:
   stage: build
-  image: eclipse-temurin:21-jdk
+  image: registry.gitlab.com/android-ci/android-sdk:34
   script:
     - cd android
     - chmod +x gradlew
