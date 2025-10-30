@@ -72,7 +72,7 @@ class Web(private val context: Context) {
 
     suspend fun profile(params: JSONObject, token: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "config/profile/android")
-        val response = client.get(url) {
+        val response = client.post(url) {
             contentType(ContentType.Application.Json)
             header("Authorization", "Bearer $token")
             setBody(params.toString().trimIndent())

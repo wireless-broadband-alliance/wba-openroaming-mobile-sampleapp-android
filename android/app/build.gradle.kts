@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -13,8 +15,8 @@ android {
         minSdk = 30
         targetSdk = 35
 
-        versionCode = 3
-        versionName = "1.0.0"
+        versionCode = 5
+        versionName = "1.1.0"
     }
 
     buildTypes {
@@ -39,14 +41,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
+    kotlin {
+
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_21
+        }
     }
 }
 
 dependencies {
     implementation(project(":or-sdk"))
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("com.airbnb.android:lottie:6.6.6")
+    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("com.airbnb.android:lottie:6.6.7")
 }

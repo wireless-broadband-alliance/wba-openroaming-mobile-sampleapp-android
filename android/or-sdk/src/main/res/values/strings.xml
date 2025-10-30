@@ -5,7 +5,7 @@
 
     <!-- QA -->
     <!-- <string name="open_roaming_api">https://wifi-qa.tetrapi.pt/api/v1/%1$s</string> -->
-    <string name="open_roaming_api">https://wifi.tetrapi.pt/api/v1/%1$s</string>
+    <string name="open_roaming_api">https://wifi.tetrapi.pt/api/v2/%1$s</string>
 
     <!-- Login -->
     <string name="open_roaming_login_blank_credentials">You need to set your username and password to login!</string>
