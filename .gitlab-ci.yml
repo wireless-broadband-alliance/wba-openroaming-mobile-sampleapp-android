@@ -5,15 +5,25 @@ stages:
 # --- Build internal SDK first ---
 build_or_sdk:
   stage: build
-  image: registry.gitlab.com/android-ci/android-sdk:34
+  image: gradle:8.8-jdk21
+  variables:
+    ANDROID_SDK_ROOT: "/opt/android-sdk"
+  before_script:
+    - apt-get update && apt-get install -y wget unzip
+    - wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O cmdtools.zip
+    - mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools
+    - unzip -q cmdtools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools
+    - mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
+    - yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_SDK_ROOT} "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+    - chmod +x gradlew
   script:
     - cd android
-    - chmod +x gradlew
     - ./gradlew :or-sdk:assembleRelease
   artifacts:
     paths:
       - android/or-sdk/build
     expire_in: 1h
+
 
 # --- Security scanning (includes both GitLab templates) ---
 include:
