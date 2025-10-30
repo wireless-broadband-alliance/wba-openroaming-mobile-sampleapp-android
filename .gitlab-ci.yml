@@ -1,13 +1,28 @@
+stages:
+  - build
+  - security
+
+# --- Stage 1: build your internal SDK first ---
+build_or_sdk:
+  stage: build
+  image: eclipse-temurin:21-jdk
+  script:
+    - cd android
+    - chmod +x gradlew
+    - ./gradlew :or-sdk:assembleRelease
+  artifacts:
+    paths:
+      - android/or-sdk/build
+    expire_in: 1h
+
+# --- Stage 2: security scanning (GitLab template) ---
 include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
 dependency_scanning:
-  before_script:
-    # Move into the Android project directory where gradlew lives
-    - cd android
-    - chmod +x gradlew
-    - ./gradlew :or-sdk:assembleRelease
+  stage: security
+  needs: ["build_or_sdk"]
   variables:
     DS_JAVA_VERSION: "21"
-    
+
