@@ -20,9 +20,7 @@ subprojects {
                 "io.netty:netty-handler-proxy:4.2.7.Final",
                 "io.netty:netty-resolver:4.2.7.Final",
                 "io.netty:netty-transport:4.2.7.Final",
-                "io.netty:netty-transport-native-unix-common:4.2.7.Final",
-
-                "com.google.protobuf:protobuf-java:4.33.0"
+                "io.netty:netty-transport-native-unix-common:4.2.7.Final"
             )
         }
     }

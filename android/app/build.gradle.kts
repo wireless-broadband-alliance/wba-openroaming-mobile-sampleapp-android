@@ -50,6 +50,11 @@ android {
 }
 
 dependencies {
+    implementation(platform("io.grpc:grpc-bom:1.76.0"))
+    implementation("io.grpc:grpc-okhttp")
+    implementation("io.grpc:grpc-protobuf")
+    implementation("io.grpc:grpc-stub")
+
     val debug = gradle.startParameter.taskNames.any { it.contains("Debug") }
     if (debug) implementation(project(":or-sdk")) else implementation("com.tetrapi.sdk:or:1.1.0")
 
