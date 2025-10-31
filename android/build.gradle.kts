@@ -10,13 +10,6 @@ subprojects {
 
         resolutionStrategy {
 
-            eachDependency {
-                if (requested.group == "com.google.protobuf" && requested.name == "protobuf-java") {
-                    useVersion("4.33.0")
-                    because("Force patched protobuf version for CVE-2024-7254")
-                }
-            }
-            
             force(
                 "io.netty:netty-buffer:4.2.7.Final",
                 "io.netty:netty-codec:4.2.7.Final",
