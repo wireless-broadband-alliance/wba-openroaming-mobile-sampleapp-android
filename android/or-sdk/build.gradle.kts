@@ -59,10 +59,10 @@ configurations.all {
 
     resolutionStrategy {
         force("io.netty:netty-codec-http:4.2.7.Final")
-        force("io.netty:netty-handler:4..2.7.Final")
-        force("io.netty:netty-common:4..2.7.Final")
-        force("io.netty:netty-buffer:4..2.7.Final")
-        force("io.netty:netty-transport:4..2.7.Final")
+        force("io.netty:netty-handler:4.2.7.Final")
+        force("io.netty:netty-common:4.2.7.Final")
+        force("io.netty:netty-buffer:4.2.7.Final")
+        force("io.netty:netty-transport:4.2.7.Final")
     }
 }
 
