@@ -9,6 +9,9 @@ include:
 dependency_scanning:
   stage: security
 
+secret_detection:
+  stage: security
+
 publish_sdk:
   stage: deploy
   image: gradle:8.8-jdk21
