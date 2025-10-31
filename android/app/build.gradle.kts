@@ -50,6 +50,9 @@ android {
 }
 
 dependencies {
+    val debug = gradle.startParameter.taskNames.any { it.contains("Debug") }
+    if (debug) implementation(project(":or-sdk")) else implementation("com.tetrapi.sdk:or:1.1.0")
+
     implementation("com.tetrapi.sdk:or:1.1.0")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.appcompat:appcompat:1.7.1")

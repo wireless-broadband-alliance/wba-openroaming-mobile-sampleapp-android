@@ -4,10 +4,6 @@ import org.gradle.authentication.http.HttpHeaderAuthentication
 import org.gradle.api.credentials.HttpHeaderCredentials
 import java.util.Properties
 
-private val env = Properties().apply {
-    load(project.rootProject.file("local.properties").inputStream())
-}
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -56,7 +52,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
     implementation("io.ktor:ktor-client-core:3.3.1")
     implementation("io.ktor:ktor-client-cio:3.3.1")
-    implementation("com.squareup.okhttp3:okhttp:5.2.1")
+    implementation("com.squareup.okhttp3:okhttp:5.3.0")
 }
 
 afterEvaluate {
@@ -83,12 +79,22 @@ afterEvaluate {
         repositories {
 
             maven {
-                name = "GitLab"
                 url = uri("https://git.tetrapi.pt/api/v4/projects/208/packages/maven")
 
                 credentials(HttpHeaderCredentials::class) {
-                    name = "Private-Token"
-                    value = env.getProperty("GITLAB_TOKEN")
+                    if (System.getenv("CI_JOB_TOKEN") != null) {
+                        name = "Job-Token"
+                        value = System.getenv("CI_JOB_TOKEN")
+                    } else {
+                        name = "Private-Token"
+                        value = runCatching {
+                            val properties = Properties().apply {
+                                load(rootDir.resolve("local.properties").inputStream())
+                            }
+
+                            properties.getProperty("GITLAB_TOKEN")
+                        }.getOrNull()
+                    }
                 }
 
                 authentication {
