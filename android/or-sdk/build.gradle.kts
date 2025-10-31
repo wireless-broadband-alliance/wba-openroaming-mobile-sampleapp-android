@@ -49,9 +49,7 @@ android {
 
 dependencies {
     implementation(platform("io.grpc:grpc-bom:1.76.0"))
-    implementation("io.grpc:grpc-okhttp")
-    implementation("io.grpc:grpc-protobuf")
-    implementation("io.grpc:grpc-stub")
+    implementation("com.google.protobuf:protobuf-java:4.33.0")
 
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
