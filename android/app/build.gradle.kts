@@ -58,27 +58,3 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.airbnb.android:lottie:6.7.0")
 }
-
-subprojects {
-
-    configurations.all {
-
-        resolutionStrategy {
-
-            force(
-                "io.netty:netty-buffer:4.2.7.Final",
-                "io.netty:netty-codec:4.2.7.Final",
-                "io.netty:netty-codec-http:4.2.7.Final",
-                "io.netty:netty-codec-http2:4.2.7.Final",
-                "io.netty:netty-common:4.2.7.Final",
-                "io.netty:netty-handler:4.2.7.Final",
-                "io.netty:netty-handler-proxy:4.2.7.Final",
-                "io.netty:netty-resolver:4.2.7.Final",
-                "io.netty:netty-transport:4.2.7.Final",
-                "io.netty:netty-transport-native-unix-common:4.2.7.Final",
-
-                "com.google.protobuf:protobuf-java:4.33.0"
-            )
-        }
-    }
-}
