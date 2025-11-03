@@ -45,6 +45,14 @@ android {
             jvmTarget = JvmTarget.JVM_21
         }
     }
+
+    publishing {
+
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {

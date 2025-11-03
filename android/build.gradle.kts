@@ -9,6 +9,9 @@ subprojects {
     configurations.all {
 
         exclude(group = "javax.annotation", module = "javax.annotation-api")
+        exclude(group = "net.java.dev.jna", module = "jna")
+        exclude(group = "net.java.dev.jna", module = "jna-platform")
+        exclude(group = "net.sf.kxml", module = "kxml2")
 
         resolutionStrategy {
 
