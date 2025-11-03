@@ -51,7 +51,6 @@ android {
 
 dependencies {
     implementation(platform("io.grpc:grpc-bom:1.76.0"))
-    implementation(platform("com.google.protobuf:protobuf-bom:4.33.0"))
     implementation("com.google.protobuf:protobuf-java:4.33.0")
 
     val debug = gradle.startParameter.taskNames.any { it.contains("Debug") }
