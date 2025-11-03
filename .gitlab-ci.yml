@@ -1,0 +1,24 @@
+stages:
+  - security
+  - deploy
+
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+dependency_scanning:
+  stage: security
+
+secret_detection:
+  stage: security
+
+publish_sdk:
+  stage: deploy
+  image: gradle:8.8-jdk21
+  script:
+    - cd android
+    - ./gradlew :or-sdk:publish
+  only:
+    - tags
+  variables:
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"

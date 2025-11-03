@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/connection_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/connect_button"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/user_lottie"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".5"
+                app:lottie_autoPlay="true"
+                app:lottie_cacheComposition="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/lottie_not_found" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/nothing_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingStart="@dimen/material_margin"
+            android:paddingEnd="@dimen/material_margin"
+            android:text="@string/fragment_usage_nothing"
+            android:textAppearance="?textAppearanceHeadlineSmall"
+            android:textColor="?colorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/user_lottie" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/networks_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:gravity="center_horizontal"
+            android:paddingStart="@dimen/material_margin"
+            android:paddingEnd="@dimen/material_margin"
+            android:text="@string/fragment_usage_networks"
+            android:textAppearance="?textAppearanceTitleMedium"
+            android:textColor="?colorSecondary"
+            app:layout_constraintTop_toBottomOf="@id/nothing_text" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/connect_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/connect_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/material_margin"
+        android:layout_marginTop="@dimen/material_margin"
+        android:layout_marginEnd="@dimen/material_margin"
+        android:layout_marginBottom="@dimen/material_margin"
+        android:backgroundTint="@android:color/white"
+        android:padding="12dp"
+        android:text="@string/fragment_usage_connect"
+        android:textColor="?colorSecondary"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeColor="?colorSecondary"
+        app:strokeWidth="1dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

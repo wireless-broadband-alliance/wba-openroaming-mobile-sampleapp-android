@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Material Design -->
+    <dimen name="material_margin_nano">2dp</dimen>
+    <dimen name="material_margin_micro">4dp</dimen>
+    <dimen name="material_margin_mini">8dp</dimen>
+    <dimen name="material_margin">16dp</dimen>
+    <dimen name="material_margin_large">32dp</dimen>
+    <dimen name="material_margin_huge">64dp</dimen>
+    <dimen name="material_margin_dialog">24dp</dimen>
+
+</resources>

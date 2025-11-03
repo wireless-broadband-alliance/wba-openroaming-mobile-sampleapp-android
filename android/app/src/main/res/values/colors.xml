@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application -->
+    <color name="color_primary">#E1E3E5</color>
+    <color name="color_on_primary">#191C1E</color>
+    <color name="color_secondary">#7BBA29</color>
+    <color name="color_on_secondary">#191C1E</color>
+    <color name="color_background">#F0F0F3</color>
+    <color name="color_error">#BA1B1B</color>
+    <color name="color_outline">#70777C</color>
+
+</resources>
