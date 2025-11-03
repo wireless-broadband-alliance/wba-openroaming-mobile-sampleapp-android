@@ -8,6 +8,7 @@ subprojects {
 
     configurations.all {
 
+        exclude(group = "com.google.protobuf", module = "protobuf-java")
         exclude(group = "javax.annotation", module = "javax.annotation-api")
         exclude(group = "net.java.dev.jna", module = "jna")
         exclude(group = "net.java.dev.jna", module = "jna-platform")
