@@ -27,6 +27,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:textViewStyle">@style/Widget.MaterialTextView</item>
         <item name="toolbarStyle">@style/Widget.MaterialToolbar</item>
+        <item name="textInputStyle">@style/Widget.MaterialTextInputLayout</item>
         <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
     </style>
 
@@ -40,6 +41,17 @@
     <style name="Widget.MaterialToolbar" parent="Widget.Material3.Toolbar">
         <item name="android:background">?colorSecondary</item>
         <item name="titleTextColor">?colorOnSecondary</item>
+    </style>
+
+    <!-- Material Text Input Layout -->
+    <style name="Widget.MaterialTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearance">@style/ShapeAppearance.MaterialTextInputLayout.Rounded</item>
+        <item name="boxStrokeWidth">1sp</item>
+        <item name="boxStrokeColor">@color/color_outline</item>
+    </style>
+
+    <style name="ShapeAppearance.MaterialTextInputLayout.Rounded" parent="ShapeAppearance.Material3.Corner.Full">
+        <item name="cornerSize">8dp</item>
     </style>
 
 </resources>

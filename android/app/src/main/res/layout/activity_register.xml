@@ -8,52 +8,70 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/material_margin">
+        android:padding="@dimen/material_margin_large">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_large">
 
-            <com.airbnb.lottie.LottieAnimationView
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".25" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="75dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="@dimen/material_margin_mini"
+                android:src="@drawable/img_tetrapi"
+                app:layout_constraintBottom_toBottomOf="@id/divider"
+                app:layout_constraintEnd_toStartOf="@id/divider"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".25"
-                app:lottie_autoPlay="true"
-                app:lottie_cacheComposition="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/lottie_wifi" />
+                app:layout_constraintTop_toTopOf="@id/divider" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_open_roaming"
+                app:layout_constraintBottom_toBottomOf="@id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider"
+                app:layout_constraintTop_toTopOf="@id/divider" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/common_open_roaming"
-            android:textAppearance="?textAppearanceDisplaySmall"
-            android:textColor="?colorSecondary" />
+            android:layout_marginTop="@dimen/material_margin_large"
+            android:text="@string/activity_login_welcome"
+            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:gravity="center"
-            android:text="@string/activity_register_description" />
+            android:text="@string/activity_login_description" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/common_email"
-            app:boxStrokeColor="@color/cr_text_input_box"
-            app:hintTextColor="@color/cr_text_input_box">
+            android:layout_marginTop="@dimen/material_margin_large"
+            android:hint="@string/common_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_edit"
@@ -69,9 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/common_password"
-            app:boxStrokeColor="@color/cr_text_input_box"
-            app:hintTextColor="@color/cr_text_input_box">
+            android:hint="@string/common_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edit"
@@ -87,9 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/activity_register_name_first"
-            app:boxStrokeColor="@color/cr_text_input_box"
-            app:hintTextColor="@color/cr_text_input_box">
+            android:hint="@string/activity_register_name_first">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_first_edit"
@@ -105,9 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/activity_register_name_last"
-            app:boxStrokeColor="@color/cr_text_input_box"
-            app:hintTextColor="@color/cr_text_input_box">
+            android:hint="@string/activity_register_name_last">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_last_edit"
@@ -126,23 +138,32 @@
             android:backgroundTint="?colorSecondary"
             android:text="@string/activity_register_continue" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_huge">
+            android:layout_marginTop="@dimen/material_margin_large" />
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_tetrapi"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_large"
+            android:gravity="center_horizontal">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_register_account" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/register_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/material_margin_mini"
+                android:text="@string/activity_register_login"
+                android:textColor="?colorSecondary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
