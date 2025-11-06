@@ -1,11 +1,11 @@
 package com.tetrapi.or.activities
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
+import com.tetrapi.sdk.core.User
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,24 +15,32 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.bottomNavigation.setOnItemSelectedListener {
-            it.changeMode()
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+
+            when (menuItem.itemId) {
+                R.id.user_button -> user()
+                R.id.about_button -> about()
+                R.id.logout_button -> logout()
+                else -> false
+            }
         }
     }
 
-    private fun MenuItem.changeMode() = when (itemId) {
-        R.id.user_button -> changeMode(0)
-        R.id.usage_button -> changeMode(1)
-        else -> changeMode(2)
+    private fun user(): Boolean {
+        startActivity(Intent(this, UserActivity::class.java))
+        return true
     }
 
-    private fun changeMode(position: Int): Boolean {
-        val currentPosition = binding.viewAnimator.displayedChild
-        if (position == currentPosition) return false
+    private fun about(): Boolean {
+        startActivity(Intent(this, AboutActivity::class.java))
+        return true
+    }
 
-        binding.viewAnimator.inAnimation = AnimationUtils.loadAnimation(this, if (position > currentPosition) R.anim.pull_right else R.anim.push_left)
-        binding.viewAnimator.outAnimation = AnimationUtils.loadAnimation(this, if (position > currentPosition) R.anim.push_right else R.anim.pull_left)
-        binding.viewAnimator.displayedChild = position
+    private fun logout(): Boolean {
+        User().logout(this)
+
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
 
         return true
     }

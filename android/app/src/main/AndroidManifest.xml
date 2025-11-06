@@ -30,6 +30,10 @@
 
         <activity android:name=".activities.MainActivity" />
 
+        <activity android:name=".activities.UserActivity" />
+
+        <activity android:name=".activities.AboutActivity" />
+
     </application>
 
 </manifest>
