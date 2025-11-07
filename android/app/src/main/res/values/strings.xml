@@ -59,10 +59,13 @@
     <string name="activity_about_terms">Terms and Conditions</string>
     <string name="activity_about_privacy">Privacy Policy</string>
 
-    <!-- Usage Fragment -->
-    <string name="fragment_usage_nothing">Nothing here yet…</string>
-    <string name="fragment_usage_networks">The networks you connect to through OpenRoaming will show up here once you join them.</string>
-    <string name="fragment_usage_connect">Connect to OpenRoaming</string>
+    <!-- Loading Dialog -->
+    <string name="dialog_loading_profile">Loading Profile</string>
+
+    <!-- Delete Dialog -->
+    <string name="dialog_delete_profile">Do you want to delete the profile %1$s?</string>
+    <string name="dialog_delete_cancel">Cancel</string>
+    <string name="dialog_delete_delete">Delete</string>
 
     <!-- Common -->
     <string name="common_placeholder">Placeholder</string>
@@ -70,6 +73,5 @@
     <string name="common_email">Email</string>
     <string name="common_password">Password</string>
     <string name="common_code">2FA code</string>
-    <string name="common_lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n\nCurabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris. Integer in mauris eu nibh euismod gravida. Duis ac tellus et risus vulputate vehicula. Donec lobortis risus a elit. Etiam tempor. Ut ullamcorper, ligula eu tempor congue, eros est euismod turpis, id tincidunt sapien risus a quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi.\n\nSuspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nulla facilisi. Etiam varius dui nec nisi scelerisque, at ultrices metus eleifend. Sed accumsan turpis ut mi hendrerit, non aliquam libero varius. Maecenas vel libero posuere, malesuada eros in, gravida lorem. Morbi quis felis in lacus viverra pharetra. Integer at libero orci. Vivamus varius dolor non mauris bibendum, non aliquam lacus convallis. Cras tincidunt augue eget mauris bibendum, id venenatis magna dictum.\n\nPraesent feugiat dolor vitae fermentum hendrerit. Integer eget purus sed neque suscipit tempor. Aliquam erat volutpat. Nulla id justo sed metus lacinia fringilla sit amet a massa. Sed et felis lorem. Duis vel urna vitae odio hendrerit sagittis. Fusce sit amet consequat quam. Nulla facilisi. Etiam ut metus sapien. Sed in auctor velit, non laoreet eros. Donec ac ullamcorper lacus. Quisque non dictum purus. Duis tincidunt nisi nec libero ultrices, non aliquet arcu eleifend.</string>
 
 </resources>

@@ -1,15 +1,21 @@
 package com.tetrapi.or.activities
 
 import android.content.Intent
+import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
+import com.tetrapi.or.adapters.NetworksAdapter
+import com.tetrapi.or.dialogs.DeleteDialog
+import com.tetrapi.or.dialogs.LoadingDialog
+import com.tetrapi.sdk.core.OpenRoaming
 import com.tetrapi.sdk.core.User
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val or = OpenRoaming()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +30,12 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        binding.connectButton.setOnClickListener {
+            connect()
+        }
+
+        checkNetworks()
     }
 
     private fun user(): Boolean {
@@ -43,5 +55,38 @@ class MainActivity : AppCompatActivity() {
         finish()
 
         return true
+    }
+
+    private fun connect() {
+        val dialog = LoadingDialog()
+        dialog.show(supportFragmentManager, "LOADING_DIALOG")
+
+        or.connect(this)
+        or.onConnectionSuccess = {
+            checkNetworks()
+            dialog.dismiss()
+        }
+    }
+
+    private fun checkNetworks() {
+        val networks = or.networks(this)
+        if (networks.isNotEmpty()) setNetworks(networks) else binding.viewAnimator.displayedChild = 0
+    }
+
+    private fun setNetworks(networks: ArrayList<PasspointConfiguration>) {
+        binding.viewAnimator.displayedChild = 1
+        binding.recyclerView.adapter.let {
+            if (it == null) binding.recyclerView.adapter = NetworksAdapter(this, networks)
+            else (it as NetworksAdapter).update(networks)
+        }
+    }
+
+    fun removeNetwork(network: PasspointConfiguration) {
+        val dialog = DeleteDialog(network)
+        dialog.show(supportFragmentManager, "DELETE_DIALOG")
+        dialog.onDelete = {
+            or.remove(this, network)
+            checkNetworks()
+        }
     }
 }
