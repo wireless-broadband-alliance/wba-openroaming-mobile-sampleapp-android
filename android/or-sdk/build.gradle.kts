@@ -60,10 +60,10 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java:4.33.0")
 
     implementation("com.google.android.material:material:1.13.0")
+    implementation("com.squareup.okhttp3:okhttp:5.3.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
     implementation("io.ktor:ktor-client-core:3.3.1")
     implementation("io.ktor:ktor-client-cio:3.3.1")
-    implementation("com.squareup.okhttp3:okhttp:5.3.0")
 }
 
 afterEvaluate {
