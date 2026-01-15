@@ -1,39 +1,92 @@
 package com.tetrapi.or.activities
 
+import android.content.Intent
+import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
-import android.view.MenuItem
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
+import com.tetrapi.or.adapters.NetworksAdapter
+import com.tetrapi.or.dialogs.DeleteDialog
+import com.tetrapi.or.dialogs.LoadingDialog
+import com.tetrapi.sdk.core.OpenRoaming
+import com.tetrapi.sdk.core.User
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val or = OpenRoaming()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.bottomNavigation.setOnItemSelectedListener {
-            it.changeMode()
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+
+            when (menuItem.itemId) {
+                R.id.user_button -> user()
+                R.id.about_button -> about()
+                R.id.logout_button -> logout()
+                else -> false
+            }
+        }
+
+        binding.connectButton.setOnClickListener {
+            connect()
+        }
+
+        checkNetworks()
+    }
+
+    private fun user(): Boolean {
+        startActivity(Intent(this, UserActivity::class.java))
+        return true
+    }
+
+    private fun about(): Boolean {
+        startActivity(Intent(this, AboutActivity::class.java))
+        return true
+    }
+
+    private fun logout(): Boolean {
+        User().logout(this)
+
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+
+        return true
+    }
+
+    private fun connect() {
+        val dialog = LoadingDialog()
+        dialog.show(supportFragmentManager, "LOADING_DIALOG")
+
+        or.connect(this)
+        or.onConnectionSuccess = {
+            checkNetworks()
+            dialog.dismiss()
         }
     }
 
-    private fun MenuItem.changeMode() = when (itemId) {
-        R.id.user_button -> changeMode(0)
-        R.id.usage_button -> changeMode(1)
-        else -> changeMode(2)
+    private fun checkNetworks() {
+        val networks = or.networks(this)
+        if (networks.isNotEmpty()) setNetworks(networks) else binding.viewAnimator.displayedChild = 0
     }
 
-    private fun changeMode(position: Int): Boolean {
-        val currentPosition = binding.viewAnimator.displayedChild
-        if (position == currentPosition) return false
+    private fun setNetworks(networks: ArrayList<PasspointConfiguration>) {
+        binding.viewAnimator.displayedChild = 1
+        binding.recyclerView.adapter.let {
+            if (it == null) binding.recyclerView.adapter = NetworksAdapter(this, networks)
+            else (it as NetworksAdapter).update(networks)
+        }
+    }
 
-        binding.viewAnimator.inAnimation = AnimationUtils.loadAnimation(this, if (position > currentPosition) R.anim.pull_right else R.anim.push_left)
-        binding.viewAnimator.outAnimation = AnimationUtils.loadAnimation(this, if (position > currentPosition) R.anim.push_right else R.anim.pull_left)
-        binding.viewAnimator.displayedChild = position
-
-        return true
+    fun removeNetwork(network: PasspointConfiguration) {
+        val dialog = DeleteDialog(network)
+        dialog.show(supportFragmentManager, "DELETE_DIALOG")
+        dialog.onDelete = {
+            or.remove(this, network)
+            checkNetworks()
+        }
     }
 }

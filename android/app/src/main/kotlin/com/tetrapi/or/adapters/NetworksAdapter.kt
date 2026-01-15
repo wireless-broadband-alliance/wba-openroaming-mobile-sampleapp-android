@@ -4,8 +4,8 @@ import android.net.wifi.hotspot2.PasspointConfiguration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tetrapi.or.activities.MainActivity
 import com.tetrapi.or.databinding.ItemNetworkBinding
-import com.tetrapi.or.fragments.UsageFragment
 
 //
 //  NetworksAdapter.java
@@ -15,7 +15,7 @@ import com.tetrapi.or.fragments.UsageFragment
 //  Copyright © 2025 Tetrapi. All rights reserved.
 //
 
-class NetworksAdapter(private val fragment: UsageFragment, private val networks: ArrayList<PasspointConfiguration>) : RecyclerView.Adapter<NetworksAdapter.ViewHolder>() {
+class NetworksAdapter(private val activity: MainActivity, private val networks: ArrayList<PasspointConfiguration>) : RecyclerView.Adapter<NetworksAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
         val binding = ItemNetworkBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,7 +29,7 @@ class NetworksAdapter(private val fragment: UsageFragment, private val networks:
         holder.binding.idText.text = network.uniqueId
 
         holder.binding.deleteButton.setOnClickListener {
-            fragment.removeNetwork(network)
+            activity.removeNetwork(network)
         }
     }
 

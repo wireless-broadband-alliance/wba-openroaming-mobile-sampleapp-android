@@ -48,8 +48,11 @@ class ConfigActivity : AppCompatActivity() {
         }
 
         config.onInfoError = {
-            binding.descriptionText.text = it ?: getString(R.string.common_error)
-            binding.descriptionText.setTextColor(Color.RED)
+
+            runOnUiThread {
+                binding.descriptionText.text = it ?: getString(R.string.common_error)
+                binding.descriptionText.setTextColor(Color.RED)
+            }
         }
 
         config.info(this)

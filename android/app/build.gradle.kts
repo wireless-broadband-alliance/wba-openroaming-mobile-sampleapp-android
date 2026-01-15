@@ -15,8 +15,8 @@ android {
         minSdk = 30
         targetSdk = 35
 
-        versionCode = 5
-        versionName = "1.1.0"
+        versionCode = 6
+        versionName = "1.2.0"
     }
 
     buildTypes {
@@ -50,8 +50,8 @@ android {
 }
 
 dependencies {
-    implementation(platform("io.grpc:grpc-bom:1.76.0"))
-    implementation("com.google.protobuf:protobuf-java:4.33.0")
+    implementation(platform("io.grpc:grpc-bom:1.78.0"))
+    implementation("com.google.protobuf:protobuf-java:4.33.4")
 
     val debug = gradle.startParameter.taskNames.any { it.contains("Debug") }
     if (debug) implementation(project(":or-sdk")) else implementation("com.tetrapi.sdk:or:1.1.0")
@@ -59,5 +59,4 @@ dependencies {
     implementation("com.tetrapi.sdk:or:1.1.0")
     implementation("com.google.android.material:material:1.13.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
-    implementation("com.airbnb.android:lottie:6.7.0")
 }
