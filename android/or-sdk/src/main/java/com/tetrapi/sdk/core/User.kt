@@ -14,7 +14,7 @@ import org.json.JSONObject
 
 //
 //  User.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
 //  Copyright © 2025 Tetrapi. All rights reserved.
@@ -94,9 +94,14 @@ class User {
         /** Code failed */
     }
 
-    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null) {
+    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null, acceptedTerms: Boolean = true) {
         if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_register_blank_credentials)
+            return onRegisterError(message)
+        }
+
+        if (!acceptedTerms) {
+            val message = activity.getString(R.string.open_roaming_register_terms)
             return onRegisterError(message)
         }
 

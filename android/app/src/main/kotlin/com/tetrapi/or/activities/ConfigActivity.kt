@@ -11,7 +11,7 @@ import com.tetrapi.sdk.core.Turnstile
 
 //
 //  ConfigActivity.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
 //  Copyright © 2025 Tetrapi. All rights reserved.

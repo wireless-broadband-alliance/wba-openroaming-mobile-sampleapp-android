@@ -70,7 +70,7 @@
             android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
+            android:layout_marginTop="@dimen/material_margin"
             android:hint="@string/common_email">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -138,15 +138,64 @@
             android:backgroundTint="?colorSecondary"
             android:text="@string/activity_register_continue" />
 
-        <com.google.android.material.divider.MaterialDivider
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large" />
+            android:layout_marginTop="@dimen/material_margin_mini"
+            android:orientation="horizontal">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/terms_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/terms_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="@dimen/material_margin_mini"
+                android:paddingEnd="@dimen/material_margin_mini"
+                android:text="@string/activity_register_terms" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
+            android:orientation="horizontal">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/privacy_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/privacy_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:paddingStart="@dimen/material_margin_mini"
+                android:paddingEnd="@dimen/material_margin_mini"
+                android:text="@string/activity_register_privacy" />
+
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_mini" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
             android:gravity="center_horizontal">
 
             <com.google.android.material.textview.MaterialTextView

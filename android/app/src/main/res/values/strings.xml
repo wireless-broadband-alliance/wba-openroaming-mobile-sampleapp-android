@@ -9,7 +9,7 @@
     <!-- Login Activity -->
     <string name="activity_login_welcome">Welcome!</string>
     <string name="activity_login_description">To enjoy seamless and secure WIFI, please login with your credentials</string>
-    <string name="activity_login_request">Request Email Code</string>
+    <string name="activity_login_request">Request 2FA Code Via Email</string>
     <string name="activity_login_configure">Configure 2FA</string>
     <string name="activity_login_continue">Login</string>
     <string name="activity_login_account">Don\'t have an Account?</string>
@@ -20,6 +20,8 @@
     <string name="activity_register_name_first">First Name</string>
     <string name="activity_register_name_last">Last Name</string>
     <string name="activity_register_continue">Register</string>
+    <string name="activity_register_terms">I accept the Terms and Conditions</string>
+    <string name="activity_register_privacy">I accept the Privacy Policy</string>
     <string name="activity_register_account">Already have an Account?</string>
     <string name="activity_register_login">Login</string>
 
