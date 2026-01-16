@@ -11,114 +11,80 @@
         android:padding="@dimen/material_margin_large">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/activity_twofa_title"
-            android:textStyle="bold" />
+            android:text="What is your 2FA?" />
 
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/twofa_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp"
-            app:strokeWidth="0dp">
+            android:hint="2FA Code">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/activity_twofa_description_1"
-                android:textAppearance="?textAppearanceLabelMedium" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/twofa_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_twofa_1" />
+                android:inputType="textEmailAddress"
+                android:textAppearance="?textAppearanceBodyMedium" />
 
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp"
-            app:strokeWidth="0dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/activity_twofa_description_2"
-                android:textAppearance="?textAppearanceLabelMedium" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_twofa_2" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp"
-            app:strokeWidth="0dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/activity_twofa_description_3"
-                android:textAppearance="?textAppearanceLabelMedium" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_twofa_3" />
-
-        </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/open_button"
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
             android:backgroundTint="?colorSecondary"
-            android:text="@string/activity_twofa_open" />
+            android:text="Login" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/request_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_mini"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/activity_twofa_request"
+            android:textAppearance="?textAppearanceLabelMedium" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/totp_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin"
+            android:backgroundTint="?colorSecondary"
+            android:text="Configure 2FA with authenticator" />
+
+        <LinearLayout
+            android:id="@+id/totp_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_mini"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Copy the following code and paste it on your preferred TOTP app:" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/totp_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin" />
+
+            <ImageButton
+                android:id="@+id/copy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin"
+                android:src="@drawable/ic_about" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

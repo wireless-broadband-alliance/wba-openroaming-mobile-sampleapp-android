@@ -53,8 +53,12 @@ dependencies {
     implementation(platform("io.grpc:grpc-bom:1.78.0"))
     implementation("com.google.protobuf:protobuf-java:4.33.4")
 
+    implementation(project(":or-sdk"))
+
+    /*
     val debug = gradle.startParameter.taskNames.any { it.contains("Debug") }
     if (debug) implementation(project(":or-sdk")) else implementation("com.tetrapi.sdk:or:1.1.0")
+    */
 
     implementation("com.tetrapi.sdk:or:1.1.0")
     implementation("com.google.android.material:material:1.13.0")

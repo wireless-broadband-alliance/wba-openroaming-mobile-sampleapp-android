@@ -97,51 +97,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/code_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/common_code">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/code_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:maxLength="10"
-                android:textAppearance="?textAppearanceBodyMedium" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_mini">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/request_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_login_request"
-                android:textAppearance="?textAppearanceLabelMedium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".5" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/configure_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="@string/activity_login_configure"
-                android:textAppearance="?textAppearanceLabelMedium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".5" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             android:layout_width="match_parent"

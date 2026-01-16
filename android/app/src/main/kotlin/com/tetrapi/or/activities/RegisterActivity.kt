@@ -71,7 +71,7 @@ class RegisterActivity : AppCompatActivity() {
             password = binding.passwordEdit.text.toString().trim(),
             nameFirst = binding.nameFirstEdit.text.toString().trim().takeIf { it.isNotEmpty() },
             nameLast = binding.nameLastEdit.text.toString().trim().takeIf { it.isNotEmpty() },
-            acceptedTerms = binding.termsCheckbox.isChecked && binding.privacyCheckbox.isChecked
+            acceptedTOS = binding.termsCheckbox.isChecked && binding.privacyCheckbox.isChecked
         )
     }
 }

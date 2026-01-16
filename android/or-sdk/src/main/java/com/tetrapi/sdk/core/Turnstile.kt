@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.utils.Preferences
+import com.tetrapi.sdk.utils.isAppDebuggable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
@@ -32,7 +33,8 @@ class Turnstile {
 
     suspend fun getToken(activity: AppCompatActivity, siteKey: String): String = suspendCoroutine {
 
-        activity.lifecycleScope.launch(Dispatchers.Main) {
+        if (activity.isAppDebuggable()) it.resume("openroaming")
+        else activity.lifecycleScope.launch(Dispatchers.Main) {
             val webView = WebView(activity)
             webView.setBackgroundColor(Color.TRANSPARENT)
             webView.layoutParams = LinearLayout.LayoutParams(

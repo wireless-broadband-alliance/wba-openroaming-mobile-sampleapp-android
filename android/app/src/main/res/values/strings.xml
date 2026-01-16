@@ -9,7 +9,6 @@
     <!-- Login Activity -->
     <string name="activity_login_welcome">Welcome!</string>
     <string name="activity_login_description">To enjoy seamless and secure WIFI, please login with your credentials</string>
-    <string name="activity_login_request">Request 2FA Code Via Email</string>
     <string name="activity_login_configure">Configure 2FA</string>
     <string name="activity_login_continue">Login</string>
     <string name="activity_login_account">Don\'t have an Account?</string>
@@ -26,6 +25,8 @@
     <string name="activity_register_login">Login</string>
 
     <!-- 2FA Activity -->
+    <string name="activity_twofa_request">Request 2FA Code Via Email</string>
+
     <string name="activity_twofa_title">Two-Factor Authentication Configuration</string>
     <string name="activity_twofa_description_1">To enable 2FA on your account, you will need to access https://wifi.tetrapi.pt/login and login with your credentials:</string>
     <string name="activity_twofa_description_2">After logging into your account, click on \"Account Settings\":</string>
@@ -74,6 +75,5 @@
     <string name="common_open_roaming">OpenRoaming</string>
     <string name="common_email">Email</string>
     <string name="common_password">Password</string>
-    <string name="common_code">2FA code</string>
 
 </resources>

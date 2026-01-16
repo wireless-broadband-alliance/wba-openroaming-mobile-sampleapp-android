@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.utils.Preferences
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.utils.Web
+import com.tetrapi.sdk.utils.isMissing2FA
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -47,7 +48,7 @@ class User {
         }
     }
 
-    fun code(activity: AppCompatActivity, email: String, password: String) {
+    fun code(activity: AppCompatActivity, email: String, password: String, type: String) {
         if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_login_blank_credentials)
             return onCodeError(message)
@@ -58,10 +59,10 @@ class User {
             put("password", password)
         }
 
-        code(activity, params)
+        code(activity, params, type)
     }
 
-    private fun code(activity: AppCompatActivity, params: JSONObject) = activity.lifecycleScope.launch(Dispatchers.IO) {
+    private fun code(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
         val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
         if (siteKey.isNullOrBlank()) {
             val message = activity.getString(R.string.common_error_turnstile_key)
@@ -73,7 +74,7 @@ class User {
 
         val request = runCatching {
             val web = Web(activity)
-            web.code(params)
+            web.code(params, type)
         }
 
         request.onSuccess {
@@ -94,13 +95,13 @@ class User {
         /** Code failed */
     }
 
-    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null, acceptedTerms: Boolean = true) {
+    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null, acceptedTOS: Boolean = true) {
         if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_register_blank_credentials)
             return onRegisterError(message)
         }
 
-        if (!acceptedTerms) {
+        if (!acceptedTOS) {
             val message = activity.getString(R.string.open_roaming_register_terms)
             return onRegisterError(message)
         }
@@ -181,6 +182,7 @@ class User {
         request.onSuccess {
             val success = it.getBoolean("success")
             if (success) it.getJSONObject("data").saveUserLogin(activity)
+            else if (it.isMissing2FA()) onLoginMissing2FA()
             else onLoginError(it.getString("error"))
         }
 
@@ -203,13 +205,17 @@ class User {
         /** Login succeeded */
     }
 
+    var onLoginMissing2FA: () -> Unit = {
+        /** Login Missing 2FA */
+    }
+
     var onLoginError: (message: String?) -> Unit = {
         /** Login failed */
     }
 
     fun info(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
         val token = jwtToken(activity)
-        if (token == null) return@launch onInfoError(activity.getString(R.string.common_error_jwt_token))
+            ?: return@launch onInfoError(activity.getString(R.string.common_error_jwt_token))
 
         val request = runCatching {
             val web = Web(activity)
