@@ -18,7 +18,7 @@ import org.json.JSONObject
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class User {
@@ -48,14 +48,14 @@ class User {
         }
     }
 
-    fun code(activity: AppCompatActivity, email: String, password: String, type: String) {
-        if (email.isBlank() || password.isBlank()) {
+    fun code(activity: AppCompatActivity, uuid: String, password: String, type: String) {
+        if (uuid.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_login_blank_credentials)
             return onCodeError(message)
         }
 
         val params = JSONObject().apply {
-            put("uuid", email)
+            put("uuid", uuid)
             put("password", password)
         }
 
@@ -93,6 +93,46 @@ class User {
 
     var onCodeError: (message: String?) -> Unit = {
         /** Code failed */
+    }
+
+    fun validate(activity: AppCompatActivity, uuid: String, password: String, code: String, type: String) {
+        if (code.isBlank()) {
+            val message = activity.getString(R.string.open_roaming_2fa_blank_credentials)
+            return onValidateError(message)
+        }
+
+        val params = JSONObject().apply {
+            put("uuid", uuid)
+            put("password", password)
+            put("code", code)
+            put("type", type)
+        }
+
+        validate(activity, params)
+    }
+
+    private fun validate(activity: AppCompatActivity, params: JSONObject) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        val request = runCatching {
+            val web = Web(activity)
+            web.validate(params)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            if (success) onValidateSuccess(it) else onValidateError(it.getString("error"))
+        }
+
+        request.onFailure {
+            onValidateError(it.message)
+        }
+    }
+
+    var onValidateSuccess: (response: JSONObject) -> Unit = {
+        /** Validate succeeded */
+    }
+
+    var onValidateError: (message: String?) -> Unit = {
+        /** Validate failed */
     }
 
     fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null, acceptedTOS: Boolean = true) {
@@ -149,14 +189,14 @@ class User {
         /** Register failed */
     }
 
-    fun login(activity: AppCompatActivity, email: String, password: String, code: String? = null) {
-        if (email.isBlank() || password.isBlank()) {
+    fun login(activity: AppCompatActivity, uuid: String, password: String, code: String? = null) {
+        if (uuid.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_login_blank_credentials)
             return onLoginError(message)
         }
 
         val params = JSONObject().apply {
-            put("uuid", email)
+            put("uuid", uuid)
             put("password", password)
             if (code != null) put("twoFACode", code)
         }

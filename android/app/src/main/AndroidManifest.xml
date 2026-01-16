@@ -28,6 +28,8 @@
 
         <activity android:name=".activities.TwoFAActivity" />
 
+        <activity android:name=".activities.TwoFAConfigurationActivity" />
+
         <activity android:name=".activities.MainActivity" />
 
         <activity android:name=".activities.UserActivity" />

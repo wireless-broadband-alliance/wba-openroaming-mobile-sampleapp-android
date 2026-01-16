@@ -14,7 +14,7 @@ import org.json.JSONObject
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class UserActivity : AppCompatActivity() {

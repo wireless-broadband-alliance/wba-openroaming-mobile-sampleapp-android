@@ -1,8 +1,5 @@
 package com.tetrapi.or.activities
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -19,7 +16,7 @@ import kotlin.text.isNotEmpty
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class TwoFAActivity : AppCompatActivity() {
@@ -30,28 +27,26 @@ class TwoFAActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val uuid = intent.getStringExtra("uuid").orEmpty()
+        val password = intent.getStringExtra("password").orEmpty()
         binding.loginButton.setOnClickListener {
-            login()
+            login(uuid, password)
         }
 
         binding.requestText.setOnClickListener {
-            requestEmailCode()
+            requestEmailCode(uuid, password)
         }
 
-        binding.totpButton.setOnClickListener {
-            configureTotpCode()
+        binding.totpText.setOnClickListener {
+            configureTotpCode(uuid, password)
         }
     }
 
-    private fun setMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-    }
-
-    private fun login() {
+    private fun login(uuid: String, password: String) {
         val user = User()
         user.onLoginSuccess = {
-            setMainActivity()
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         user.onLoginError = {
@@ -61,17 +56,15 @@ class TwoFAActivity : AppCompatActivity() {
             }
         }
 
-        val email = intent.getStringExtra("email") ?: return finish()
-        val password = intent.getStringExtra("password") ?: return finish()
         user.login(
             this,
-            email = email,
+            uuid = uuid,
             password = password,
             code = binding.twofaEdit.text.toString().trim().takeIf { it.isNotEmpty() }
         )
     }
 
-    private fun requestEmailCode() {
+    private fun requestEmailCode(uuid: String, password: String) {
         if (binding.requestText.isGone) return
         binding.requestText.visibility = View.GONE
 
@@ -92,51 +85,20 @@ class TwoFAActivity : AppCompatActivity() {
             }
         }
 
-        val email = intent.getStringExtra("email") ?: return finish()
-        val password = intent.getStringExtra("password") ?: return finish()
-        user.code(this, email, password, "email")
+        user.code(
+            activity = this,
+            uuid = uuid,
+            password = password,
+            type = "email"
+        )
     }
 
-    private fun configureTotpCode() {
-        if (binding.totpButton.isGone) return
-        binding.totpButton.visibility = View.GONE
-
-        val user = User()
-        user.onCodeSuccess = {
-            val message = it.getJSONObject("data").getString("message")
-            runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-                binding.totpButton.visibility = View.VISIBLE
-
-                val code = it.getJSONObject("data").getString("totpId")
-                showTotpCode(code)
-            }
+    private fun configureTotpCode(uuid: String, password: String) {
+        val intent = Intent(this, TwoFAConfigurationActivity::class.java).apply {
+            putExtra("uuid", uuid)
+            putExtra("password", password)
         }
 
-        user.onCodeError = {
-            val message = it ?: getString(R.string.common_error)
-            runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-                binding.totpButton.visibility = View.VISIBLE
-            }
-        }
-
-        val email = intent.getStringExtra("email") ?: return finish()
-        val password = intent.getStringExtra("password") ?: return finish()
-        user.code(this, email, password, "totp")
-    }
-
-    private fun showTotpCode(code: String) {
-        binding.totpLayout.visibility = View.VISIBLE
-        binding.totpText.text = code
-        binding.copyButton.setOnClickListener {
-            copyToClipboard(code)
-        }
-    }
-
-    fun copyToClipboard(code: String) {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("TOTP Code", code)
-        clipboard.setPrimaryClip(clip)
+        startActivity(intent)
     }
 }

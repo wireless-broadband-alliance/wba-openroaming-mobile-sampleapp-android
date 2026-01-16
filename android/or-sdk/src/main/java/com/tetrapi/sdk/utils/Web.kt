@@ -17,7 +17,7 @@ import org.json.JSONObject
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class Web(private val context: Context) {
@@ -32,6 +32,16 @@ class Web(private val context: Context) {
 
     suspend fun code(params: JSONObject, type: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "twoFA/$type")
+        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
+    suspend fun validate(params: JSONObject): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "twoFA/validate")
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
             setBody(params.toString().trimIndent())

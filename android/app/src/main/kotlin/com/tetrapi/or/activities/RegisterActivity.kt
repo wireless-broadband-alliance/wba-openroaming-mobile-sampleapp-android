@@ -16,7 +16,7 @@ import kotlin.text.isNotBlank
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class RegisterActivity : AppCompatActivity() {
@@ -66,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         user.register(
-            this,
+            activity = this,
             email = binding.emailEdit.text.toString().trim(),
             password = binding.passwordEdit.text.toString().trim(),
             nameFirst = binding.nameFirstEdit.text.toString().trim().takeIf { it.isNotEmpty() },

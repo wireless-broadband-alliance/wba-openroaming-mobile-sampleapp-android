@@ -57,73 +57,82 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            android:text="@string/activity_twofa"
+            android:text="@string/activity_twofa_configuration"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/request_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_twofa_description" />
+            android:text="@string/activity_twofa_configuration_request" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/twofa_input"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/request_loading"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            android:hint="@string/activity_twofa">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/twofa_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textAppearance="?textAppearanceBodyMedium" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/request_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_mini"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/activity_twofa_request"
-            android:textAppearance="?textAppearanceLabelMedium" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:backgroundTint="?colorSecondary"
-            android:text="@string/activity_login_continue" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/material_margin_large" />
 
         <LinearLayout
+            android:id="@+id/totp_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            android:gravity="center_horizontal">
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/totp_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/totp_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/material_margin_large"
+                    android:text="@string/common_placeholder" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/copy_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_mini"
+                android:text="@string/activity_twofa_configuration_copy"
+                android:textAppearance="?textAppearanceBodySmall" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/activity_twofa_totp" />
+                android:layout_marginTop="@dimen/material_margin_large"
+                android:text="@string/activity_twofa_configuration_confirm" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/totp_text"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twofa_input"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/material_margin_mini"
-                android:text="@string/activity_twofa_configure"
-                android:textColor="?colorSecondary"
-                android:textStyle="bold" />
+                android:layout_marginTop="@dimen/material_margin_mini"
+                android:hint="@string/activity_twofa">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/twofa_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAppearance="?textAppearanceBodyMedium" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/validate_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin"
+                android:backgroundTint="?colorSecondary"
+                android:text="@string/activity_twofa_configuration_validate" />
 
         </LinearLayout>
 

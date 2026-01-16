@@ -13,7 +13,7 @@ import com.tetrapi.sdk.core.User
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class LoginActivity : AppCompatActivity() {
@@ -55,7 +55,13 @@ class LoginActivity : AppCompatActivity() {
         val email = binding.emailEdit.text.toString().trim()
         val password = binding.passwordEdit.text.toString().trim()
         user.onLoginMissing2FA = {
-            startActivity(Intent(this, TwoFAActivity::class.java).putExtra("email", email).putExtra("password", password))
+
+            val intent = Intent(this, TwoFAActivity::class.java).apply {
+                putExtra("uuid", email)
+                putExtra("password", password)
+            }
+
+            startActivity(intent)
             finish()
         }
 
@@ -67,8 +73,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         user.login(
-            this,
-            email = email,
+            activity = this,
+            uuid = email,
             password = password
         )
     }
