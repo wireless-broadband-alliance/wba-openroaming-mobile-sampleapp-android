@@ -49,6 +49,8 @@
         <item name="boxStrokeWidth">1sp</item>
         <item name="boxStrokeColor">@color/color_outline</item>
         <item name="hintTextColor">@color/cr_text_input_box</item>
+        <item name="cursorColor">@color/color_primary_dark</item>
+
     </style>
 
     <style name="ShapeAppearance.MaterialTextInputLayout.Rounded" parent="ShapeAppearance.Material3.Corner.Full">

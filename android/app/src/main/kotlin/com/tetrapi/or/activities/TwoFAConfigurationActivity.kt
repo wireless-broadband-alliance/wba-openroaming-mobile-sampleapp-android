@@ -18,7 +18,7 @@ import com.tetrapi.sdk.core.User
 //  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class TwoFAConfigurationActivity : AppCompatActivity() {
+class TwoFAConfigurationActivity : AppCompatActivity() { 
 
     private val binding by lazy { ActivityTwofaConfigurationBinding.inflate(layoutInflater) }
 

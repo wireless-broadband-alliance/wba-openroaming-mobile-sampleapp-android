@@ -28,7 +28,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="@dimen/material_margin_mini"
-                android:src="@drawable/ic_open_roaming"
+                android:src="@drawable/ic_or"
                 app:tint="?colorPrimary" />
 
         </LinearLayout>
