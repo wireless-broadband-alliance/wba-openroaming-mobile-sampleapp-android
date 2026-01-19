@@ -60,7 +60,7 @@ class TwoFAConfigurationActivity : AppCompatActivity() {
         binding.requestLoading.visibility = View.GONE
 
         binding.totpLayout.visibility = View.VISIBLE
-        binding.totpText.text = key
+        binding.totpText.text = key.chunked(4).joinToString(" ")
         binding.totpCard.setOnClickListener {
             copyToClipboard(key)
         }

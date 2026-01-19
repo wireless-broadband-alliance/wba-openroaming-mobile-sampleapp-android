@@ -55,8 +55,10 @@ class Turnstile {
                 override fun onTokenReceived(token: String) {
                     it.resume(token)
 
-                    webView.visibility = View.GONE
-                    webView.destroy()
+                    activity.runOnUiThread {
+                        webView.visibility = View.GONE
+                        webView.destroy()
+                    }
                 }
             }
 
