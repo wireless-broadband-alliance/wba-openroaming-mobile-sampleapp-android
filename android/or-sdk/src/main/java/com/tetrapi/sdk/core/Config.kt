@@ -44,6 +44,13 @@ class Config {
         }
 
         fun privacy(preferences: Preferences) = preferences.getString("PRIVACY_POLICY")
+
+        fun isAuthActive(context: Context, type: String): Boolean {
+            val preferences = Preferences(context)
+            return isAuthActive(preferences, type)
+        }
+
+        fun isAuthActive(preferences: Preferences, type: String) = preferences.getBoolean(type)
     }
 
     fun info(activity: AppCompatActivity, expiration: Int = 2) = activity.lifecycleScope.launch(Dispatchers.IO) {
@@ -54,7 +61,7 @@ class Config {
 
         request.onSuccess {
             val success = it.getBoolean("success")
-            if (success) save(activity, expiration, it)  else onInfoError (it.getString("error"))
+            if (success) save(activity, expiration, it.getJSONObject("data"))  else onInfoError (it.getString("error"))
         }
 
         request.onFailure {
@@ -64,18 +71,34 @@ class Config {
 
     private fun save(activity: AppCompatActivity, expiration: Int, data: JSONObject) {
         val preferences = Preferences(activity)
+        data.getJSONObject("platform").apply {
+            val tos = getString("TOS")
+            preferences.saveString("TOS", tos)
 
-        val siteKey = data.getJSONObject("data").getJSONObject("turnstile").getString("TURNSTILE_KEY")
-        preferences.saveString("TURNSTILE_SITE_KEY", siteKey)
+            val privacy = getString("PRIVACY_POLICY")
+            preferences.saveString("PRIVACY_POLICY", privacy)
+        }
+
+        data.getJSONObject("turnstile").apply {
+            val siteKey = getString("TURNSTILE_KEY")
+            preferences.saveString("TURNSTILE_SITE_KEY", siteKey)
+        }
+
+        data.getJSONObject("auth").apply {
+            val local = getBoolean("AUTH_METHOD_LOGIN_TRADITIONAL_ENABLED")
+            preferences.saveBoolean("AUTH_LOCAL", local)
+
+            val saml = getBoolean("AUTH_METHOD_SAML_ENABLED")
+            preferences.saveBoolean("AUTH_SAML", saml)
+        }
+
+        data.getJSONObject("saml").apply {
+            //TODO get this from API?
+            preferences.saveString("SAML_START", "https://wifi.tetrapi.pt/saml/login")
+        }
 
         val expiration = System.currentTimeMillis() + (expiration * 24 * 60 * 60 * 1000)
         preferences.saveLong("CONFIG_EXPIRATION", expiration)
-
-        val tos = data.getJSONObject("data").getJSONObject("platform").getString("TOS")
-        preferences.saveString("TOS", tos)
-
-        val privacy = data.getJSONObject("data").getJSONObject("platform").getString("PRIVACY_POLICY")
-        preferences.saveString("PRIVACY_POLICY", privacy)
 
         onInfoSuccess()
     }

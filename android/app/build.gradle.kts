@@ -54,7 +54,7 @@ android {
 }
 
 dependencies {
-    implementation(platform("io.grpc:grpc-bom:1.78.0"))
+    implementation(platform("io.grpc:grpc-bom:1.79.0"))
     implementation("com.google.protobuf:protobuf-java:4.33.5")
 
     implementation(platform("com.google.firebase:firebase-bom:34.9.0"))

@@ -2,10 +2,13 @@ package com.tetrapi.or.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.databinding.ActivityLoginBinding
 import com.tetrapi.sdk.R
+import com.tetrapi.sdk.core.Config
+import com.tetrapi.sdk.core.SAML
 import com.tetrapi.sdk.core.User
 
 //
@@ -44,6 +47,9 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             login()
         }
+
+        val isSamlActive = Config.isAuthActive(this, "AUTH_SAML")
+        if (isSamlActive) setSaml()
     }
 
     private fun login() {
@@ -77,5 +83,12 @@ class LoginActivity : AppCompatActivity() {
             uuid = email,
             password = password
         )
+    }
+
+    private fun setSaml() {
+        binding.samlButton.visibility = View.VISIBLE
+        binding.samlButton.setOnClickListener {
+            SAML(this).start()
+        }
     }
 }

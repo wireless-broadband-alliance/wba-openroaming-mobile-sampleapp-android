@@ -32,8 +32,9 @@ class Turnstile {
     }
 
     suspend fun getToken(activity: AppCompatActivity, siteKey: String): String = suspendCoroutine {
-        if (activity.isAppDebuggable()) it.resume("openroaming")
-        else
+        // if (activity.isAppDebuggable()) it.resume("openroaming")
+        // else
+        // TODO
             activity.lifecycleScope.launch(Dispatchers.Main) {
             val webView = WebView(activity)
             webView.setBackgroundColor(Color.TRANSPARENT)
@@ -70,8 +71,6 @@ class Turnstile {
             val container = activity.findViewById<ViewGroup>(android.R.id.content)
             container.addView(webView)
         }
-
-         */
     }
 
     open class JSInterface {

@@ -105,6 +105,17 @@
             android:backgroundTint="?colorSecondary"
             android:text="@string/activity_login_continue" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/saml_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_mini"
+            android:text="@string/activity_login_saml"
+            android:textColor="?colorSecondary"
+            android:visibility="gone"
+            app:strokeColor="?colorSecondary"
+            app:strokeWidth="1dp" />
+
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

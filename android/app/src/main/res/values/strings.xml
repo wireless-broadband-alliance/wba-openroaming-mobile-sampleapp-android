@@ -11,6 +11,7 @@
     <string name="activity_login_description">To enjoy seamless and secure WIFI, please login with your credentials</string>
     <string name="activity_login_configure">Configure 2FA</string>
     <string name="activity_login_continue">Login</string>
+    <string name="activity_login_saml">Login with SAML</string>
     <string name="activity_login_account">Don\'t have an Account?</string>
     <string name="activity_login_register">Create Account</string>
 
