@@ -56,14 +56,10 @@ class OpenRoaming {
         cipher.init(Cipher.DECRYPT_MODE, key)
 
         val decryptedBytes = cipher.doFinal(encryptedBytes)
-        return String(decryptedBytes, Charsets.UTF_8)
+        return String(decryptedBytes, Charsets.UTF_8).trim()
     }
 
     fun connect(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
-        // Checks if Terms and Conditions are accepted
-        // val isTermsAccepted = isTermsAccepted(context)
-        // if (!isTermsAccepted) return showTermsDialog(context)
-
         // Checks if device supports OpenRoaming
         val isSupported = isPasspointSupported(activity)
         if (!isSupported) return@launch Toast.makeText(activity, activity.getString(R.string.open_roaming_not_supported), Toast.LENGTH_LONG).show()
@@ -73,13 +69,11 @@ class OpenRoaming {
         val publicKeyBase64 = Base64.getEncoder().encodeToString(keyPair.public.encoded)
         val publicPemFormatted = "-----BEGIN PUBLIC KEY-----\n$publicKeyBase64\n-----END PUBLIC KEY-----"
 
-        // Get Android Profile configuration
         val token = User.jwtToken(activity)
         val params = JSONObject().apply {
             put("public_key", publicPemFormatted)
         }
 
-        // TODO need to request new token if null
         val request = runCatching {
             val web = Web(activity)
             web.profile(params, token ?: "todo")
@@ -115,7 +109,10 @@ class OpenRoaming {
         // Set up User Credentials
         val userCredential = Credential.UserCredential()
         userCredential.username = data.getString("radiusUsername")
-        userCredential.password = decryptPassword(keyPair.private, data.getString("radiusPassword"))
+
+        val password = decryptPassword(keyPair.private, data.getString("radiusPassword"))
+        val passwordB64 = Base64.getEncoder().encodeToString(password.toByteArray(Charsets.UTF_8))
+        userCredential.password = passwordB64
 
         userCredential.eapType = data.getInt("eapType")
         userCredential.nonEapInnerMethod = data.getString("nonEapInnerMethod")

@@ -2,6 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
+
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+
     id("org.jetbrains.kotlin.android")
 }
 
@@ -51,7 +55,11 @@ android {
 
 dependencies {
     implementation(platform("io.grpc:grpc-bom:1.78.0"))
-    implementation("com.google.protobuf:protobuf-java:4.33.4")
+    implementation("com.google.protobuf:protobuf-java:4.33.5")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.9.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
 
     implementation(project(":or-sdk"))
 

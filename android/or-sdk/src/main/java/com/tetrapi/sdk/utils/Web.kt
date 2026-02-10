@@ -80,6 +80,17 @@ class Web(private val context: Context) {
         return JSONObject(response)
     }
 
+    suspend fun refreshJwt(params: JSONObject, token: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "user")
+        val response = client.get(url) {
+            contentType(ContentType.Application.Json)
+            header("Authorization", "Bearer $token")
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
     suspend fun profile(params: JSONObject, token: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "config/profile/android")
         val response = client.post(url) {

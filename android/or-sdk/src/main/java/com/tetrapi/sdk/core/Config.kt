@@ -54,7 +54,7 @@ class Config {
 
         request.onSuccess {
             val success = it.getBoolean("success")
-            if (success)save(activity, expiration, it)  else onInfoError (it.getString("error"))
+            if (success) save(activity, expiration, it)  else onInfoError (it.getString("error"))
         }
 
         request.onFailure {
