@@ -11,16 +11,16 @@ plugins {
 
 android {
     namespace = "com.tetrapi.or"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.tetrapi.or"
 
         minSdk = 30
-        targetSdk = 35
+        targetSdk = 36
 
-        versionCode = 9
-        versionName = "1.3.0"
+        versionCode = 10
+        versionName = "1.4.0"
     }
 
     buildTypes {

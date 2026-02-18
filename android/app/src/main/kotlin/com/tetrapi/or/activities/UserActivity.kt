@@ -10,7 +10,7 @@ import com.tetrapi.sdk.core.User
 import org.json.JSONObject
 
 //
-//  activity_about.xml.kt
+//  UserActivity.kt
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho

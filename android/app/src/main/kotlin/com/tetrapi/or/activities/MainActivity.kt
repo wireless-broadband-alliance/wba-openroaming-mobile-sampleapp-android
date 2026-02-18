@@ -58,14 +58,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connect() {
+        binding.connectButton.isLoading()
+
         val dialog = LoadingDialog()
         dialog.show(supportFragmentManager, "LOADING_DIALOG")
 
-        or.connect(this)
         or.onConnectionSuccess = {
             checkNetworks()
+
+            binding.connectButton.isReady()
             dialog.dismiss()
         }
+
+        or.connect(this)
     }
 
     private fun checkNetworks() {

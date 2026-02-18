@@ -126,7 +126,7 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <com.tetrapi.or.views.StateMaterialButton
                 android:id="@+id/validate_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -55,11 +55,19 @@
                 android:textAppearance="?textAppearanceLabelLarge"
                 android:textStyle="bold" />
 
+            <com.tetrapi.or.views.StateMaterialButton
+                android:id="@+id/connect_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin"
+                android:backgroundTint="?colorSecondary"
+                android:text="@string/activity_main_connect" />
+
             <ViewAnimator
                 android:id="@+id/view_animator"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/material_margin_large"
+                android:layout_marginTop="@dimen/material_margin"
                 android:inAnimation="@anim/pull_right"
                 android:measureAllChildren="false"
                 android:outAnimation="@anim/push_right">
@@ -111,14 +119,6 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </ViewAnimator>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/connect_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/material_margin"
-                android:backgroundTint="?colorSecondary"
-                android:text="@string/activity_main_connect" />
 
         </LinearLayout>
 

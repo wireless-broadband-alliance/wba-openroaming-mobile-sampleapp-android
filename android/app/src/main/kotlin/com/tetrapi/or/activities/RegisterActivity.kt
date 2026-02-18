@@ -29,12 +29,12 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.termsText.setOnClickListener {
             val url = Config.tos(this)
-            if (url != null && url.isNotBlank()) openBrowser(url)
+            if (!url.isNullOrBlank()) openBrowser(url)
         }
 
         binding.privacyText.setOnClickListener {
             val url = Config.privacy(this)
-            if (url != null && url.isNotBlank()) openBrowser(url)
+            if (!url.isNullOrBlank()) openBrowser(url)
         }
 
         binding.registerButton.setOnClickListener {
@@ -48,6 +48,8 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register() {
+        binding.registerButton.isLoading()
+
         val user = User()
         user.onRegisterSuccess = {
             val message = it.getJSONObject("data").getString("message")
@@ -61,6 +63,7 @@ class RegisterActivity : AppCompatActivity() {
         user.onRegisterError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
+                binding.registerButton.isReady()
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }

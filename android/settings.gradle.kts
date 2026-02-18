@@ -42,5 +42,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GRA ID SDK"
+rootProject.name = "OpenRoaming Mobile"
 include(":app", ":or-sdk")

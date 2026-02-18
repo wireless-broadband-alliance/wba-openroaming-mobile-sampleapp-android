@@ -43,6 +43,8 @@ class TwoFAActivity : AppCompatActivity() {
     }
 
     private fun login(uuid: String, password: String) {
+        binding.loginButton.isLoading()
+
         val user = User()
         user.onLoginSuccess = {
             startActivity(Intent(this, MainActivity::class.java))
@@ -52,6 +54,7 @@ class TwoFAActivity : AppCompatActivity() {
         user.onLoginError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
+                binding.loginButton.isReady()
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }

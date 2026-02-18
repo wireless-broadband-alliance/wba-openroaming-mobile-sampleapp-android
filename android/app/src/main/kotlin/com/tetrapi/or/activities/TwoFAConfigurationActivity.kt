@@ -80,6 +80,8 @@ class TwoFAConfigurationActivity : AppCompatActivity() {
     }
 
     private fun validate(code: String) {
+        binding.validateButton.isLoading()
+
         val user = User()
         user.onValidateSuccess = {
             val message = it.getJSONObject("data").getString("message")
@@ -93,6 +95,7 @@ class TwoFAConfigurationActivity : AppCompatActivity() {
         user.onValidateError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
+                binding.validateButton.isReady()
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }

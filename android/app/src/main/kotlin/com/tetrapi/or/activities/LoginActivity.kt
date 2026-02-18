@@ -49,10 +49,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val isSamlActive = Config.isAuthActive(this, "AUTH_SAML")
-        if (isSamlActive) setSaml()
+        // if (isSamlActive) setSaml()
     }
 
     private fun login() {
+        binding.loginButton.isLoading()
+
         val user = User()
         user.onLoginSuccess = {
             setMainActivity()
@@ -74,6 +76,7 @@ class LoginActivity : AppCompatActivity() {
         user.onLoginError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
+                binding.loginButton.isReady()
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
         }
