@@ -10,10 +10,15 @@
     <string name="activity_login_welcome">Welcome!</string>
     <string name="activity_login_description">To enjoy seamless and secure WIFI, please login with your credentials</string>
     <string name="activity_login_configure">Configure 2FA</string>
+    <string name="activity_login_reset">Reset Password</string>
     <string name="activity_login_continue">Login</string>
     <string name="activity_login_saml">Continue with SAML</string>
     <string name="activity_login_account">Don\'t have an Account?</string>
     <string name="activity_login_register">Create Account</string>
+
+    <!-- Reset Activity -->
+    <string name="activity_reset_title">Reset Password</string>
+    <string name="activity_reset_description">Set the email you used to create your account</string>
 
     <!-- Register Activity -->
     <string name="activity_register_description">Create your account to enjoy seamless and secure WIFI</string>

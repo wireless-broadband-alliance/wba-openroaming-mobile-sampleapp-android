@@ -10,6 +10,9 @@
     <!-- Login -->
     <string name="open_roaming_login_blank_credentials">You need to set your username and password to login!</string>
 
+    <!-- Reset -->
+    <string name="open_roaming_reset_blank_credentials">You need to set your email to reset the password!</string>
+
     <!-- Register -->
     <string name="open_roaming_register_blank_credentials">You need to set at least a username and password to register!</string>
     <string name="open_roaming_register_terms">You need to accept or Terms &amp; Conditions and Privacy Policy to register!</string>

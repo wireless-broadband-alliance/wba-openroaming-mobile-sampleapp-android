@@ -3,13 +3,11 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.tetrapi.or.databinding.ActivityRegisterBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
 import com.tetrapi.sdk.core.User
-import kotlin.text.isNotBlank
 
 //
 //  RegisterActivity.kt
@@ -19,7 +17,7 @@ import kotlin.text.isNotBlank
 //  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class RegisterActivity : AppCompatActivity() {
+class RegisterActivity : ORActivity() {
 
     private val binding by lazy { ActivityRegisterBinding.inflate(layoutInflater) }
 

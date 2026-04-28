@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.sdk.R
 import com.tetrapi.or.databinding.ActivityTwofaConfigurationBinding
 import com.tetrapi.sdk.core.User
@@ -18,7 +17,7 @@ import com.tetrapi.sdk.core.User
 //  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class TwoFAConfigurationActivity : AppCompatActivity() { 
+class TwoFAConfigurationActivity : ORActivity() {
 
     private val binding by lazy { ActivityTwofaConfigurationBinding.inflate(layoutInflater) }
 

@@ -12,7 +12,13 @@ plugins {
 
 android {
     namespace = "com.tetrapi.sdk"
-    compileSdk = 36
+
+    compileSdk {
+
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
 
     defaultConfig {
         minSdk = 30
@@ -56,15 +62,15 @@ android {
 }
 
 dependencies {
-    implementation(platform("io.grpc:grpc-bom:1.79.0"))
-    implementation("com.google.protobuf:protobuf-java:4.33.5")
+    implementation(platform("io.grpc:grpc-bom:1.80.0"))
+    implementation("com.google.protobuf:protobuf-java:4.34.1")
 
     implementation("com.google.android.material:material:1.13.0")
     implementation("com.squareup.okhttp3:okhttp:5.3.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
 
-    implementation("io.ktor:ktor-client-core:3.4.0")
-    implementation("io.ktor:ktor-client-cio:3.4.0")
+    implementation("io.ktor:ktor-client-core:3.4.3")
+    implementation("io.ktor:ktor-client-cio:3.4.3")
 }
 
 afterEvaluate {

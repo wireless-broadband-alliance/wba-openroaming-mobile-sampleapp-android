@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.databinding.ActivityLoginBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
@@ -19,7 +18,7 @@ import com.tetrapi.sdk.core.User
 //  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : ORActivity() {
 
     private val binding by lazy { ActivityLoginBinding.inflate(layoutInflater) }
 
@@ -40,6 +39,10 @@ class LoginActivity : AppCompatActivity() {
     private fun setContentView() {
         setContentView(binding.root)
 
+        binding.resetText.setOnClickListener {
+            startActivity(Intent(this, ResetActivity::class.java))
+        }
+
         binding.registerText.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -48,8 +51,8 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
 
-        val isSamlActive = Config.isAuthActive(this, "AUTH_SAML")
-        // if (isSamlActive) setSaml()
+        val isSAMLActive = Config.isAuthActive(this, "AUTH_SAML")
+        if (isSAMLActive) setSAML()
     }
 
     private fun login() {
@@ -88,10 +91,46 @@ class LoginActivity : AppCompatActivity() {
         )
     }
 
-    private fun setSaml() {
+    private fun setSAML() {
         binding.samlButton.visibility = View.VISIBLE
         binding.samlButton.setOnClickListener {
-            SAML(this).start()
+            startSAML()
         }
+    }
+
+    private fun startSAML() {
+        binding.samlButton.isLoading()
+
+        val saml = SAML()
+        saml.onSAMLSuccess = {
+            loginSAML(it)
+        }
+
+        saml.onSAMLError = {
+            binding.loginButton.isReady()
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        }
+
+        saml.start(this)
+    }
+
+    private fun loginSAML(response: String) {
+        val user = User()
+        user.onLoginSuccess = {
+            setMainActivity()
+        }
+
+        user.onLoginError = {
+            val message = it ?: getString(R.string.common_error)
+            runOnUiThread {
+                binding.loginButton.isReady()
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            }
+        }
+
+        user.login(
+            activity = this,
+            response = response
+        )
     }
 }

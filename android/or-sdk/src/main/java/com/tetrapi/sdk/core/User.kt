@@ -204,15 +204,25 @@ class User {
         login(activity, params, "local")
     }
 
-    private fun login(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
-        val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
-        if (siteKey.isNullOrBlank()) {
-            val message = activity.getString(R.string.common_error_turnstile_key)
-            return@launch onLoginError(message)
+    fun login(activity: AppCompatActivity, response: String) {
+        val params = JSONObject().apply {
+            put("response", response)
         }
 
-        val token = Turnstile().getToken(activity, siteKey)
-        params.put("turnstile_token", token)
+        login(activity, params, "saml")
+    }
+
+    private fun login(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        if (type === "local") {
+            val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
+            if (siteKey.isNullOrBlank()) {
+                val message = activity.getString(R.string.common_error_turnstile_key)
+                return@launch onLoginError(message)
+            }
+
+            val token = Turnstile().getToken(activity, siteKey)
+            params.put("turnstile_token", token)
+        }
 
         val request = runCatching {
             val web = Web(activity)
@@ -251,6 +261,47 @@ class User {
 
     var onLoginError: (message: String?) -> Unit = {
         /** Login failed */
+    }
+
+    fun reset(activity: AppCompatActivity, email: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        if (email.isBlank()) {
+            val message = activity.getString(R.string.open_roaming_reset_blank_credentials)
+            return@launch onResetError(message)
+        }
+
+        val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
+        if (siteKey.isNullOrBlank()) {
+            val message = activity.getString(R.string.common_error_turnstile_key)
+            return@launch onRegisterError(message)
+        }
+
+        val token = Turnstile().getToken(activity, siteKey)
+        val params = JSONObject().apply {
+            put("email", email)
+            put("turnstile_token", token)
+        }
+
+        val request = runCatching {
+            val web = Web(activity)
+            web.reset(params)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            if (success) onResetSuccess(it) else onResetError(it.getString("error"))
+        }
+
+        request.onFailure {
+            onResetError(it.message)
+        }
+    }
+
+    var onResetSuccess: (response: JSONObject) -> Unit = {
+        /** Reset succeeded */
+    }
+
+    var onResetError: (message: String?) -> Unit = {
+        /** Reset failed */
     }
 
     fun info(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
