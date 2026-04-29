@@ -99,13 +99,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/reset_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:layout_marginTop="@dimen/material_margin_mini"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/activity_login_reset"
-            android:textColor="?colorSecondary"
-            android:textStyle="bold" />
+            android:textAppearance="?textAppearanceLabelMedium" />
 
         <com.tetrapi.or.views.StateMaterialButton
             android:id="@+id/login_button"

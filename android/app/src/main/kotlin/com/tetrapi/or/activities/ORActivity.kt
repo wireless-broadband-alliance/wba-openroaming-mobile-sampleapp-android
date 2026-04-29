@@ -1,6 +1,8 @@
 package com.tetrapi.or.activities
 
 import android.os.Bundle
+import android.view.View
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -18,13 +20,19 @@ import com.tetrapi.or.R
 
 abstract class ORActivity : AppCompatActivity() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
-        if (toolbar != null) ViewCompat.setOnApplyWindowInsetsListener(toolbar) { v, insets ->
+        val view = findViewById<MaterialToolbar>(R.id.toolbar) ?: findViewById<View>(android.R.id.content)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.updatePadding(top = systemBars.top)
+
             insets
         }
     }

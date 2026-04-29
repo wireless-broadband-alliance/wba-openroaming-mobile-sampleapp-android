@@ -25,7 +25,7 @@ android {
         minSdk = 30
         targetSdk = 36
 
-        versionCode = 12
+        versionCode = 14
         versionName = "1.5.0"
     }
 

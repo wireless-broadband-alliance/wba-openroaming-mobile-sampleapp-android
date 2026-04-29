@@ -90,7 +90,7 @@ class OpenRoaming {
         request.onFailure {
 
             activity.runOnUiThread {
-                Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
+                onConnectionError(it.message)
             }
         }
     }
@@ -139,6 +139,10 @@ class OpenRoaming {
 
     var onConnectionSuccess: () -> Unit = {
         /** Connection succeeded */
+    }
+
+    var onConnectionError: (message: String?) -> Unit = {
+        /** Connection failed */
     }
 
     fun networks(context: Context): ArrayList<PasspointConfiguration> {

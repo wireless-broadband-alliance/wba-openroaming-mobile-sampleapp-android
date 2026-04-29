@@ -27,7 +27,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="wifi-qa.tetrapi.pt"
+                    android:host="wifi.tetrapi.pt"
                     android:pathPrefix="/return-to-app" />
 
             </intent-filter>

@@ -46,8 +46,6 @@ class ResetActivity : ORActivity() {
                 binding.resetButton.isReady()
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             }
-
-            binding.resetButton.isReady()
         }
 
         user.reset(

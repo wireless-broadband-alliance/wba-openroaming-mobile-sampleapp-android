@@ -3,6 +3,7 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
+import android.widget.Toast
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
 import com.tetrapi.or.adapters.NetworksAdapter
@@ -64,6 +65,13 @@ class MainActivity : ORActivity() {
 
         or.onConnectionSuccess = {
             checkNetworks()
+
+            binding.connectButton.isReady()
+            dialog.dismiss()
+        }
+
+        or.onConnectionError = {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
 
             binding.connectButton.isReady()
             dialog.dismiss()
