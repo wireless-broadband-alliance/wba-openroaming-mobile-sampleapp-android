@@ -19,11 +19,13 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
+            <!--
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_tetrapi"
                 app:tint="?colorPrimary" />
+            -->
 
             <ImageView
                 android:layout_width="24dp"
@@ -56,6 +58,20 @@
                 android:textAppearance="?textAppearanceLabelLarge"
                 android:textStyle="bold" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/material_margin"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/img_open_roaming_event" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -98,6 +114,7 @@
                     app:layout_constraintTop_toTopOf="@id/divider" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+            -->
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
