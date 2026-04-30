@@ -30,7 +30,7 @@ subprojects {
                 "io.netty:netty-resolver:4.2.12.Final",
                 "io.netty:netty-transport:4.2.12.Final",
                 "io.netty:netty-transport-native-unix-common:4.2.12.Final",
-                "com.google.protobuf:protobuf-java:3.34.1"
+                "com.google.protobuf:protobuf-java:4.34.1"
             )
 
             /*
