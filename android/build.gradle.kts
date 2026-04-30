@@ -32,15 +32,10 @@ subprojects {
                 "com.google.protobuf:protobuf-javalite:4.34.1",
                 "com.google.guava:guava:33.6.0-android"
             )
-
-            /*
+            
             eachDependency {
-                if (requested.group == "com.google.protobuf") {
-                    useVersion("4.34.1")
-                }
+                if (requested.group == "com.google.protobuf") useVersion("4.34.1")
             }
-
-             */
         }
     }
 }
