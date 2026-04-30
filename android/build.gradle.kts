@@ -20,12 +20,12 @@ subprojects {
 
             force(
                 "io.netty:netty-all:4.2.12.Final",
-                "io.netty:netty-codec-http:4.1.108.Final",
-                "io.netty:netty-handler:4.1.108.Final",
-                "io.netty:netty-common:4.1.108.Final",
-                "io.netty:netty-buffer:4.1.108.Final",
-                "io.netty:netty-transport:4.1.108.Final",
-                "io.netty:netty-resolver:4.1.108.Final"
+                "io.netty:netty-codec-http:4.2.12.Final",
+                "io.netty:netty-handler:4.2.12.Final",
+                "io.netty:netty-common:4.2.12.Final",
+                "io.netty:netty-buffer:4.2.12.Final",
+                "io.netty:netty-transport:4.2.12.Final",
+                "io.netty:netty-resolver:4.2.12.Final"
             )
 
             /*
