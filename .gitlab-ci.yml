@@ -1,3 +1,15 @@
 include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+
+stages:
+  - test
+
+variables:
+  DS_INCLUDE_DEV_DEPENDENCIES: "false"
+
+dependency_scanning:
+  stage: test
+  variables:
+    GRADLE_CLI_OPTS: "--no-daemon"
