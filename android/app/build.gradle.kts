@@ -50,11 +50,6 @@ android {
 }
 
 dependencies {
-    /*
-    implementation(platform("io.grpc:grpc-bom:1.80.0"))
-    implementation("com.google.protobuf:protobuf-java:4.34.1")
-    */
-
     implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")

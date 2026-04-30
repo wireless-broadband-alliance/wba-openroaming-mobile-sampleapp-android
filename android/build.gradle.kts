@@ -9,14 +9,8 @@ subprojects {
 
     configurations.all {
 
-        exclude(group = "javax.annotation", module = "javax.annotation-api")
-
-        /*
-        exclude(group = "javax.annotation", module = "javax.annotation-api")
-        exclude(group = "net.java.dev.jna", module = "jna")
-        exclude(group = "net.java.dev.jna", module = "jna-platform")
-        exclude(group = "net.sf.kxml", module = "kxml2")
-        */
+        exclude(group = "javax.annotation", module = "javax.annotation-api") // GPL
+        exclude(group = "net.java.dev.jna") // LGPL
 
         resolutionStrategy {
 
@@ -32,8 +26,16 @@ subprojects {
                 "io.netty:netty-resolver:4.2.12.Final",
                 "io.netty:netty-transport:4.2.12.Final",
                 "io.netty:netty-transport-native-unix-common:4.2.12.Final",
-                "com.google.protobuf:protobuf-java:3.25.5"
+                "com.google.protobuf:protobuf-java:4.34.1",
+                "com.google.protobuf:protobuf-javalite:4.34.1",
+                "com.google.guava:guava:33.6.0-android"
             )
+
+            eachDependency {
+                if (requested.group == "com.google.protobuf") {
+                    useVersion("4.34.1")
+                }
+            }
         }
     }
 }
