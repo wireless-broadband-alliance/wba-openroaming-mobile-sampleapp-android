@@ -1,24 +1,17 @@
-stages:
-  - security
-  - deploy
-
+before_script:
+  - chmod +x android/gradlew || true
+  
 include:
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+stages:
+  - test
+
+variables:
+  DS_INCLUDE_DEV_DEPENDENCIES: "false"
 
 dependency_scanning:
-  stage: security
-
-secret_detection:
-  stage: security
-
-publish_sdk:
-  stage: deploy
-  image: gradle:8.8-jdk21
-  script:
-    - cd android
-    - ./gradlew :or-sdk:publish
-  only:
-    - tags
+  stage: test
   variables:
-    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    GRADLE_CLI_OPTS: "--no-daemon"

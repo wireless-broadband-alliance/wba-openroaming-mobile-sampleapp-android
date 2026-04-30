@@ -72,100 +72,82 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            android:text="@string/activity_login_welcome"
+            android:text="@string/activity_twofa_configuration"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/request_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_login_description" />
+            android:text="@string/activity_twofa_configuration_request" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_input"
-            android:layout_width="match_parent"
+        <ProgressBar
+            android:id="@+id/request_loading"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            android:hint="@string/common_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:textAppearance="?textAppearanceBodyMedium" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/common_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textAppearance="?textAppearanceBodyMedium" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/reset_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_mini"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/activity_login_reset"
-            android:textAppearance="?textAppearanceLabelMedium" />
-
-        <com.tetrapi.or.views.StateMaterialButton
-            android:id="@+id/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:backgroundTint="?colorSecondary"
-            android:text="@string/activity_login_continue" />
-
-        <com.tetrapi.or.views.StateMaterialButton
-            android:id="@+id/saml_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_mini"
-            android:text="@string/activity_login_saml"
-            android:textColor="?colorSecondary"
-            android:visibility="gone"
-            app:strokeColor="?colorSecondary"
-            app:strokeWidth="1dp" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/material_margin_large" />
 
         <LinearLayout
+            android:id="@+id/totp_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            android:gravity="center_horizontal">
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/totp_card"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/totp_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/material_margin_large"
+                    android:text="@string/common_placeholder" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/copy_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_mini"
+                android:text="@string/activity_twofa_configuration_copy"
+                android:textAppearance="?textAppearanceBodySmall" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/activity_login_account" />
+                android:layout_marginTop="@dimen/material_margin_large"
+                android:text="@string/activity_twofa_configuration_confirm" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/register_text"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/twofa_input"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/material_margin_mini"
-                android:text="@string/activity_login_register"
-                android:textColor="?colorSecondary"
-                android:textStyle="bold" />
+                android:layout_marginTop="@dimen/material_margin_mini"
+                android:hint="@string/activity_twofa">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/twofa_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAppearance="?textAppearanceBodyMedium" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.tetrapi.or.views.StateMaterialButton
+                android:id="@+id/validate_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin"
+                android:backgroundTint="?colorSecondary"
+                android:text="@string/activity_twofa_configuration_validate" />
 
         </LinearLayout>
 

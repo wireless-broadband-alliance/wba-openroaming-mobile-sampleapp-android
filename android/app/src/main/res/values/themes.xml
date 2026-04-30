@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base Theme -->
-    <style name="Theme.MimWifi" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.OR" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorOnPrimary">@color/color_on_primary</item>
@@ -25,10 +25,10 @@
         <item name="android:colorBackground">@color/color_background</item>
         <item name="android:navigationBarColor">@color/color_primary_dark</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
         <item name="android:textViewStyle">@style/Widget.MaterialTextView</item>
         <item name="toolbarStyle">@style/Widget.MaterialToolbar</item>
         <item name="textInputStyle">@style/Widget.MaterialTextInputLayout</item>
-        <item name="android:windowOptOutEdgeToEdgeEnforcement" tools:targetApi="35">true</item>
     </style>
 
     <!-- Material TextView Widget -->
@@ -49,6 +49,8 @@
         <item name="boxStrokeWidth">1sp</item>
         <item name="boxStrokeColor">@color/color_outline</item>
         <item name="hintTextColor">@color/cr_text_input_box</item>
+        <item name="cursorColor">@color/color_primary_dark</item>
+
     </style>
 
     <style name="ShapeAppearance.MaterialTextInputLayout.Rounded" parent="ShapeAppearance.Material3.Corner.Full">

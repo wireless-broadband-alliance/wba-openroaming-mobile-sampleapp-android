@@ -3,7 +3,7 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
 import com.tetrapi.or.adapters.NetworksAdapter
@@ -12,7 +12,7 @@ import com.tetrapi.or.dialogs.LoadingDialog
 import com.tetrapi.sdk.core.OpenRoaming
 import com.tetrapi.sdk.core.User
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ORActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val or = OpenRoaming()
@@ -58,14 +58,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connect() {
+        binding.connectButton.isLoading()
+
         val dialog = LoadingDialog()
         dialog.show(supportFragmentManager, "LOADING_DIALOG")
 
-        or.connect(this)
         or.onConnectionSuccess = {
             checkNetworks()
+
+            binding.connectButton.isReady()
             dialog.dismiss()
         }
+
+        or.onConnectionError = {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+
+            binding.connectButton.isReady()
+            dialog.dismiss()
+        }
+
+        or.connect(this)
     }
 
     private fun checkNetworks() {

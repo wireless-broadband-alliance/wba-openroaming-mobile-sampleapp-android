@@ -16,6 +16,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        /*
         maven {
             url = uri("https://git.tetrapi.pt/api/v4/projects/208/packages/maven")
 
@@ -39,8 +41,9 @@ dependencyResolutionManagement {
                 create<HttpHeaderAuthentication>("header")
             }
         }
+        */
     }
 }
 
-rootProject.name = "GRA ID SDK"
+rootProject.name = "OpenRoaming Mobile"
 include(":app", ":or-sdk")

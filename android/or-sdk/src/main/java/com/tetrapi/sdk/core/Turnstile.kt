@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.utils.Preferences
+import com.tetrapi.sdk.utils.isAppDebuggable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -30,9 +32,9 @@ class Turnstile {
         fun siteKey(preferences: Preferences) = preferences.getString("TURNSTILE_SITE_KEY")
     }
 
-    suspend fun getToken(activity: AppCompatActivity, siteKey: String): String = suspendCoroutine {
-
-        activity.lifecycleScope.launch(Dispatchers.Main) {
+    suspend fun getToken(activity: AppCompatActivity, siteKey: String): String = suspendCancellableCoroutine {
+        if (activity.isAppDebuggable()) it.resume("openroaming")
+        else activity.lifecycleScope.launch(Dispatchers.Main) {
             val webView = WebView(activity)
             webView.setBackgroundColor(Color.TRANSPARENT)
             webView.layoutParams = LinearLayout.LayoutParams(
@@ -40,9 +42,10 @@ class Turnstile {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
 
-            val settings = webView.settings
-            @SuppressLint("SetJavaScriptEnabled")
-            settings.javaScriptEnabled = true
+            webView.settings.apply {
+                @SuppressLint("SetJavaScriptEnabled")
+                javaScriptEnabled = true
+            }
 
             val jsInterface = object : JSInterface() {
 
@@ -53,8 +56,10 @@ class Turnstile {
                 override fun onTokenReceived(token: String) {
                     it.resume(token)
 
-                    webView.visibility = View.GONE
-                    webView.destroy()
+                    activity.runOnUiThread {
+                        webView.visibility = View.GONE
+                        webView.destroy()
+                    }
                 }
             }
 

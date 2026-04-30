@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "856006726615",
+    "project_id": "openroaming-5956b",
+    "storage_bucket": "openroaming-5956b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856006726615:android:aba7cd75715dcca4b8b192",
+        "android_client_info": {
+          "package_name": "com.tetrapi.or"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnKhHE0RL_3bO8Ouki-nVWzZVnUoLsqaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

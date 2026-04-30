@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,19 +73,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            android:text="@string/activity_login_welcome"
+            android:text="@string/activity_reset_title"
             android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_login_description" />
+            android:text="@string/activity_reset_description" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
+            android:layout_marginTop="@dimen/material_margin"
             android:hint="@string/common_email">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -96,78 +97,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/password_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            android:hint="@string/common_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textAppearance="?textAppearanceBodyMedium" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/reset_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_mini"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/activity_login_reset"
-            android:textAppearance="?textAppearanceLabelMedium" />
-
         <com.tetrapi.or.views.StateMaterialButton
-            android:id="@+id/login_button"
+            android:id="@+id/reset_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
             android:backgroundTint="?colorSecondary"
-            android:text="@string/activity_login_continue" />
-
-        <com.tetrapi.or.views.StateMaterialButton
-            android:id="@+id/saml_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_mini"
-            android:text="@string/activity_login_saml"
-            android:textColor="?colorSecondary"
-            android:visibility="gone"
-            app:strokeColor="?colorSecondary"
-            app:strokeWidth="1dp" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            android:gravity="center_horizontal">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_login_account" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/register_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/material_margin_mini"
-                android:text="@string/activity_login_register"
-                android:textColor="?colorSecondary"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:text="@string/activity_reset_title" />
 
     </LinearLayout>
 

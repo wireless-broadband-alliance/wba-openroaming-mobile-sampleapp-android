@@ -10,115 +10,137 @@
         android:orientation="vertical"
         android:padding="@dimen/material_margin_large">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/material_margin"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/img_open_roaming_event" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".25" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="75dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="@dimen/material_margin_mini"
+                android:src="@drawable/img_tetrapi"
+                app:layout_constraintBottom_toBottomOf="@id/divider"
+                app:layout_constraintEnd_toStartOf="@id/divider"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/divider" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_open_roaming"
+                app:layout_constraintBottom_toBottomOf="@id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/divider"
+                app:layout_constraintTop_toTopOf="@id/divider" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        -->
+
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_twofa_title"
+            android:layout_marginTop="@dimen/material_margin_large"
+            android:text="@string/activity_twofa"
             android:textStyle="bold" />
 
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_twofa_description" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/twofa_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_large"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp"
-            app:strokeWidth="0dp">
+            android:hint="@string/activity_twofa">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/activity_twofa_description_1"
-                android:textAppearance="?textAppearanceLabelMedium" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/twofa_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_twofa_1" />
+                android:inputType="textEmailAddress"
+                android:textAppearance="?textAppearanceBodyMedium" />
 
-        </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/request_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp"
-            app:strokeWidth="0dp">
+            android:layout_marginTop="@dimen/material_margin_mini"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/activity_twofa_request"
+            android:textAppearance="?textAppearanceLabelMedium" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/activity_twofa_description_2"
-                android:textAppearance="?textAppearanceLabelMedium" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_twofa_2" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_large"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp"
-            app:strokeWidth="0dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/material_margin"
-                android:text="@string/activity_twofa_description_3"
-                android:textAppearance="?textAppearanceLabelMedium" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin"
-            app:cardBackgroundColor="@color/color_outline"
-            app:cardCornerRadius="8dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/img_twofa_3" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/open_button"
+        <com.tetrapi.or.views.StateMaterialButton
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
             android:backgroundTint="?colorSecondary"
-            android:text="@string/activity_twofa_open" />
+            android:text="@string/activity_login_continue" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_large" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_large"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_twofa_totp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/totp_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/material_margin_mini"
+                android:text="@string/activity_twofa_configure"
+                android:textColor="?colorSecondary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

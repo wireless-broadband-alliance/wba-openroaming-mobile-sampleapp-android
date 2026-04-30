@@ -3,21 +3,20 @@ package com.tetrapi.or.activities
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.R
 import com.tetrapi.or.databinding.ActivityUserBinding
 import com.tetrapi.sdk.core.User
 import org.json.JSONObject
 
 //
-//  activity_about.xml.kt
-//  Open Roaming SDK
+//  UserActivity.kt
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class UserActivity : AppCompatActivity() {
+class UserActivity : ORActivity() {
 
     private val binding by lazy { ActivityUserBinding.inflate(layoutInflater) }
 

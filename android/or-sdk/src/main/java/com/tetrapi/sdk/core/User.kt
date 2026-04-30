@@ -8,16 +8,17 @@ import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.utils.Preferences
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.utils.Web
+import com.tetrapi.sdk.utils.isMissing2FA
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 //
 //  User.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class User {
@@ -47,21 +48,21 @@ class User {
         }
     }
 
-    fun code(activity: AppCompatActivity, email: String, password: String) {
-        if (email.isBlank() || password.isBlank()) {
+    fun code(activity: AppCompatActivity, uuid: String, password: String, type: String) {
+        if (uuid.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_login_blank_credentials)
             return onCodeError(message)
         }
 
         val params = JSONObject().apply {
-            put("uuid", email)
+            put("uuid", uuid)
             put("password", password)
         }
 
-        code(activity, params)
+        code(activity, params, type)
     }
 
-    private fun code(activity: AppCompatActivity, params: JSONObject) = activity.lifecycleScope.launch(Dispatchers.IO) {
+    private fun code(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
         val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
         if (siteKey.isNullOrBlank()) {
             val message = activity.getString(R.string.common_error_turnstile_key)
@@ -73,7 +74,7 @@ class User {
 
         val request = runCatching {
             val web = Web(activity)
-            web.code(params)
+            web.code(params, type)
         }
 
         request.onSuccess {
@@ -94,9 +95,54 @@ class User {
         /** Code failed */
     }
 
-    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null) {
+    fun validate(activity: AppCompatActivity, uuid: String, password: String, code: String, type: String) {
+        if (code.isBlank()) {
+            val message = activity.getString(R.string.open_roaming_2fa_blank_credentials)
+            return onValidateError(message)
+        }
+
+        val params = JSONObject().apply {
+            put("uuid", uuid)
+            put("password", password)
+            put("code", code)
+            put("type", type)
+        }
+
+        validate(activity, params)
+    }
+
+    private fun validate(activity: AppCompatActivity, params: JSONObject) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        val request = runCatching {
+            val web = Web(activity)
+            web.validate(params)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            if (success) onValidateSuccess(it) else onValidateError(it.getString("error"))
+        }
+
+        request.onFailure {
+            onValidateError(it.message)
+        }
+    }
+
+    var onValidateSuccess: (response: JSONObject) -> Unit = {
+        /** Validate succeeded */
+    }
+
+    var onValidateError: (message: String?) -> Unit = {
+        /** Validate failed */
+    }
+
+    fun register(activity: AppCompatActivity, email: String, password: String, nameFirst: String? = null, nameLast: String? = null, acceptedTOS: Boolean = true) {
         if (email.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_register_blank_credentials)
+            return onRegisterError(message)
+        }
+
+        if (!acceptedTOS) {
+            val message = activity.getString(R.string.open_roaming_register_terms)
             return onRegisterError(message)
         }
 
@@ -143,14 +189,14 @@ class User {
         /** Register failed */
     }
 
-    fun login(activity: AppCompatActivity, email: String, password: String, code: String? = null) {
-        if (email.isBlank() || password.isBlank()) {
+    fun login(activity: AppCompatActivity, uuid: String, password: String, code: String? = null) {
+        if (uuid.isBlank() || password.isBlank()) {
             val message = activity.getString(R.string.open_roaming_login_blank_credentials)
             return onLoginError(message)
         }
 
         val params = JSONObject().apply {
-            put("uuid", email)
+            put("uuid", uuid)
             put("password", password)
             if (code != null) put("twoFACode", code)
         }
@@ -158,15 +204,25 @@ class User {
         login(activity, params, "local")
     }
 
-    private fun login(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
-        val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
-        if (siteKey.isNullOrBlank()) {
-            val message = activity.getString(R.string.common_error_turnstile_key)
-            return@launch onLoginError(message)
+    fun login(activity: AppCompatActivity, response: String) {
+        val params = JSONObject().apply {
+            put("response", response)
         }
 
-        val token = Turnstile().getToken(activity, siteKey)
-        params.put("turnstile_token", token)
+        login(activity, params, "saml")
+    }
+
+    private fun login(activity: AppCompatActivity, params: JSONObject, type: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        if (type === "local") {
+            val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
+            if (siteKey.isNullOrBlank()) {
+                val message = activity.getString(R.string.common_error_turnstile_key)
+                return@launch onLoginError(message)
+            }
+
+            val token = Turnstile().getToken(activity, siteKey)
+            params.put("turnstile_token", token)
+        }
 
         val request = runCatching {
             val web = Web(activity)
@@ -176,6 +232,7 @@ class User {
         request.onSuccess {
             val success = it.getBoolean("success")
             if (success) it.getJSONObject("data").saveUserLogin(activity)
+            else if (it.isMissing2FA()) onLoginMissing2FA()
             else onLoginError(it.getString("error"))
         }
 
@@ -198,13 +255,58 @@ class User {
         /** Login succeeded */
     }
 
+    var onLoginMissing2FA: () -> Unit = {
+        /** Login Missing 2FA */
+    }
+
     var onLoginError: (message: String?) -> Unit = {
         /** Login failed */
     }
 
+    fun reset(activity: AppCompatActivity, email: String) = activity.lifecycleScope.launch(Dispatchers.IO) {
+        if (email.isBlank()) {
+            val message = activity.getString(R.string.open_roaming_reset_blank_credentials)
+            return@launch onResetError(message)
+        }
+
+        val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
+        if (siteKey.isNullOrBlank()) {
+            val message = activity.getString(R.string.common_error_turnstile_key)
+            return@launch onRegisterError(message)
+        }
+
+        val token = Turnstile().getToken(activity, siteKey)
+        val params = JSONObject().apply {
+            put("email", email)
+            put("turnstile_token", token)
+        }
+
+        val request = runCatching {
+            val web = Web(activity)
+            web.reset(params)
+        }
+
+        request.onSuccess {
+            val success = it.getBoolean("success")
+            if (success) onResetSuccess(it) else onResetError(it.getString("error"))
+        }
+
+        request.onFailure {
+            onResetError(it.message)
+        }
+    }
+
+    var onResetSuccess: (response: JSONObject) -> Unit = {
+        /** Reset succeeded */
+    }
+
+    var onResetError: (message: String?) -> Unit = {
+        /** Reset failed */
+    }
+
     fun info(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
         val token = jwtToken(activity)
-        if (token == null) return@launch onInfoError(activity.getString(R.string.common_error_jwt_token))
+            ?: return@launch onInfoError(activity.getString(R.string.common_error_jwt_token))
 
         val request = runCatching {
             val web = Web(activity)

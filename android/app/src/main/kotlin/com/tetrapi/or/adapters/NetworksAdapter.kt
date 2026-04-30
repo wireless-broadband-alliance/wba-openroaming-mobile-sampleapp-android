@@ -9,10 +9,10 @@ import com.tetrapi.or.databinding.ItemNetworkBinding
 
 //
 //  NetworksAdapter.java
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class NetworksAdapter(private val activity: MainActivity, private val networks: ArrayList<PasspointConfiguration>) : RecyclerView.Adapter<NetworksAdapter.ViewHolder>() {

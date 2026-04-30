@@ -3,7 +3,6 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.or.databinding.ActivityConfigBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
@@ -11,13 +10,13 @@ import com.tetrapi.sdk.core.Turnstile
 
 //
 //  ConfigActivity.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class ConfigActivity : AppCompatActivity() {
+class ConfigActivity : ORActivity() {
 
     private val binding by lazy { ActivityConfigBinding.inflate(layoutInflater) }
 

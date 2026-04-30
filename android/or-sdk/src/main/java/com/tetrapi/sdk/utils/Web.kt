@@ -3,21 +3,23 @@ package com.tetrapi.sdk.utils
 import android.content.Context
 import com.tetrapi.sdk.R
 import io.ktor.client.HttpClient
+import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.Parameters
 import io.ktor.http.contentType
 import org.json.JSONObject
 
 //
 //  Web.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class Web(private val context: Context) {
@@ -30,8 +32,18 @@ class Web(private val context: Context) {
         return JSONObject(response)
     }
 
-    suspend fun code(params: JSONObject): JSONObject {
-        val url = String.format(context.getString(R.string.open_roaming_api), "twoFA/request")
+    suspend fun code(params: JSONObject, type: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "twoFA/$type")
+        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
+    suspend fun validate(params: JSONObject): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "twoFA/validate")
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
             setBody(params.toString().trimIndent())
@@ -43,8 +55,17 @@ class Web(private val context: Context) {
     suspend fun login(params: JSONObject, type: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "auth/$type")
         val response = client.post(url) {
-            contentType(ContentType.Application.Json)
-            setBody(params.toString().trimIndent())
+
+            when (type) {
+                "local" -> {
+                    contentType(ContentType.Application.Json)
+                    setBody(params.toString())
+                }
+                else -> setBody(FormDataContent(Parameters.build {
+                    val response = params.optString("response")
+                    append("SAMLResponse", response)
+                }))
+            }
         }.bodyAsText()
 
         return JSONObject(response)
@@ -60,11 +81,32 @@ class Web(private val context: Context) {
         return JSONObject(response)
     }
 
+    suspend fun reset(params: JSONObject): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "auth/local/reset")
+        val response = client.post(url) {
+            contentType(ContentType.Application.Json)
+            setBody(params.toString().trimIndent())
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
     suspend fun getUser(token: String): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "user")
         val response = client.get(url) {
             contentType(ContentType.Application.Json)
             header("Authorization", "Bearer $token")
+        }.bodyAsText()
+
+        return JSONObject(response)
+    }
+
+    suspend fun refreshJwt(params: JSONObject, token: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "user")
+        val response = client.get(url) {
+            contentType(ContentType.Application.Json)
+            header("Authorization", "Bearer $token")
+            setBody(params.toString().trimIndent())
         }.bodyAsText()
 
         return JSONObject(response)

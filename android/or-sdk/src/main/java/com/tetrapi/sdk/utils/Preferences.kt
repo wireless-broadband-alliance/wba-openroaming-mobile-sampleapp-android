@@ -5,10 +5,10 @@ import androidx.core.content.edit
 
 //
 //  Preferences.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
 class Preferences(context: Context) {

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.tetrapi.or.databinding.ActivityAboutBinding
 import com.tetrapi.sdk.core.Config
@@ -12,13 +11,13 @@ import kotlin.text.isNotBlank
 
 //
 //  AboutActivity.kt
-//  Open Roaming SDK
+//  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2025 Tetrapi. All rights reserved.
+//  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class AboutActivity : AppCompatActivity() {
+class AboutActivity : ORActivity() {
 
     private val binding by lazy { ActivityAboutBinding.inflate(layoutInflater) }
 
