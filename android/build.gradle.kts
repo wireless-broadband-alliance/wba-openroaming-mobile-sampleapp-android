@@ -9,8 +9,10 @@ subprojects {
 
     configurations.all {
 
-        exclude(group = "javax.annotation", module = "javax.annotation-api") // GPL
-        exclude(group = "net.java.dev.jna") // LGPL
+        exclude(group = "javax.annotation", module = "javax.annotation-api")
+        exclude(group = "net.java.dev.jna")
+        exclude(group = "xpp3", module = "xpp3")
+        exclude(group = "net.sf.kxml", module = "kxml2")
 
         resolutionStrategy {
 
@@ -31,11 +33,14 @@ subprojects {
                 "com.google.guava:guava:33.6.0-android"
             )
 
+            /*
             eachDependency {
                 if (requested.group == "com.google.protobuf") {
                     useVersion("4.34.1")
                 }
             }
+
+             */
         }
     }
 }
