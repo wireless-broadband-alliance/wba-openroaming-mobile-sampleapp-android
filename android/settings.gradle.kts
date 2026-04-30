@@ -16,6 +16,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        /*
         maven {
             url = uri("https://git.tetrapi.pt/api/v4/projects/208/packages/maven")
 
@@ -39,6 +41,7 @@ dependencyResolutionManagement {
                 create<HttpHeaderAuthentication>("header")
             }
         }
+        */
     }
 }
 

@@ -2,11 +2,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     id("com.android.application")
-
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
-
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -50,18 +47,13 @@ android {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
     }
-
-    kotlin {
-
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_21
-        }
-    }
 }
 
 dependencies {
+    /*
     implementation(platform("io.grpc:grpc-bom:1.80.0"))
     implementation("com.google.protobuf:protobuf-java:4.34.1")
+    */
 
     implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
     implementation("com.google.firebase:firebase-analytics")

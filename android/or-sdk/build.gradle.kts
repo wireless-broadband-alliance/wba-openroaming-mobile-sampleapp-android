@@ -6,7 +6,6 @@ import java.util.Properties
 
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
     id("maven-publish")
 }
 
@@ -45,13 +44,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    kotlin {
-
-        compilerOptions {
-            jvmTarget = JvmTarget.JVM_21
-        }
-    }
-
     publishing {
 
         singleVariant("release") {
@@ -62,8 +54,10 @@ android {
 }
 
 dependencies {
+    /*
     implementation(platform("io.grpc:grpc-bom:1.80.0"))
     implementation("com.google.protobuf:protobuf-java:4.34.1")
+    */
 
     implementation("com.google.android.material:material:1.13.0")
     implementation("com.squareup.okhttp3:okhttp:5.3.2")
@@ -73,6 +67,7 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:3.4.3")
 }
 
+/*
 afterEvaluate {
 
     publishing {
@@ -122,3 +117,4 @@ afterEvaluate {
         }
     }
 }
+*/
