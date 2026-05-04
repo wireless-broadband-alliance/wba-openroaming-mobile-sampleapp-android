@@ -3,6 +3,8 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
@@ -39,8 +41,16 @@ class MainActivity : ORActivity() {
     }
 
     private fun user(): Boolean {
-        startActivity(Intent(this, UserActivity::class.java))
+        val intent = Intent(this, UserActivity::class.java)
+        userLauncher.launch(intent)
+
         return true
+    }
+
+    private val userLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) result.data?.getBooleanExtra("expired", false)
+            ?.takeIf { it }
+            ?.let { logout() }
     }
 
     private fun about(): Boolean {
@@ -75,7 +85,8 @@ class MainActivity : ORActivity() {
             dialog.dismiss()
 
             val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
-            Snackbar.make(binding.connectButton, message, 4000).show()
+            if (message == "JWT Token is expired!") sessionExpired(message)
+            else Snackbar.make(binding.connectButton, message, 4000).show()
         }
 
         or.connect(this)
@@ -101,5 +112,10 @@ class MainActivity : ORActivity() {
             or.remove(this, network)
             checkNetworks()
         }
+    }
+
+    private fun sessionExpired(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        logout()
     }
 }

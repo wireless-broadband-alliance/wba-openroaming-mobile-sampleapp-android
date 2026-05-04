@@ -10,6 +10,6 @@
     <color name="color_background">#FFFFFF</color>
     <color name="color_error">#BA1B1B</color>
     <color name="color_outline">#338C96A0</color>
-    <color name="color_icon_launcher_background">#7DB928</color>
+    <color name="color_icon_launcher_background">#AEFF00</color>
 
 </resources>
