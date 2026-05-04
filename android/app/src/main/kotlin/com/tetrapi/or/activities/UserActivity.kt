@@ -2,7 +2,7 @@ package com.tetrapi.or.activities
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.R
 import com.tetrapi.or.databinding.ActivityUserBinding
 import com.tetrapi.sdk.core.User
@@ -40,9 +40,9 @@ class UserActivity : ORActivity() {
         }
 
         user.onInfoError = {
-
+            val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
             runOnUiThread {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, message, 4000).show()
             }
         }
 

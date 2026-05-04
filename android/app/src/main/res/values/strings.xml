@@ -8,7 +8,7 @@
 
     <!-- Login Activity -->
     <string name="activity_login_welcome">Welcome!</string>
-    <string name="activity_login_description">To enjoy seamless and secure WIFI, please login with your credentials</string>
+    <string name="activity_login_description">To enjoy seamless and secure Wi-Fi, please login with your credentials</string>
     <string name="activity_login_configure">Configure 2FA</string>
     <string name="activity_login_reset">Reset Password</string>
     <string name="activity_login_continue">Login</string>
@@ -21,12 +21,12 @@
     <string name="activity_reset_description">Set the email you used to create your account</string>
 
     <!-- Register Activity -->
-    <string name="activity_register_description">Create your account to enjoy seamless and secure WIFI</string>
+    <string name="activity_register_description">To enjoy seamless and secure Wi-Fi, please register your account</string>
     <string name="activity_register_name_first">First Name</string>
     <string name="activity_register_name_last">Last Name</string>
     <string name="activity_register_continue">Register</string>
-    <string name="activity_register_terms">I accept the Terms and Conditions</string>
-    <string name="activity_register_privacy">I accept the Privacy Policy</string>
+    <string name="activity_register_terms"><u>I accept the Terms and Conditions</u></string>
+    <string name="activity_register_privacy"><u>I accept the Privacy Policy</u></string>
     <string name="activity_register_account">Already have an Account?</string>
     <string name="activity_register_login">Login</string>
 

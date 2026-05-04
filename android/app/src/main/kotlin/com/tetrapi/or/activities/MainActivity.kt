@@ -3,7 +3,7 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.net.wifi.hotspot2.PasspointConfiguration
 import android.os.Bundle
-import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityMainBinding
 import com.tetrapi.or.R
 import com.tetrapi.or.adapters.NetworksAdapter
@@ -71,10 +71,11 @@ class MainActivity : ORActivity() {
         }
 
         or.onConnectionError = {
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
-
             binding.connectButton.isReady()
             dialog.dismiss()
+
+            val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
+            Snackbar.make(binding.connectButton, message, 4000).show()
         }
 
         or.connect(this)

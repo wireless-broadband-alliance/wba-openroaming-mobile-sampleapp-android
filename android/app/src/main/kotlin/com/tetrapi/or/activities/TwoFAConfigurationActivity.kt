@@ -2,9 +2,10 @@ package com.tetrapi.or.activities
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.sdk.R
 import com.tetrapi.or.databinding.ActivityTwofaConfigurationBinding
 import com.tetrapi.sdk.core.User
@@ -42,7 +43,7 @@ class TwoFAConfigurationActivity : ORActivity() {
         user.onCodeError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.validateButton, message, 4000).show()
             }
         }
 
@@ -75,7 +76,7 @@ class TwoFAConfigurationActivity : ORActivity() {
         val clip = ClipData.newPlainText("TOTP Code", code)
         clipboard.setPrimaryClip(clip)
 
-        Toast.makeText(this, code, Toast.LENGTH_LONG).show()
+        Snackbar.make(binding.validateButton, code, 4000).show()
     }
 
     private fun validate(code: String) {
@@ -84,9 +85,9 @@ class TwoFAConfigurationActivity : ORActivity() {
         val user = User()
         user.onValidateSuccess = {
             val message = it.getJSONObject("data").getString("message")
-            runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-            }
+            setResult(RESULT_OK, Intent().apply {
+                putExtra("message", message)
+            })
 
             finish()
         }
@@ -95,7 +96,7 @@ class TwoFAConfigurationActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.validateButton.isReady()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.validateButton, message, 4000).show()
             }
         }
 

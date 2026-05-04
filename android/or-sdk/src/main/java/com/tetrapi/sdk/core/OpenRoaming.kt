@@ -8,7 +8,6 @@ import android.net.wifi.hotspot2.PasspointConfiguration
 import android.net.wifi.hotspot2.pps.Credential
 import android.net.wifi.hotspot2.pps.HomeSp
 import android.os.Build
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.R
@@ -62,7 +61,7 @@ class OpenRoaming {
     fun connect(activity: FragmentActivity) = activity.lifecycleScope.launch(Dispatchers.IO) {
         // Checks if device supports OpenRoaming
         val isSupported = isPasspointSupported(activity)
-        if (!isSupported) return@launch Toast.makeText(activity, activity.getString(R.string.open_roaming_not_supported), Toast.LENGTH_LONG).show()
+        if (!isSupported) return@launch onConnectionError(activity.getString(R.string.open_roaming_not_supported))
 
         // Generate RSA Keys to get Android profile
         val keyPair = generateRSAKeys()
@@ -83,7 +82,7 @@ class OpenRoaming {
             val success = it.getBoolean("success")
             activity.runOnUiThread {
                 if (success) connect(activity, keyPair, it.getJSONObject("data"))
-                else Toast.makeText(activity, it.getString("error"), Toast.LENGTH_LONG).show()
+                else onConnectionError(it.getString("error"))
             }
         }
 
