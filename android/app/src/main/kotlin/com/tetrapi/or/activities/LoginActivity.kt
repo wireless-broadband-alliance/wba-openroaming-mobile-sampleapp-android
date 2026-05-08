@@ -10,6 +10,7 @@ import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
 import com.tetrapi.sdk.core.SAML
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  LoginActivity.kt
@@ -61,7 +62,7 @@ class LoginActivity : ORActivity() {
     private val actionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             val message = it.data?.getStringExtra("message")
-            if (message != null) Snackbar.make(binding.loginButton, message, 8000).show()
+            if (message != null) Snackbar.make(binding.loginButton, message, 8000).allowInfiniteLines().show()
         }
     }
 
@@ -90,7 +91,7 @@ class LoginActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.loginButton.isReady()
-                Snackbar.make(binding.loginButton, message, 4000).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -119,8 +120,8 @@ class LoginActivity : ORActivity() {
         saml.onSAMLError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
-                binding.loginButton.isReady()
-                Snackbar.make(binding.loginButton, message, 4000).show()
+                binding.samlButton.isReady()
+                Snackbar.make(binding.samlButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -137,7 +138,7 @@ class LoginActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.loginButton.isReady()
-                Snackbar.make(binding.loginButton, message, 4000).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

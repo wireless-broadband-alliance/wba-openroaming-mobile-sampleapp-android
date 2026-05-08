@@ -8,6 +8,7 @@ import com.tetrapi.or.databinding.ActivityRegisterBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  RegisterActivity.kt
@@ -66,7 +67,7 @@ class RegisterActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.registerButton.isReady()
-                Snackbar.make(binding.registerButton, message, 4000).show()
+                Snackbar.make(binding.registerButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

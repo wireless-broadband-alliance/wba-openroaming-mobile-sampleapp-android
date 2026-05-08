@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.sdk.R
 import com.tetrapi.or.databinding.ActivityTwofaConfigurationBinding
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  TwoFAConfigurationActivity.kt
@@ -43,7 +44,7 @@ class TwoFAConfigurationActivity : ORActivity() {
         user.onCodeError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
-                Snackbar.make(binding.validateButton, message, 4000).show()
+                Snackbar.make(binding.validateButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -76,7 +77,7 @@ class TwoFAConfigurationActivity : ORActivity() {
         val clip = ClipData.newPlainText("TOTP Code", code)
         clipboard.setPrimaryClip(clip)
 
-        Snackbar.make(binding.validateButton, code, 4000).show()
+        Snackbar.make(binding.validateButton, code, 4000).allowInfiniteLines().show()
     }
 
     private fun validate(code: String) {
@@ -96,7 +97,7 @@ class TwoFAConfigurationActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.validateButton.isReady()
-                Snackbar.make(binding.validateButton, message, 4000).show()
+                Snackbar.make(binding.validateButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

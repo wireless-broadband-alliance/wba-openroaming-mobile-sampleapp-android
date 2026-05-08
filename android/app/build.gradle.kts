@@ -22,8 +22,8 @@ android {
         minSdk = 30
         targetSdk = 36
 
-        versionCode = 17
-        versionName = "1.5.0"
+        versionCode = 18
+        versionName = "1.5.1"
     }
 
     buildTypes {
@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-    implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
 

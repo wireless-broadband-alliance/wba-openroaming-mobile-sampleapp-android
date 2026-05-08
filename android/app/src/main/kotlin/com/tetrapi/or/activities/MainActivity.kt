@@ -13,6 +13,7 @@ import com.tetrapi.or.dialogs.DeleteDialog
 import com.tetrapi.or.dialogs.LoadingDialog
 import com.tetrapi.sdk.core.OpenRoaming
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 class MainActivity : ORActivity() {
 
@@ -86,7 +87,7 @@ class MainActivity : ORActivity() {
 
             val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
             if (message == "JWT Token is expired!") sessionExpired(message)
-            else Snackbar.make(binding.connectButton, message, 4000).show()
+            else Snackbar.make(binding.connectButton, message, 4000).allowInfiniteLines().show()
         }
 
         or.connect(this)

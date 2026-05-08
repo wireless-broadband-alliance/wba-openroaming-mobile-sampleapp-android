@@ -6,6 +6,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityResetBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  ResetActivity.kt
@@ -45,7 +46,7 @@ class ResetActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.resetButton.isReady()
-                Snackbar.make(binding.resetButton, message, 4000).show()
+                Snackbar.make(binding.resetButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

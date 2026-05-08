@@ -70,7 +70,13 @@ class User {
         }
 
         val token = Turnstile().getToken(activity, siteKey)
-        params.put("turnstile_token", token)
+        token.onSuccess { token ->
+            params.put("turnstile_token", token)
+        }
+
+        token.onFailure { e ->
+            return@launch onCodeError(e.message)
+        }
 
         val request = runCatching {
             val web = Web(activity)
@@ -164,7 +170,13 @@ class User {
         }
 
         val token = Turnstile().getToken(activity, siteKey)
-        params.put("turnstile_token", token)
+        token.onSuccess { token ->
+            params.put("turnstile_token", token)
+        }
+
+        token.onFailure { e ->
+            return@launch onRegisterError(e.message)
+        }
 
         val request = runCatching {
             val web = Web(activity)
@@ -221,7 +233,13 @@ class User {
             }
 
             val token = Turnstile().getToken(activity, siteKey)
-            params.put("turnstile_token", token)
+            token.onSuccess { token ->
+                params.put("turnstile_token", token)
+            }
+
+            token.onFailure { e ->
+                return@launch onLoginError(e.message)
+            }
         }
 
         val request = runCatching {
@@ -269,16 +287,23 @@ class User {
             return@launch onResetError(message)
         }
 
+        val params = JSONObject().apply {
+            put("email", email)
+        }
+
         val siteKey = Preferences(activity).getString("TURNSTILE_SITE_KEY")
         if (siteKey.isNullOrBlank()) {
             val message = activity.getString(R.string.common_error_turnstile_key)
-            return@launch onRegisterError(message)
+            return@launch onResetError(message)
         }
 
         val token = Turnstile().getToken(activity, siteKey)
-        val params = JSONObject().apply {
-            put("email", email)
-            put("turnstile_token", token)
+        token.onSuccess { token ->
+            params.put("turnstile_token", token)
+        }
+
+        token.onFailure { e ->
+            return@launch onResetError(e.message)
         }
 
         val request = runCatching {

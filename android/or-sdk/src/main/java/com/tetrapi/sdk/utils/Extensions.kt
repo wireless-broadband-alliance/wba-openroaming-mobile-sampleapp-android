@@ -3,7 +3,10 @@ package com.tetrapi.sdk.utils
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.util.Base64
+import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 import org.json.JSONObject
+
 
 //
 //  Extensions.kt
@@ -14,6 +17,14 @@ import org.json.JSONObject
 //
 
 fun Context.isAppDebuggable() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+
+fun Snackbar.allowInfiniteLines(): Snackbar {
+    val textView = view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+    textView.maxLines = Int.MAX_VALUE
+    textView.isSingleLine = false
+
+    return this
+}
 
 fun JSONObject.isMissing2FA() = getString("error") == "Invalid data: Missing required fields."
         && getJSONArray("missing_fields").length() == 1

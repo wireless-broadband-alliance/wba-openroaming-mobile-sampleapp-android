@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityTwofaBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 import kotlin.text.isNotEmpty
 
 //
@@ -55,7 +56,7 @@ class TwoFAActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.loginButton.isReady()
-                Snackbar.make(binding.loginButton, message, 4000).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -76,7 +77,7 @@ class TwoFAActivity : ORActivity() {
             val message = it.getJSONObject("data").getString("message")
             runOnUiThread {
                 binding.requestText.visibility = View.VISIBLE
-                Snackbar.make(binding.loginButton, message, 4000).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -84,7 +85,7 @@ class TwoFAActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.requestText.visibility = View.VISIBLE
-                Snackbar.make(binding.loginButton, message, 4000).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -108,7 +109,7 @@ class TwoFAActivity : ORActivity() {
     private val actionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == RESULT_OK) {
             val message = it.data?.getStringExtra("message")
-            if (message != null) Snackbar.make(binding.loginButton, message, 8000).show()
+            if (message != null) Snackbar.make(binding.loginButton, message, 8000).allowInfiniteLines().show()
         }
     }
 }
