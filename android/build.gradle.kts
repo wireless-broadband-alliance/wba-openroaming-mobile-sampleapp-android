@@ -30,9 +30,12 @@ subprojects {
                 "io.netty:netty-transport-native-unix-common:4.2.15.Final",
                 "com.google.protobuf:protobuf-java:4.35.0",
                 "com.google.protobuf:protobuf-javalite:4.35.0",
-                "com.google.guava:guava:33.6.0-android"
+                "com.google.guava:guava:33.6.0-android",
+                "org.bouncycastle:bcprov-jdk18on:1.84",
+                "org.bouncycastle:bcprov-jdk15on:1.84",
+                "org.bouncycastle:bcpkix-jdk18on:1.84"
             )
-            
+
             eachDependency {
                 if (requested.group == "com.google.protobuf") useVersion("4.35.0")
             }
