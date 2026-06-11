@@ -3,11 +3,13 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isGone
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityTwofaBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 import kotlin.text.isNotEmpty
 
 //
@@ -54,7 +56,7 @@ class TwoFAActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.loginButton.isReady()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -74,16 +76,16 @@ class TwoFAActivity : ORActivity() {
         user.onCodeSuccess = {
             val message = it.getJSONObject("data").getString("message")
             runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
                 binding.requestText.visibility = View.VISIBLE
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
         user.onCodeError = {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
                 binding.requestText.visibility = View.VISIBLE
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -101,6 +103,13 @@ class TwoFAActivity : ORActivity() {
             putExtra("password", password)
         }
 
-        startActivity(intent)
+        actionLauncher.launch(intent)
+    }
+
+    private val actionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            val message = it.data?.getStringExtra("message")
+            if (message != null) Snackbar.make(binding.loginButton, message, 8000).allowInfiniteLines().show()
+        }
     }
 }

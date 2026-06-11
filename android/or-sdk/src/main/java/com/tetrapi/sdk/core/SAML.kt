@@ -4,17 +4,14 @@ import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.JavascriptInterface
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.core.Turnstile.JSInterface
 import com.tetrapi.sdk.utils.Preferences
-import com.tetrapi.sdk.utils.Web
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.json.JSONObject
 
 //
 //  SAML.kt
@@ -39,25 +36,29 @@ class SAML {
             domStorageEnabled = true
         }
 
-        val jsInterface = object : JSInterface() {
-
-            @JavascriptInterface
-            fun onSamlResponse(response: String) {
-                onSAMLSuccess(response)
-
-                webView.visibility = View.GONE
-                webView.destroy()
-            }
-        }
-
-        webView.addJavascriptInterface(jsInterface, "JSInterface")
         webView.webViewClient = object : WebViewClient() {
+
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                onSAMLError(error?.description?.toString())
+                cleanup(activity, webView)
+            }
 
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
                 view?.evaluateJavascript(script, null)
             }
         }
+
+        val jsInterface = object : JSInterface() {
+
+            @JavascriptInterface
+            fun onSamlResponse(response: String) {
+                onSAMLSuccess(response)
+                cleanup(activity, webView)
+            }
+        }
+
+        webView.addJavascriptInterface(jsInterface, "JSInterface")
 
         val url = Preferences(activity).getString("SAML_START") ?: return onSAMLError("TODO handle empty start!")
         webView.loadUrl(url)
@@ -83,6 +84,14 @@ class SAML {
             };
         })();
     """.trimIndent()
+
+    private fun cleanup(activity: AppCompatActivity, webView: WebView) = activity.runOnUiThread {
+        val container = activity.findViewById<ViewGroup>(android.R.id.content)
+        container.removeView(webView)
+
+        webView.visibility = View.GONE
+        webView.destroy()
+    }
 
     var onSAMLSuccess: (response: String) -> Unit = {
         /** Code succeeded */

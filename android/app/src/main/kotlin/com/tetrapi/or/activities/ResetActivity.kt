@@ -1,10 +1,12 @@
 package com.tetrapi.or.activities
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityResetBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  ResetActivity.kt
@@ -33,9 +35,9 @@ class ResetActivity : ORActivity() {
         val user = User()
         user.onResetSuccess = {
             val message = it.getJSONObject("data").getString("message")
-            runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-            }
+            setResult(RESULT_OK, Intent().apply {
+                putExtra("message", message)
+            })
 
             finish()
         }
@@ -44,7 +46,7 @@ class ResetActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.resetButton.isReady()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.resetButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

@@ -3,12 +3,14 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityLoginBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
 import com.tetrapi.sdk.core.SAML
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  LoginActivity.kt
@@ -40,11 +42,13 @@ class LoginActivity : ORActivity() {
         setContentView(binding.root)
 
         binding.resetText.setOnClickListener {
-            startActivity(Intent(this, ResetActivity::class.java))
+            val intent = Intent(this, ResetActivity::class.java)
+            actionLauncher.launch(intent)
         }
 
         binding.registerText.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            val intent = Intent(this, RegisterActivity::class.java)
+            actionLauncher.launch(intent)
         }
 
         binding.loginButton.setOnClickListener {
@@ -53,6 +57,13 @@ class LoginActivity : ORActivity() {
 
         val isSAMLActive = Config.isAuthActive(this, "AUTH_SAML")
         if (isSAMLActive) setSAML()
+    }
+
+    private val actionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            val message = it.data?.getStringExtra("message")
+            if (message != null) Snackbar.make(binding.loginButton, message, 8000).allowInfiniteLines().show()
+        }
     }
 
     private fun login() {
@@ -80,7 +91,7 @@ class LoginActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.loginButton.isReady()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 
@@ -107,8 +118,11 @@ class LoginActivity : ORActivity() {
         }
 
         saml.onSAMLError = {
-            binding.loginButton.isReady()
-            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            val message = it ?: getString(R.string.common_error)
+            runOnUiThread {
+                binding.samlButton.isReady()
+                Snackbar.make(binding.samlButton, message, 4000).allowInfiniteLines().show()
+            }
         }
 
         saml.start(this)
@@ -124,7 +138,7 @@ class LoginActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.loginButton.isReady()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

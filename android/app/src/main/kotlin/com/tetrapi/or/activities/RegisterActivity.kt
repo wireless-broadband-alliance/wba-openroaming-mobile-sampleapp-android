@@ -2,12 +2,13 @@ package com.tetrapi.or.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.net.toUri
+import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityRegisterBinding
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.core.Config
 import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.utils.allowInfiniteLines
 
 //
 //  RegisterActivity.kt
@@ -38,6 +39,10 @@ class RegisterActivity : ORActivity() {
         binding.registerButton.setOnClickListener {
             register()
         }
+
+        binding.loginText.setOnClickListener {
+            finish()
+        }
     }
 
     private fun openBrowser(url: String){
@@ -51,9 +56,9 @@ class RegisterActivity : ORActivity() {
         val user = User()
         user.onRegisterSuccess = {
             val message = it.getJSONObject("data").getString("message")
-            runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-            }
+            setResult(RESULT_OK, Intent().apply {
+                putExtra("message", message)
+            })
 
             finish()
         }
@@ -62,7 +67,7 @@ class RegisterActivity : ORActivity() {
             val message = it ?: getString(R.string.common_error)
             runOnUiThread {
                 binding.registerButton.isReady()
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                Snackbar.make(binding.registerButton, message, 4000).allowInfiniteLines().show()
             }
         }
 

@@ -1,5 +1,6 @@
 package com.tetrapi.or.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -40,9 +41,10 @@ class UserActivity : ORActivity() {
         }
 
         user.onInfoError = {
-
+            val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
             runOnUiThread {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                if (message == "JWT Token is expired!") sessionExpired()
             }
         }
 
@@ -56,5 +58,13 @@ class UserActivity : ORActivity() {
         binding.typeText.text = data.getJSONArray("user_external_auths").getJSONObject(0).getString("provider")
 
         binding.createdText.text = String.format(getString(R.string.activity_user_created), data.getString("created_at"))
+    }
+
+    private fun sessionExpired() {
+        setResult(RESULT_OK, Intent().apply {
+            putExtra("expired", true)
+        })
+
+        finish()
     }
 }
