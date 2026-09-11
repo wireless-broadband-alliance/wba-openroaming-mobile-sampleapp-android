@@ -68,3 +68,6 @@ lint/tmp/
 
 # Android Profiling
 *.hprof
+
+# Android Secrets
+android/app/google-services.json
