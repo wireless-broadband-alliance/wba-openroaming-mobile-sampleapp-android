@@ -17,7 +17,7 @@ tasks.withType<CyclonedxDirectTask>().configureEach {
 }
 
 tasks.cyclonedxBom {
-    schemaVersion = Version.VERSION_17
+    schemaVersion = Version.VERSION_15
     jsonOutput = file("build/reports/gl-sbom-android.json")
     xmlOutput.unsetConvention()
 }
