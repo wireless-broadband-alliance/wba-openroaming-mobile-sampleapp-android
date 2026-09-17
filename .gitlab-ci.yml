@@ -15,3 +15,5 @@ gemnasium-maven-dependency-scanning:
     - chmod +x android/gradlew || true
     - mkdir -p android/app
     - cp "$GOOGLE_SERVICES_JSON" android/app/google-services.json || true
+  script:
+    - /analyzer run
