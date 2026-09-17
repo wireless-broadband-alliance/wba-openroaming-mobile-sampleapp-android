@@ -15,7 +15,7 @@ class Preferences(context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences(context.packageName, Context.MODE_PRIVATE)
 
-    fun saveString(key: String, value: String) {
+    fun saveString(key: String, value: String?) {
         sharedPreferences.edit { putString(key, value) }
     }
 

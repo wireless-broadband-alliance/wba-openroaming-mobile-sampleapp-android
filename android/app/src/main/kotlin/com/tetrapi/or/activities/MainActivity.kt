@@ -12,7 +12,7 @@ import com.tetrapi.or.adapters.NetworksAdapter
 import com.tetrapi.or.dialogs.DeleteDialog
 import com.tetrapi.or.dialogs.LoadingDialog
 import com.tetrapi.sdk.core.OpenRoaming
-import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.core.SDK
 import com.tetrapi.sdk.utils.allowInfiniteLines
 
 class MainActivity : ORActivity() {
@@ -60,7 +60,7 @@ class MainActivity : ORActivity() {
     }
 
     private fun logout(): Boolean {
-        User().logout(this)
+        SDK.getUser().logout()
 
         startActivity(Intent(this, LoginActivity::class.java))
         finish()

@@ -1,4 +1,4 @@
-package com.tetrapi.sdk.utils
+package com.tetrapi.sdk.core
 
 import android.content.Context
 import com.tetrapi.sdk.R
@@ -15,20 +15,30 @@ import io.ktor.http.contentType
 import org.json.JSONObject
 
 //
-//  Web.kt
+//  API.kt
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
 //  Copyright © 2026 Tetrapi. All rights reserved.
 //
 
-class Web(private val context: Context) {
+class API(private val context: Context) {
 
     private val client = HttpClient()
 
-    suspend fun getConfig(): JSONObject {
+    suspend fun config(): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "config")
         val response = client.get(url).bodyAsText()
+        return JSONObject(response)
+    }
+
+    suspend fun info(token: String): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "user")
+        val response = client.get(url) {
+            contentType(ContentType.Application.Json)
+            header("Authorization", "Bearer $token")
+        }.bodyAsText()
+
         return JSONObject(response)
     }
 
@@ -71,8 +81,8 @@ class Web(private val context: Context) {
         return JSONObject(response)
     }
 
-    suspend fun register(params: JSONObject, type: String): JSONObject {
-        val url = String.format(context.getString(R.string.open_roaming_api), "auth/$type/register")
+    suspend fun register(params: JSONObject): JSONObject {
+        val url = String.format(context.getString(R.string.open_roaming_api), "auth/local/register")
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
             setBody(params.toString().trimIndent())
@@ -86,16 +96,6 @@ class Web(private val context: Context) {
         val response = client.post(url) {
             contentType(ContentType.Application.Json)
             setBody(params.toString().trimIndent())
-        }.bodyAsText()
-
-        return JSONObject(response)
-    }
-
-    suspend fun getUser(token: String): JSONObject {
-        val url = String.format(context.getString(R.string.open_roaming_api), "user")
-        val response = client.get(url) {
-            contentType(ContentType.Application.Json)
-            header("Authorization", "Bearer $token")
         }.bodyAsText()
 
         return JSONObject(response)

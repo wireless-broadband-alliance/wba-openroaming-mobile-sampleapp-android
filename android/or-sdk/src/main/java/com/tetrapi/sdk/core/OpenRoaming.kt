@@ -11,7 +11,6 @@ import android.os.Build
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.tetrapi.sdk.R
-import com.tetrapi.sdk.utils.Web
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -68,14 +67,14 @@ class OpenRoaming {
         val publicKeyBase64 = Base64.getEncoder().encodeToString(keyPair.public.encoded)
         val publicPemFormatted = "-----BEGIN PUBLIC KEY-----\n$publicKeyBase64\n-----END PUBLIC KEY-----"
 
-        val token = User.jwtToken(activity)
+        val token = SDK.getUser().jwtToken
         val params = JSONObject().apply {
             put("public_key", publicPemFormatted)
         }
 
         val request = runCatching {
-            val web = Web(activity)
-            web.profile(params, token ?: "todo")
+            val api = API(activity)
+            api.profile(params, token ?: "todo")
         }
 
         request.onSuccess {

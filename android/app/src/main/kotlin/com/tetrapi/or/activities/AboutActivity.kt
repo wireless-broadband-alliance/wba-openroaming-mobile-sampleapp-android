@@ -6,8 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.core.net.toUri
 import com.tetrapi.or.databinding.ActivityAboutBinding
-import com.tetrapi.sdk.core.Config
-import kotlin.text.isNotBlank
+import com.tetrapi.sdk.core.SDK
 
 //
 //  AboutActivity.kt
@@ -36,14 +35,15 @@ class AboutActivity : ORActivity() {
         binding.versionText.text = String.format(getString(com.tetrapi.or.R.string.activity_about_version), if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).versionName
         else packageManager.getPackageInfo(packageName, 0).versionName)
 
+        val config = SDK.getConfig()
         binding.termsCard.setOnClickListener {
-            val url = Config.tos(this)
-            if (url != null && url.isNotBlank()) openBrowser(url)
+            val url = config.termsOfService
+            if (!url.isNullOrBlank()) openBrowser(url)
         }
 
         binding.privacyCard.setOnClickListener {
-            val url = Config.privacy(this)
-            if (url != null && url.isNotBlank()) openBrowser(url)
+            val url = config.privacyPolicy
+            if (!url.isNullOrBlank()) openBrowser(url)
         }
     }
 

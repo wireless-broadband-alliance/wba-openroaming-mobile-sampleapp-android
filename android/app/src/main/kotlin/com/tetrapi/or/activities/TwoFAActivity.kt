@@ -4,13 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isGone
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityTwofaBinding
-import com.tetrapi.sdk.R
-import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.core.SDK
 import com.tetrapi.sdk.utils.allowInfiniteLines
-import kotlin.text.isNotEmpty
+import kotlinx.coroutines.launch
+import kotlin.toString
 
 //
 //  TwoFAActivity.kt
@@ -30,12 +30,13 @@ class TwoFAActivity : ORActivity() {
 
         val uuid = intent.getStringExtra("uuid").orEmpty()
         val password = intent.getStringExtra("password").orEmpty()
+
         binding.loginButton.setOnClickListener {
-            login(uuid, password)
+            getToken(uuid, password, "login")
         }
 
         binding.requestText.setOnClickListener {
-            requestEmailCode(uuid, password)
+            getToken(uuid, password, "code")
         }
 
         binding.totpText.setOnClickListener {
@@ -43,58 +44,63 @@ class TwoFAActivity : ORActivity() {
         }
     }
 
-    private fun login(uuid: String, password: String) {
-        binding.loginButton.isLoading()
+    private fun getToken(uuid: String, password: String, type: String) = lifecycleScope.launch {
+        if (type == "login") binding.loginButton.isLoading()
+        else binding.requestText.visibility = View.GONE
 
-        val user = User()
-        user.onLoginSuccess = {
-            startActivity(Intent(this, MainActivity::class.java))
+        val result = SDK.getTurnstile().getToken(
+            activity = this@TwoFAActivity
+        )
+
+        result.onSuccess {
+            if (type == "login") login(uuid, password, it)
+            else requestEmailCode(uuid, password, it)
+        }
+
+        result.onFailure { error ->
+            if (type == "login") binding.loginButton.isReady()
+            else binding.requestText.visibility = View.VISIBLE
+
+            Snackbar.make(binding.loginButton, error.message.toString(), 4000).allowInfiniteLines().show()
+        }
+    }
+
+    private fun login(uuid: String, password: String, token: String) = lifecycleScope.launch {
+        val result = SDK.getUser().login(
+            uuid = uuid,
+            password = password,
+            code = binding.twofaEdit.text.toString().trim(),
+            token = token
+        )
+
+        result.onSuccess {
+            startActivity(Intent(this@TwoFAActivity, MainActivity::class.java))
             finish()
         }
 
-        user.onLoginError = {
-            val message = it ?: getString(R.string.common_error)
-            runOnUiThread {
-                binding.loginButton.isReady()
-                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
-            }
+        result.onFailure { error ->
+            binding.loginButton.isReady()
+            Snackbar.make(binding.loginButton, error.message.toString(), 4000).allowInfiniteLines().show()
         }
-
-        user.login(
-            this,
-            uuid = uuid,
-            password = password,
-            code = binding.twofaEdit.text.toString().trim().takeIf { it.isNotEmpty() }
-        )
     }
 
-    private fun requestEmailCode(uuid: String, password: String) {
-        if (binding.requestText.isGone) return
-        binding.requestText.visibility = View.GONE
-
-        val user = User()
-        user.onCodeSuccess = {
-            val message = it.getJSONObject("data").getString("message")
-            runOnUiThread {
-                binding.requestText.visibility = View.VISIBLE
-                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
-            }
-        }
-
-        user.onCodeError = {
-            val message = it ?: getString(R.string.common_error)
-            runOnUiThread {
-                binding.requestText.visibility = View.VISIBLE
-                Snackbar.make(binding.loginButton, message, 4000).allowInfiniteLines().show()
-            }
-        }
-
-        user.code(
-            activity = this,
+    private fun requestEmailCode(uuid: String, password: String, token: String) = lifecycleScope.launch {
+        val result = SDK.getUser().code(
             uuid = uuid,
             password = password,
-            type = "email"
+            type = "email",
+            token = token
         )
+
+        result.onSuccess {
+            binding.requestText.visibility = View.VISIBLE
+            Snackbar.make(binding.loginButton, it, 4000).allowInfiniteLines().show()
+        }
+
+        result.onFailure { error ->
+            binding.requestText.visibility = View.VISIBLE
+            Snackbar.make(binding.requestText, error.message.toString(), 4000).allowInfiniteLines().show()
+        }
     }
 
     private fun configureTotpCode(uuid: String, password: String) {
@@ -107,6 +113,7 @@ class TwoFAActivity : ORActivity() {
     }
 
     private val actionLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
         if (it.resultCode == RESULT_OK) {
             val message = it.data?.getStringExtra("message")
             if (message != null) Snackbar.make(binding.loginButton, message, 8000).allowInfiniteLines().show()

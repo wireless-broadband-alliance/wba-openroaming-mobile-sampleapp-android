@@ -2,11 +2,12 @@ package com.tetrapi.or.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityResetBinding
-import com.tetrapi.sdk.R
-import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.core.SDK
 import com.tetrapi.sdk.utils.allowInfiniteLines
+import kotlinx.coroutines.launch
 
 //
 //  ResetActivity.kt
@@ -25,34 +26,44 @@ class ResetActivity : ORActivity() {
         setContentView(binding.root)
 
         binding.resetButton.setOnClickListener {
-            reset()
+            getToken()
         }
     }
 
-    private fun reset() {
+    private fun getToken() = lifecycleScope.launch {
         binding.resetButton.isLoading()
 
-        val user = User()
-        user.onResetSuccess = {
-            val message = it.getJSONObject("data").getString("message")
+        val result = SDK.getTurnstile().getToken(
+            activity = this@ResetActivity
+        )
+
+        result.onSuccess {
+            reset(it)
+        }
+
+        result.onFailure { error ->
+            binding.resetButton.isReady()
+            Snackbar.make(binding.resetButton, error.message.toString(), 4000).allowInfiniteLines().show()
+        }
+    }
+
+    private fun reset(token: String) = lifecycleScope.launch {
+        val result = SDK.getUser().reset(
+            uuid = binding.emailEdit.text.toString().trim(),
+            token = token
+        )
+
+        result.onSuccess {
             setResult(RESULT_OK, Intent().apply {
-                putExtra("message", message)
+                putExtra("message", it)
             })
 
             finish()
         }
 
-        user.onResetError = {
-            val message = it ?: getString(R.string.common_error)
-            runOnUiThread {
-                binding.resetButton.isReady()
-                Snackbar.make(binding.resetButton, message, 4000).allowInfiniteLines().show()
-            }
+        result.onFailure { error ->
+            binding.resetButton.isReady()
+            Snackbar.make(binding.resetButton, error.message.toString(), 4000).allowInfiniteLines().show()
         }
-
-        user.reset(
-            activity = this,
-            email = binding.emailEdit.text.toString().trim()
-        )
     }
 }

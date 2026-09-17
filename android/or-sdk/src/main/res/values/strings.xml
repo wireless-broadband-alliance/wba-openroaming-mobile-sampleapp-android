@@ -7,22 +7,9 @@
     <!-- 2FA -->
     <string name="open_roaming_2fa_blank_credentials">You need to set your 2FA code to continue!</string>
 
-    <!-- Login -->
-    <string name="open_roaming_login_blank_credentials">You need to set your username and password to login!</string>
-
-    <!-- Reset -->
-    <string name="open_roaming_reset_blank_credentials">You need to set your email to reset the password!</string>
-
-    <!-- Register -->
-    <string name="open_roaming_register_blank_credentials">You need to set at least a username and password to register!</string>
-    <string name="open_roaming_register_terms">You need to accept or Terms &amp; Conditions and Privacy Policy to register!</string>
-
-    <!-- Google SignIn Button -->
-    <string name="google_sign_in_button">Continue with Google</string>
-
     <!-- Common -->
     <string name="common_error">An expected error occurred…</string>
     <string name="common_error_turnstile_key">The Turnstile key is invalid… Please run the config endpoint to get a new Key!</string>
-    <string name="common_error_jwt_token">The JWT Token does not exist or it is expired!</string>
+    <string name="common_error_jwt_token">The JWT Token does not exist, or it is expired!</string>
 
 </resources>

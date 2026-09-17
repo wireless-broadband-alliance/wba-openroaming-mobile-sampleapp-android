@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.tetrapi.or.R
 import com.tetrapi.or.databinding.ActivityUserBinding
-import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.core.SDK
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 //
@@ -32,23 +34,21 @@ class UserActivity : ORActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        val user = User()
-        user.onInfoSuccess = {
+        fetchInfo()
+    }
 
-            runOnUiThread {
-                setInfo(it)
-            }
+    private fun fetchInfo() = lifecycleScope.launch {
+        val result = SDK.getUser().info()
+        result.onSuccess {
+            setInfo(it)
         }
 
-        user.onInfoError = {
-            val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
-            runOnUiThread {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-                if (message == "JWT Token is expired!") sessionExpired()
-            }
-        }
+        result.onFailure { error ->
+            val message = error.message.toString()
+            Toast.makeText(this@UserActivity, message, Toast.LENGTH_LONG).show()
 
-        user.info(this)
+            if (message == "JWT Token is expired!") sessionExpired()
+        }
     }
 
     private fun setInfo(data: JSONObject) {

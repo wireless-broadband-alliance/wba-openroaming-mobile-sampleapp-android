@@ -3,12 +3,12 @@ package com.tetrapi.or.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.tetrapi.or.databinding.ActivityRegisterBinding
-import com.tetrapi.sdk.R
-import com.tetrapi.sdk.core.Config
-import com.tetrapi.sdk.core.User
+import com.tetrapi.sdk.core.SDK
 import com.tetrapi.sdk.utils.allowInfiniteLines
+import kotlinx.coroutines.launch
 
 //
 //  RegisterActivity.kt
@@ -26,18 +26,19 @@ class RegisterActivity : ORActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val config = SDK.getConfig()
         binding.termsText.setOnClickListener {
-            val url = Config.tos(this)
+            val url = config.termsOfService
             if (!url.isNullOrBlank()) openBrowser(url)
         }
 
         binding.privacyText.setOnClickListener {
-            val url = Config.privacy(this)
+            val url = config.privacyPolicy
             if (!url.isNullOrBlank()) openBrowser(url)
         }
 
         binding.registerButton.setOnClickListener {
-            register()
+            getToken()
         }
 
         binding.loginText.setOnClickListener {
@@ -50,34 +51,44 @@ class RegisterActivity : ORActivity() {
         startActivity(intent)
     }
 
-    private fun register() {
+    private fun getToken() = lifecycleScope.launch {
         binding.registerButton.isLoading()
 
-        val user = User()
-        user.onRegisterSuccess = {
-            val message = it.getJSONObject("data").getString("message")
+        val result = SDK.getTurnstile().getToken(
+            activity = this@RegisterActivity
+        )
+
+        result.onSuccess {
+            register(it)
+        }
+
+        result.onFailure { error ->
+            binding.registerButton.isReady()
+            Snackbar.make(binding.registerButton, error.message.toString(), 4000).allowInfiniteLines().show()
+        }
+    }
+
+    private fun register(token: String) = lifecycleScope.launch {
+        val result = SDK.getUser().register(
+            uuid = binding.emailEdit.text.toString().trim(),
+            password = binding.passwordEdit.text.toString().trim(),
+            nameFirst = binding.nameFirstEdit.text.toString().trim().takeIf { it.isNotEmpty() },
+            nameLast = binding.nameLastEdit.text.toString().trim().takeIf { it.isNotEmpty() },
+            acceptedTOS = binding.termsCheckbox.isChecked && binding.privacyCheckbox.isChecked,
+            token = token
+        )
+
+        result.onSuccess {
             setResult(RESULT_OK, Intent().apply {
-                putExtra("message", message)
+                putExtra("message", it)
             })
 
             finish()
         }
 
-        user.onRegisterError = {
-            val message = it ?: getString(R.string.common_error)
-            runOnUiThread {
-                binding.registerButton.isReady()
-                Snackbar.make(binding.registerButton, message, 4000).allowInfiniteLines().show()
-            }
+        result.onFailure { error ->
+            binding.registerButton.isReady()
+            Snackbar.make(binding.registerButton, error.message.toString(), 4000).allowInfiniteLines().show()
         }
-
-        user.register(
-            activity = this,
-            email = binding.emailEdit.text.toString().trim(),
-            password = binding.passwordEdit.text.toString().trim(),
-            nameFirst = binding.nameFirstEdit.text.toString().trim().takeIf { it.isNotEmpty() },
-            nameLast = binding.nameLastEdit.text.toString().trim().takeIf { it.isNotEmpty() },
-            acceptedTOS = binding.termsCheckbox.isChecked && binding.privacyCheckbox.isChecked
-        )
     }
 }
