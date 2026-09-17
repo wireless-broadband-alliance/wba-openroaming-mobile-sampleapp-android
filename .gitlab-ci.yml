@@ -29,7 +29,3 @@ generate_sbom:
     paths:
       - android/build/reports/gl-sbom-android.json
     expire_in: 30 days
-
-gemnasium-maven-dependency-scanning:
-  stage: test
-  needs: ["generate_sbom"]
