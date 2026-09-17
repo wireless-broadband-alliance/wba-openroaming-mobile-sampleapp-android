@@ -4,13 +4,17 @@ stages:
 
 variables:
   GRADLE_CLI_OPTS: "--no-daemon"
-  DS_SBD_ENABLED: "true"
-  DS_SBD_SBOM_PATH: "android/build/reports/gl-sbom-android.json"
-  DS_MAX_DEPTH: "0"
+  DS_EXCLUDED_PATHS: "**/build/**, **/app/build/**"
 
 include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+default:
+  before_script:
+    - chmod +x android/gradlew || true
+    - mkdir -p android/app
+    - cp "$GOOGLE_SERVICES_JSON" android/app/google-services.json || true
 
 generate_sbom:
   stage: build
@@ -18,10 +22,11 @@ generate_sbom:
   script:
     - cd android
     - ./gradlew cyclonedxBom --no-daemon
+    - mv build/reports/gl-sbom-android.json build/reports/gl-sbom-android.cdx.json
   artifacts:
     name: "sbom-cyclonedx-$CI_COMMIT_REF_NAME"
     reports:
-      cyclonedx: android/build/reports/gl-sbom-android.json
+      cyclonedx: android/build/reports/gl-sbom-android.cdx.json
     paths:
-      - android/build/reports/gl-sbom-android.json
+      - android/build/reports/gl-sbom-android.cdx.json
     expire_in: 30 days
