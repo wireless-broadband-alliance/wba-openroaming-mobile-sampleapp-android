@@ -4,7 +4,6 @@ stages:
 
 variables:
   GRADLE_CLI_OPTS: "--no-daemon"
-
   DS_SBD_SBOM_PATH: "android/build/reports/gl-sbom-android.json"
 
 include:
@@ -33,6 +32,4 @@ generate_sbom:
 
 gemnasium-maven-dependency-scanning:
   stage: test
-  needs:
-    - job: generate_sbom
-      artifacts: true
+  needs: ["generate_sbom"]
