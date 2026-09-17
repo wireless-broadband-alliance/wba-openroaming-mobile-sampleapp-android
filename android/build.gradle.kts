@@ -22,12 +22,13 @@ subprojects {
 
         resolutionStrategy {
 
+            force("com.google.guava:guava:33.6.0-android")
+            
             eachDependency {
 
                 when (requested.group) {
                     "io.netty" -> useVersion("4.2.17.Final")
                     "com.google.protobuf" -> useVersion("4.35.0")
-                    "com.google.guava" -> useVersion("33.6.0-android")
                     "org.bouncycastle" -> useVersion("1.86")
                 }
             }
