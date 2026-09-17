@@ -22,8 +22,12 @@ subprojects {
 
         resolutionStrategy {
 
-            force("com.google.guava:guava:33.6.0-android")
-            
+            force(
+                "com.google.guava:guava:33.6.0-android",
+                "org.apache.httpcomponents:httpclient:4.5.13",
+                "org.apache.commons:commons-lang3:3.18.0"
+            )
+
             eachDependency {
 
                 when (requested.group) {
