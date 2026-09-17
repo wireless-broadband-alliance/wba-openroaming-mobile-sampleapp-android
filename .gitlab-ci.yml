@@ -4,7 +4,9 @@ stages:
 
 variables:
   GRADLE_CLI_OPTS: "--no-daemon"
+  DS_SBD_ENABLED: "true"
   DS_SBD_SBOM_PATH: "android/build/reports/gl-sbom-android.json"
+  SECURE_LOG_LEVEL: "info"
 
 include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
