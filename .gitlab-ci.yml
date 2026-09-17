@@ -1,11 +1,14 @@
 stages:
-  - test
   - build
+  - test
 
 variables:
   GRADLE_CLI_OPTS: "--no-daemon"
 
+  DS_SBD_SBOM_PATH: "android/build/reports/gl-sbom-android.json"
+
 include:
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
 
 default:
@@ -27,3 +30,9 @@ generate_sbom:
     paths:
       - android/build/reports/gl-sbom-android.json
     expire_in: 30 days
+
+gemnasium-maven-dependency-scanning:
+  stage: test
+  needs:
+    - job: generate_sbom
+      artifacts: true
