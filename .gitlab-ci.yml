@@ -6,16 +6,11 @@ variables:
   GRADLE_CLI_OPTS: "--no-daemon"
   DS_SBD_ENABLED: "true"
   DS_SBD_SBOM_PATH: "android/build/reports/gl-sbom-android.json"
+  DS_MAX_DEPTH: "0"
 
 include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/Secret-Detection.gitlab-ci.yml
-
-gemnasium-maven-dependency-scanning:
-  variables:
-    DS_SBD_ENABLED: "true"
-    DS_SBD_SBOM_PATH: "android/build/reports/gl-sbom-android.json"
-    DS_SEARCH_MAX_DEPTH: "0" 
 
 generate_sbom:
   stage: build
