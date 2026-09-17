@@ -8,6 +8,10 @@ plugins {
     id("org.cyclonedx.bom") version "3.4.1"
 }
 
+tasks.cyclonedxBom {
+    jsonOutput = layout.buildDirectory.file("reports/gl-sbom-android.json")
+}
+
 subprojects {
 
     configurations.all {
