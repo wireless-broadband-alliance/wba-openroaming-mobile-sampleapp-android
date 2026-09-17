@@ -22,11 +22,10 @@ generate_sbom:
   script:
     - cd android
     - ./gradlew cyclonedxBom --no-daemon
-    - mv build/reports/gl-sbom-android.json build/reports/gl-sbom-android.cdx.json
   artifacts:
     name: "sbom-cyclonedx-$CI_COMMIT_REF_NAME"
     reports:
-      cyclonedx: android/build/reports/gl-sbom-android.cdx.json
+      cyclonedx: android/build/reports/gl-sbom-android.json
     paths:
-      - android/build/reports/gl-sbom-android.cdx.json
+      - android/build/reports/gl-sbom-android.json
     expire_in: 30 days
