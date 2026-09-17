@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimaryDark"
+        app:navigationIcon="@drawable/ic_back"
+        app:navigationIconTint="?colorPrimary">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_tetrapi"
+                app:tint="?colorPrimary" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="@dimen/material_margin_mini"
+                android:src="@drawable/ic_or"
+                app:tint="?colorPrimary" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/material_margin_large">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_about"
+                android:drawablePadding="@dimen/material_margin_mini"
+                android:gravity="center"
+                android:text="@string/activity_main_about"
+                android:textAppearance="?textAppearanceLabelLarge"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".25" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="75dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guideline"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="@dimen/material_margin_mini"
+                    android:src="@drawable/img_tetrapi"
+                    app:layout_constraintBottom_toBottomOf="@id/divider"
+                    app:layout_constraintEnd_toStartOf="@id/divider"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/divider" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img_open_roaming"
+                    app:layout_constraintBottom_toBottomOf="@id/divider"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/divider"
+                    app:layout_constraintTop_toTopOf="@id/divider" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin"
+                app:cardBackgroundColor="@color/color_outline"
+                app:cardCornerRadius="8dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/material_margin_large">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/version_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/material_margin_mini"
+                        android:gravity="center_horizontal"
+                        android:text="@string/activity_about_version"
+                        android:textAppearance="?textAppearanceTitleMedium"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/material_margin_mini"
+                        android:gravity="center_horizontal"
+                        android:text="@string/activity_about_copyright"
+                        android:textAppearance="?textAppearanceLabelMedium" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/terms_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_large"
+                app:cardBackgroundColor="?colorPrimaryDark"
+                app:cardCornerRadius="8dp"
+                app:strokeWidth="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_terms"
+                    android:drawablePadding="@dimen/material_margin"
+                    android:drawableTint="?colorPrimary"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/material_margin"
+                    android:paddingTop="@dimen/material_margin_mini"
+                    android:paddingEnd="@dimen/material_margin"
+                    android:paddingBottom="@dimen/material_margin_mini"
+                    android:text="@string/activity_about_terms"
+                    android:textAppearance="?textAppearanceTitleMedium"
+                    android:textColor="?colorPrimary" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/privacy_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_mini"
+                app:cardBackgroundColor="?colorPrimaryDark"
+                app:cardCornerRadius="8dp"
+                app:strokeWidth="0dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_privacy"
+                    android:drawablePadding="@dimen/material_margin"
+                    android:drawableTint="?colorPrimary"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/material_margin"
+                    android:paddingTop="@dimen/material_margin_mini"
+                    android:paddingEnd="@dimen/material_margin"
+                    android:paddingBottom="@dimen/material_margin_mini"
+                    android:text="@string/activity_about_privacy"
+                    android:textAppearance="?textAppearanceTitleMedium"
+                    android:textColor="?colorPrimary" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
