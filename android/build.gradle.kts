@@ -22,28 +22,14 @@ subprojects {
 
         resolutionStrategy {
 
-            force(
-                "io.netty:netty-all:4.2.17.Final",
-                "io.netty:netty-buffer:4.2.17.Final",
-                "io.netty:netty-codec:4.2.17.Final",
-                "io.netty:netty-codec-http:4.2.17.Final",
-                "io.netty:netty-codec-http2:4.2.17.Final",
-                "io.netty:netty-common:4.2.17.Final",
-                "io.netty:netty-handler:4.2.17.Final",
-                "io.netty:netty-handler-proxy:4.2.17.Final",
-                "io.netty:netty-resolver:4.2.17.Final",
-                "io.netty:netty-transport:4.2.17.Final",
-                "io.netty:netty-transport-native-unix-common:4.2.17.Final",
-                "com.google.protobuf:protobuf-java:4.35.0",
-                "com.google.protobuf:protobuf-javalite:4.35.0",
-                "com.google.guava:guava:33.6.0-android",
-                "org.bouncycastle:bcprov-jdk18on:1.84",
-                "org.bouncycastle:bcprov-jdk15on:1.84",
-                "org.bouncycastle:bcpkix-jdk18on:1.84"
-            )
-
             eachDependency {
-                if (requested.group == "com.google.protobuf") useVersion("4.35.0")
+
+                when (requested.group) {
+                    "io.netty" -> useVersion("4.2.17.Final")
+                    "com.google.protobuf" -> useVersion("4.35.0")
+                    "com.google.guava" -> useVersion("33.6.0-android")
+                    "org.bouncycastle" -> useVersion("1.86")
+                }
             }
         }
     }
