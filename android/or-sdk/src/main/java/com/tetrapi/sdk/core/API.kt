@@ -3,6 +3,8 @@ package com.tetrapi.sdk.core
 import android.content.Context
 import com.tetrapi.sdk.R
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -24,7 +26,13 @@ import org.json.JSONObject
 
 class API(private val context: Context) {
 
-    private val client = HttpClient()
+    private val client = HttpClient(OkHttp) {
+
+        defaultRequest {
+            header("User-Agent", "Android/App")
+            header("Accept", "application/json")
+        }
+    }
 
     suspend fun config(): JSONObject {
         val url = String.format(context.getString(R.string.open_roaming_api), "config")

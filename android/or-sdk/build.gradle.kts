@@ -29,21 +29,9 @@ android {
         }
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    publishing {
-
-        singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
-        }
     }
 }
 
@@ -55,5 +43,5 @@ dependencies {
     implementation("androidx.startup:startup-runtime:1.2.0")
 
     implementation("io.ktor:ktor-client-core:3.5.2")
-    implementation("io.ktor:ktor-client-cio:3.5.2")
+    implementation("io.ktor:ktor-client-okhttp:3.5.2")
 }

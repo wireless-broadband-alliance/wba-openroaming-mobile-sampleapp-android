@@ -10,48 +10,11 @@
         android:orientation="vertical"
         android:padding="@dimen/material_margin_large">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent=".25" />
-
-            <com.google.android.material.divider.MaterialDivider
-                android:id="@+id/divider"
-                android:layout_width="1dp"
-                android:layout_height="75dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guideline"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:padding="@dimen/material_margin_mini"
-                android:src="@drawable/img_tetrapi"
-                app:layout_constraintBottom_toBottomOf="@id/divider"
-                app:layout_constraintEnd_toStartOf="@id/divider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/divider" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_open_roaming"
-                app:layout_constraintBottom_toBottomOf="@id/divider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/divider"
-                app:layout_constraintTop_toTopOf="@id/divider" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginTop="@dimen/material_margin"
+            android:src="@drawable/img_wba" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -113,9 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin"
-            android:textColor="?colorPrimary"
             android:backgroundTint="?colorSecondary"
-            android:text="@string/activity_login_continue" />
+            android:text="@string/activity_login_continue"
+            android:textColor="?colorPrimary" />
 
         <com.tetrapi.or.views.StateMaterialButton
             android:id="@+id/saml_button"
@@ -154,6 +117,24 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/material_margin_large">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_open_roaming"
+                app:layout_constraintDimensionRatio="1:.25"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".75" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

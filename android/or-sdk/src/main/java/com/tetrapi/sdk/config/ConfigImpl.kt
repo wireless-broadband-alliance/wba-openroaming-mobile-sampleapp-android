@@ -54,7 +54,7 @@ class ConfigImpl(
             preferences.saveBoolean("AUTH_SAML", getBoolean("AUTH_METHOD_SAML_ENABLED"))
         }
 
-        data.getJSONObject("saml").apply {
+        if (data.has("saml")) data.getJSONObject("saml").apply {
             preferences.saveString("SAML_START", "https://wifi.tetrapi.pt/saml/login")
         }
 
