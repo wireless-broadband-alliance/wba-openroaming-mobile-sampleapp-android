@@ -13,7 +13,6 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.tetrapi.sdk.R
 import com.tetrapi.sdk.utils.Preferences
-import com.tetrapi.sdk.utils.isAppDebuggable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -36,8 +35,7 @@ class TurnstileImpl(
         get() = preferences.getString("TURNSTILE_SITE_KEY")
 
     override suspend fun getToken(activity: AppCompatActivity): Result<String> = runCatching {
-        if (activity.isAppDebuggable()) "openroaming"
-        else fetchToken(activity)
+        fetchToken(activity)
     }
 
     private suspend fun fetchToken(activity: AppCompatActivity): String = withContext(Dispatchers.Main) {

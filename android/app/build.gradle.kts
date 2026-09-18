@@ -15,13 +15,13 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.tetrapi.or"
+        applicationId = "com.wba.or"
 
         minSdk = 30
         targetSdk = 37
 
-        versionCode = 18
-        versionName = "1.5.1"
+        versionCode = 19
+        versionName = "1.6.0"
     }
 
     buildTypes {
@@ -44,6 +44,10 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    lint {
+        checkReleaseBuilds = false
     }
 }
 

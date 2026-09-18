@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="wifi.tetrapi.pt"
+                    android:host="openroamingconnect.org"
                     android:pathPrefix="/return-to-app"
                     android:scheme="https" />
 

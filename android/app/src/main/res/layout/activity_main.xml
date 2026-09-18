@@ -12,26 +12,13 @@
         android:background="?colorPrimaryDark"
         app:menu="@menu/menu_main">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_tetrapi"
-                app:tint="?colorPrimary" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/material_margin_mini"
-                android:src="@drawable/ic_or"
-                app:tint="?colorPrimary" />
-
-        </LinearLayout>
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/material_margin_mini"
+            android:src="@drawable/ic_or"
+            app:tint="?colorPrimary" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
