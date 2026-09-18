@@ -23,11 +23,17 @@ generate_sbom:
     - apk add --no-cache curl
     - curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
   script:
-    - syft dir:./android -o cyclonedx-json@1.5=gl-sbom-android.json
+    - syft dir:./android -o cyclonedx-json@1.5=gl-sbom-android.cdx.json
   artifacts:
     name: "sbom-cyclonedx-$CI_COMMIT_REF_NAME"
     reports:
-      cyclonedx: gl-sbom-android.json
+      cyclonedx: gl-sbom-android.cdx.json
     paths:
-      - gl-sbom-android.json
+      - gl-sbom-android.cdx.json
     expire_in: 30 days
+
+gemnasium-maven-dependency_scanning:
+  needs: ["generate_sbom"]
+  dependencies: ["generate_sbom"]
+  before_script:
+    - find . -name "build.gradle*" -exec mv {} {}.bak \;
