@@ -1,3 +1,6 @@
+import org.cyclonedx.Version
+import org.cyclonedx.gradle.CyclonedxDirectTask
+
 plugins {
     id("com.android.application") version "9.4.0" apply false
     id("com.android.library") version "9.4.0" apply false
@@ -8,8 +11,15 @@ plugins {
     id("org.cyclonedx.bom") version "3.4.1"
 }
 
+tasks.withType<CyclonedxDirectTask>().configureEach {
+    includeConfigs.set(listOf("releaseRuntimeClasspath"))
+    schemaVersion.set(Version.VERSION_15)
+}
+
 tasks.cyclonedxBom {
-    jsonOutput = layout.buildDirectory.file("reports/gl-sbom-android.json")
+    schemaVersion = Version.VERSION_15
+    jsonOutput = file("build/reports/gl-sbom-android.json")
+    xmlOutput.unsetConvention()
 }
 
 subprojects {
