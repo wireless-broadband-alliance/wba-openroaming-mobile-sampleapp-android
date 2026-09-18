@@ -7,19 +7,6 @@ plugins {
 
     id("com.google.gms.google-services") version "4.5.0" apply false
     id("com.google.firebase.crashlytics") version "3.0.8" apply false
-
-    id("org.cyclonedx.bom") version "3.4.1"
-}
-
-tasks.withType<CyclonedxDirectTask>().configureEach {
-    includeConfigs.set(listOf("releaseRuntimeClasspath"))
-    schemaVersion.set(Version.VERSION_15)
-}
-
-tasks.cyclonedxBom {
-    schemaVersion = Version.VERSION_15
-    jsonOutput = file("build/reports/gl-sbom-android.json")
-    xmlOutput.unsetConvention()
 }
 
 subprojects {
