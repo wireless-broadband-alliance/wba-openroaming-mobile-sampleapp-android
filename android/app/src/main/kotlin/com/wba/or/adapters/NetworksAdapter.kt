@@ -1,18 +1,18 @@
-package com.tetrapi.or.adapters
+package com.wba.or.adapters
 
 import android.net.wifi.hotspot2.PasspointConfiguration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tetrapi.or.activities.MainActivity
-import com.tetrapi.or.databinding.ItemNetworkBinding
+import com.wba.or.activities.MainActivity
+import com.wba.or.databinding.ItemNetworkBinding
 
 //
 //  NetworksAdapter.java
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class NetworksAdapter(private val activity: MainActivity, private val networks: ArrayList<PasspointConfiguration>) : RecyclerView.Adapter<NetworksAdapter.ViewHolder>() {

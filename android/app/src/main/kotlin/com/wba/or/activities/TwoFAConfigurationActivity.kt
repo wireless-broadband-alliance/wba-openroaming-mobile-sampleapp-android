@@ -1,4 +1,4 @@
-package com.tetrapi.or.activities
+package com.wba.or.activities
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
-import com.tetrapi.or.databinding.ActivityTwofaConfigurationBinding
-import com.tetrapi.sdk.core.SDK
-import com.tetrapi.sdk.utils.allowInfiniteLines
+import com.wba.or.databinding.ActivityTwofaConfigurationBinding
+import com.wba.sdk.core.SDK
+import com.wba.sdk.utils.allowInfiniteLines
 import kotlinx.coroutines.launch
 
 //
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class TwoFAConfigurationActivity : ORActivity() {
@@ -65,7 +65,7 @@ class TwoFAConfigurationActivity : ORActivity() {
     }
 
     private fun showTotpCode(uuid: String, password: String, key: String) {
-        binding.requestText.text = getString(com.tetrapi.or.R.string.activity_twofa_configuration_description)
+        binding.requestText.text = getString(com.wba.or.R.string.activity_twofa_configuration_description)
         binding.requestLoading.visibility = View.GONE
 
         binding.totpLayout.visibility = View.VISIBLE

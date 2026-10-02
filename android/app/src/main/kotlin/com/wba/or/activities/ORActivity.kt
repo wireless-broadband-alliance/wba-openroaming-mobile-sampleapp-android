@@ -1,4 +1,4 @@
-package com.tetrapi.or.activities
+package com.wba.or.activities
 
 import android.os.Bundle
 import android.view.View
@@ -8,14 +8,14 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.MaterialToolbar
-import com.tetrapi.or.R
+import com.wba.or.R
 
 //
 //  ORActivity.kt
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 abstract class ORActivity : AppCompatActivity() {

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Application -->
-    <string name="app_name">OpenRoaming Mobile</string>
+    <string name="app_name">OpenRoaming WBA</string>
 
     <!-- Config Activity -->
     <string name="activity_config_description">Getting OpenRoaming configuration…</string>

@@ -1,4 +1,4 @@
-package com.tetrapi.or.dialogs
+package com.wba.or.dialogs
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.tetrapi.or.R
+import com.wba.or.R
 
 //
 //  LoadingDialog.kt
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class LoadingDialog : DialogFragment() {

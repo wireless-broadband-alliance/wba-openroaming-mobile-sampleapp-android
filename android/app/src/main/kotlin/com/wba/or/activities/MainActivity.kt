@@ -1,4 +1,4 @@
-package com.tetrapi.or.activities
+package com.wba.or.activities
 
 import android.content.Intent
 import android.net.wifi.hotspot2.PasspointConfiguration
@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
-import com.tetrapi.or.databinding.ActivityMainBinding
-import com.tetrapi.or.R
-import com.tetrapi.or.adapters.NetworksAdapter
-import com.tetrapi.or.dialogs.DeleteDialog
-import com.tetrapi.or.dialogs.LoadingDialog
-import com.tetrapi.sdk.core.OpenRoaming
-import com.tetrapi.sdk.core.SDK
-import com.tetrapi.sdk.utils.allowInfiniteLines
+import com.wba.or.databinding.ActivityMainBinding
+import com.wba.or.R
+import com.wba.or.adapters.NetworksAdapter
+import com.wba.or.dialogs.DeleteDialog
+import com.wba.or.dialogs.LoadingDialog
+import com.wba.sdk.core.OpenRoaming
+import com.wba.sdk.core.SDK
+import com.wba.sdk.utils.allowInfiniteLines
 
 class MainActivity : ORActivity() {
 
@@ -85,7 +85,7 @@ class MainActivity : ORActivity() {
             binding.connectButton.isReady()
             dialog.dismiss()
 
-            val message = it ?: getString(com.tetrapi.sdk.R.string.common_error)
+            val message = it ?: getString(com.wba.sdk.R.string.common_error)
             if (message == "JWT Token is expired!") sessionExpired(message)
             else Snackbar.make(binding.connectButton, message, 4000).allowInfiniteLines().show()
         }
