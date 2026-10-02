@@ -35,7 +35,7 @@ This sample app serves as an end-to-end implementation guide for developers look
 Clone the repository along with the SDK module/submodule:
 
 ```bash
-git clone --recursive [https://git.tetrapi.pt/tcs/wba/wba-openroaming-android.git](https://git.tetrapi.pt/tcs/wba/wba-openroaming-android.git)
+git clone --recursive https://git.tetrapi.pt/tcs/wba/wba-openroaming-android.git
 cd wba-openroaming-android
 ```
 
@@ -44,7 +44,7 @@ Open `or-sdk/src/main/res/values/strings.xml` and update the `open_roaming_api` 
 
 ```xml
 <resources>
-    <string name="open_roaming_api">[https://your-api-domain.com/v1/%s](https://your-api-domain.com/v1/%s)</string>
+    <string name="open_roaming_api">https://your-api-domain.com/v1/%1$s</string>
     <string name="open_roaming_not_supported">Your device does not support Wi-Fi Passpoint (OpenRoaming).</string>
 </resources>
 ```
