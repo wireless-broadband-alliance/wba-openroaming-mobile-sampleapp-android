@@ -36,7 +36,7 @@ Clone the repository along with the SDK module/submodule:
 
 ```bash
 git clone https://github.com/wireless-broadband-alliance/wba-openroaming-mobile-sampleapp-android
-cd wba-openroaming-android
+cd wba-openroaming-mobile-sampleapp-android
 ```
 
 ### 2. Configure API Endpoints
