@@ -35,7 +35,7 @@ This sample app serves as an end-to-end implementation guide for developers look
 Clone the repository along with the SDK module/submodule:
 
 ```bash
-git clone --recursive https://git.tetrapi.pt/tcs/wba/wba-openroaming-android.git
+git clone https://github.com/wireless-broadband-alliance/wba-openroaming-mobile-sampleapp-android
 cd wba-openroaming-android
 ```
 
@@ -61,7 +61,7 @@ Open `or-sdk/src/main/res/values/strings.xml` and update the `open_roaming_api` 
 ```text
 app/
  ├── src/main/
- │    ├── java/ (or kotlin/) com/tetrapi/or/
+ │    ├── java/ (or kotlin/) com/wba/or/
  │    │    ├── activities/                   # Application activities and screens
  │    │    │    ├── AboutActivity.kt         # Information & About screen
  │    │    │    ├── LoginActivity.kt         # User authentication screen

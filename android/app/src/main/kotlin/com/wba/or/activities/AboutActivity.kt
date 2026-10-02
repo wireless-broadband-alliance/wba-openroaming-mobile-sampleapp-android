@@ -1,19 +1,19 @@
-package com.tetrapi.or.activities
+package com.wba.or.activities
 
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.core.net.toUri
-import com.tetrapi.or.databinding.ActivityAboutBinding
-import com.tetrapi.sdk.core.SDK
+import com.wba.or.databinding.ActivityAboutBinding
+import com.wba.sdk.core.SDK
 
 //
 //  AboutActivity.kt
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class AboutActivity : ORActivity() {
@@ -32,7 +32,7 @@ class AboutActivity : ORActivity() {
         }
 
         @Suppress("DEPRECATION")
-        binding.versionText.text = String.format(getString(com.tetrapi.or.R.string.activity_about_version), if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).versionName
+        binding.versionText.text = String.format(getString(com.wba.or.R.string.activity_about_version), if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0)).versionName
         else packageManager.getPackageInfo(packageName, 0).versionName)
 
         val config = SDK.getConfig()

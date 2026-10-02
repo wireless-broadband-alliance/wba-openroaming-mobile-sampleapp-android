@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tetrapi.or"
+    namespace = "com.wba.or"
 
     compileSdk {
 

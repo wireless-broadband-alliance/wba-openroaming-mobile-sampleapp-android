@@ -42,7 +42,7 @@
                 android:textAppearance="?textAppearanceLabelLarge"
                 android:textStyle="bold" />
 
-            <com.tetrapi.or.views.StateMaterialButton
+            <com.wba.or.views.StateMaterialButton
                 android:id="@+id/connect_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

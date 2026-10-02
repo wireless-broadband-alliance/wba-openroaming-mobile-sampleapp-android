@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OpenRoaming Mobile WBA"
+rootProject.name = "OpenRoaming WBA"
 include(":app", ":or-sdk")

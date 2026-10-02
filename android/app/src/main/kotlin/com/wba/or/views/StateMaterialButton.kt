@@ -1,4 +1,4 @@
-package com.tetrapi.or.views
+package com.wba.or.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -9,7 +9,7 @@ import com.google.android.material.button.MaterialButton
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class StateMaterialButton @JvmOverloads constructor(

@@ -33,7 +33,6 @@ import org.json.JSONObject
 class API(private val context: Context) {
 
     private val client = HttpClient(OkHttp) {
-
         defaultRequest {
             header("User-Agent", "Android/App")
             header("Accept", "application/json")

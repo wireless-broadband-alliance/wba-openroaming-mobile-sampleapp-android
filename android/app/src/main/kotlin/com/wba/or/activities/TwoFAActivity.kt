@@ -1,4 +1,4 @@
-package com.tetrapi.or.activities
+package com.wba.or.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
-import com.tetrapi.or.databinding.ActivityTwofaBinding
-import com.tetrapi.sdk.core.SDK
-import com.tetrapi.sdk.utils.allowInfiniteLines
+import com.wba.or.databinding.ActivityTwofaBinding
+import com.wba.sdk.core.SDK
+import com.wba.sdk.utils.allowInfiniteLines
 import kotlinx.coroutines.launch
 import kotlin.toString
 
@@ -17,7 +17,7 @@ import kotlin.toString
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class TwoFAActivity : ORActivity() {

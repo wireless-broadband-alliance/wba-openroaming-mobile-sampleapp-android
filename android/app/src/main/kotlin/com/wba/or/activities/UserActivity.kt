@@ -1,13 +1,13 @@
-package com.tetrapi.or.activities
+package com.wba.or.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.tetrapi.or.R
-import com.tetrapi.or.databinding.ActivityUserBinding
-import com.tetrapi.sdk.core.SDK
+import com.wba.or.R
+import com.wba.or.databinding.ActivityUserBinding
+import com.wba.sdk.core.SDK
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
@@ -16,7 +16,7 @@ import org.json.JSONObject
 //  OpenRoaming SDK
 //
 //  Created by Fábio Carvalho
-//  Copyright © 2026 Tetrapi. All rights reserved.
+//  Copyright © 2026 WBA. All rights reserved.
 //
 
 class UserActivity : ORActivity() {
